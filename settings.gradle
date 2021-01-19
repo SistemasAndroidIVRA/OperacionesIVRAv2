@@ -1,0 +1,2 @@
+rootProject.name='Operaciones IVRA'
+include ':app'
