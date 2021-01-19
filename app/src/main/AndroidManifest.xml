@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.operacionesivra">
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Ubicaciones.Ubicacaiones"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCyvWIGohTMdVWfPiC3I7jTpionX6J3OG0" />
+
+        <activity android:name=".Monitoreo.Detalles.DetallesMonitoreo" android:label="@string/title_activity_detalles_monitoreo" />
+        <activity android:name=".Administrador.Permisos.DetallesUsuario" />
+        <activity android:name=".Administrador.Administrador" />
+        <activity android:name=".MainActivity.Login" />
+        <activity android:name=".Monitoreo.Monitoreo_Mapa" android:label="@string/title_activity_monitoreo__mapa" />
+        <activity android:name=".Monitoreo.Monitoreo" />
+        <activity android:name=".Reportes.AuxiliarPorProducto.AuxiliarPorProducto" />
+        <activity android:name=".Reportes.Inventario.InventarioActual.InventarioActual" />
+        <activity android:name=".Reportes.Inventario.InventariosCerrados.ReporteInventariosCerrados" />
+        <activity android:name=".Reportes.Inventario.ReportesInventarioGeneral" />
+        <activity android:name=".Reportes.Encuesta.EncuestadeSatisfacionReporte" />
+        <activity android:name=".Reportes.Inventario.ReporteInventarioTerminado" />
+        <activity android:name=".Reportes.SelectordeReportes" />
+        <activity android:name=".Reportes.Chequeo.TerminadosListaPedido.CrearReporte" />
+        <activity android:name=".Reportes.Chequeo.ListaChequeoTerminado" />
+        <activity android:name=".Chequeo.Surtir.DetallesChequeo" />
+        <activity android:name=".Chequeo.ListadePedidos.ListadeChequeo" />
+        <activity android:name=".PantallaRecepcion.PantallaDeRecepcion" />
+        <activity android:name=".PantallaDePrioridades.PantalladePrioridades" />
+        <activity android:name=".Inventario.InventariosCerrados.Inventarioscerrados" />
+        <activity android:name=".Inventario.ConteosPausa.Pausa" />
+        <activity android:name=".Inventario.Inventario" />
+        <activity
+            android:name=".Picking.SuirtirPicking.SurtirPicking"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Picking.ListapedidosPicking.Picking" />
+        <activity android:name=".MainActivity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

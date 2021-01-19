@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="Gradle: online.devliving:mvbarcodereader:1.1.6@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a1e855ff1744cab719a23cc4f2291113/jetified-mvbarcodereader-1.1.6/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a1e855ff1744cab719a23cc4f2291113/jetified-mvbarcodereader-1.1.6/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a1e855ff1744cab719a23cc4f2291113/jetified-mvbarcodereader-1.1.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a1e855ff1744cab719a23cc4f2291113/jetified-mvbarcodereader-1.1.6/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/online.devliving/mvbarcodereader/1.1.6/f50a98af87324ead27392706029cf827099eb66b/mvbarcodereader-1.1.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/online.devliving/mvbarcodereader/1.1.6/58617033b940fbc83c73a2a0ccb1355c43c444a6/mvbarcodereader-1.1.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="Gradle: online.devliving:mobilevision-pipeline:1.0.8@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ff91d400de6eb096c6a3771341c2dc9e/jetified-mobilevision-pipeline-1.0.8/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ff91d400de6eb096c6a3771341c2dc9e/jetified-mobilevision-pipeline-1.0.8/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ff91d400de6eb096c6a3771341c2dc9e/jetified-mobilevision-pipeline-1.0.8/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ff91d400de6eb096c6a3771341c2dc9e/jetified-mobilevision-pipeline-1.0.8/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/online.devliving/mobilevision-pipeline/1.0.8/fc0b6aa6d544eedf6c3859cf727053921e155a01/mobilevision-pipeline-1.0.8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/online.devliving/mobilevision-pipeline/1.0.8/68c690ea4937051daaaf8fa4607528555c0bd79c/mobilevision-pipeline-1.0.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

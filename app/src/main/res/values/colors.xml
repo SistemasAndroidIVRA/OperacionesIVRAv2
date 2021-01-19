@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="primary_light">#C5CAE9</color>
+    <color name="colorAccent">#D32F2F</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="positivo">#64DD17</color>
+    <color name="negativo">#D50000</color>
+
+    <color name="correcto">#C2185B</color>
+    <color name="valoresblanco">#FFFFFF</color>
+
+    //colores extras
+
+    //Colores de las graficas
+    <color name="color1">#1E88E5</color>
+    <color name="color2">#5BB51C</color>
+    <color name="color3">#E53935</color>
+    <color name="color4">#FB8C00</color>
+    <color name="color5">#633EAE</color>
+    <color name="color6">#D83570</color>
+    <color name="color7">#FDD835</color>
+    <color name="color8">#3949AB</color>
+    <color name="color9">#4F1FB1</color>
+    <color name="color10">#C36D00</color>
+    <color name="color11">#FFB300</color>
+
+    //Botones
+    <color name="Inventario">#053267</color>
+    <color name="Recepcion">#EFC226</color>
+    <color name="Chequeo">#85C872</color>
+    <color name="Prioridades">#FF87B7</color>
+    <color name="Reportes">#7EDBB0</color>
+    <color name="Picking">#EB3C33</color>
+    <color name="Monitoreo">#FB8C00</color>
+    <color name="Administrador">#633EAE</color>
+
+
+</resources>
