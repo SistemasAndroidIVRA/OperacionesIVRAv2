@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fechapiking"
+        android:title="Fecha"
+        android:icon="@drawable/fecha_icono"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/pedidopiking"
+        android:icon="@drawable/lupablanca"
+        android:title="Material actual"
+        android:iconTint="@color/valoresblanco"
+        app:showAsAction="ifRoom"/>
+</menu>

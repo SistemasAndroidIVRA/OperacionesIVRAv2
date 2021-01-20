@@ -1,15 +1,13 @@
 package com.example.operacionesivra.Picking.ListapedidosPicking;
 
-public class ModeloListaPedido {
-    String fecha, cliente, referencia, numerodepedido, cantidad, hora, serie;
+public class ModeloListaPicking {
+    String fecha, cliente, referencia, numerodepedido, serie;
 
-    public ModeloListaPedido(String referencia, String cliente, String fecha, String numerodepedido, String hora, String cantidad, String serie) {
+    public ModeloListaPicking(String referencia, String cliente, String fecha, String numerodepedido, String serie) {
         this.fecha = fecha;
         this.cliente = cliente;
         this.referencia = referencia;
         this.numerodepedido = numerodepedido;
-        this.cantidad = cantidad;
-        this.hora = hora;
         this.serie = serie;
     }
 
@@ -27,14 +25,6 @@ public class ModeloListaPedido {
 
     public String getNumerodepedido() {
         return numerodepedido;
-    }
-
-    public String getCantidad() {
-        return cantidad;
-    }
-
-    public String getHora() {
-        return hora;
     }
 
     public String getSerie() {

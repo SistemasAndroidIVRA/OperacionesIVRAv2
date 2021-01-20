@@ -37,8 +37,6 @@ public class AdapterListaPedidos extends RecyclerView.Adapter<AdapterListaPedido
             cliente = itemView.findViewById(R.id.cliente);
             fecha = itemView.findViewById(R.id.fechaitemprioridades);
             numerodepedido = itemView.findViewById(R.id.numerodepedido);
-            cantidad = itemView.findViewById(R.id.cantidadtotal);
-            hora = itemView.findViewById(R.id.hora);
             card = itemView.findViewById(R.id.carditem);
 
 
@@ -76,9 +74,9 @@ public class AdapterListaPedidos extends RecyclerView.Adapter<AdapterListaPedido
     }
 
 
-    public List<ModeloListaPedido> listaPedidos;
+    public List<ModeloListaPicking> listaPedidos;
 
-    public AdapterListaPedidos(List<ModeloListaPedido> pedidolista) {
+    public AdapterListaPedidos(List<ModeloListaPicking> pedidolista) {
         this.listaPedidos = pedidolista;
     }
 
@@ -96,8 +94,6 @@ public class AdapterListaPedidos extends RecyclerView.Adapter<AdapterListaPedido
         holder.cliente.setText(listaPedidos.get(position).getCliente());
         holder.fecha.setText(listaPedidos.get(position).getFecha());
         holder.numerodepedido.setText(listaPedidos.get(position).getNumerodepedido());
-        holder.hora.setText(listaPedidos.get(position).getHora());
-        holder.cantidad.setText(listaPedidos.get(position).getCantidad());
         holder.serie = listaPedidos.get(position).getSerie();
     }
 
