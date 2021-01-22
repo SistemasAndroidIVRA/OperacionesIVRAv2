@@ -40,6 +40,7 @@ public class AdapterContenidodelPedido extends RecyclerView.Adapter<AdapterConte
             card = itemView.findViewById(R.id.carditempedido);
             imagen = itemView.findViewById(R.id.estadoimagen_picking);
 
+            /*
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -51,7 +52,7 @@ public class AdapterContenidodelPedido extends RecyclerView.Adapter<AdapterConte
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (contexto instanceof SurtirPicking) {
                                         v.startAnimation(AnimationUtils.loadAnimation(contexto, R.anim.fragment_open_enter));
-                                        ((SurtirPicking) contexto).editardialog(nombreproducto.getText().toString(), cantidadregistrada.getText().toString());
+                                        ((SurtirPicking) contexto).editardialog(nombreproducto.getText().toString(),Float.parseFloat( cantidadregistrada.getText().toString()));
                                     }
                                 }
                             })
@@ -64,6 +65,8 @@ public class AdapterContenidodelPedido extends RecyclerView.Adapter<AdapterConte
                             .show();
                 }
             });
+
+             */
         }
 
     }
@@ -86,12 +89,12 @@ public class AdapterContenidodelPedido extends RecyclerView.Adapter<AdapterConte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.nombreproducto.setText(contenidodelPedido.get(position).getNombredelmaterial());
-        holder.cantidaddelpedido.setText(contenidodelPedido.get(position).getCantidadsolicitada());
-        holder.cantidadregistrada.setText(contenidodelPedido.get(position).getCantidad());
+        holder.cantidaddelpedido.setText(contenidodelPedido.get(position).getCantidadsolicitada()+"");
+        holder.cantidadregistrada.setText(contenidodelPedido.get(position).getCantidad()+"");
         holder.estado.setText(contenidodelPedido.get(position).getEstado());
-        holder.codpedido = contenidodelPedido.get(position).getCodpedido();
+        holder.codpedido = contenidodelPedido.get(position).getCodproducto();
         holder.imagen.setImageResource(contenidodelPedido.get(position).getImagen());
-        holder.coditem = contenidodelPedido.get(position).getCoditem();
+        holder.coditem = contenidodelPedido.get(position).getCodPedido();
     }
 
 

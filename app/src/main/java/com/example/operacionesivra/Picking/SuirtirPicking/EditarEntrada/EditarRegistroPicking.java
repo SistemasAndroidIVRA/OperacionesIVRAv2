@@ -1,4 +1,4 @@
-package com.example.operacionesivra.Picking.SuirtirPicking;
+package com.example.operacionesivra.Picking.SuirtirPicking.EditarEntrada;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,11 +18,12 @@ import java.util.Objects;
 
 public class EditarRegistroPicking extends DialogFragment {
     EditarRegistroPickingInterface editarregistro;
-    String material, contenido;
+    String material;
+    float contenido;
     TextView materialT;
     TextInputEditText cantidad;
 
-    public EditarRegistroPicking(String material, String contenido) {
+    public EditarRegistroPicking(String material, float contenido) {
         this.material = material;
         this.contenido = contenido;
     }
@@ -51,13 +52,13 @@ public class EditarRegistroPicking extends DialogFragment {
 
 
         materialT.setText(material);
-        cantidad.setText(contenido);
+        cantidad.setText(contenido+"");
 
         view.findViewById(R.id.editarAceptar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!Objects.requireNonNull(cantidad.getText()).toString().equals("")) {
-                    editarregistro.editar(material, cantidad.getText().toString());
+                    editarregistro.editar(material, contenido);
                     dismiss();
                 } else {
                     cantidad.setError("Complete los campos para continuar");

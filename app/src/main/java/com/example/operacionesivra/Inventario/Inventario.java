@@ -1,9 +1,7 @@
 package com.example.operacionesivra.Inventario;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,12 +15,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -41,7 +37,6 @@ import com.example.operacionesivra.MainActivity.MainActivity;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -70,7 +65,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-import devliving.online.mvbarcodereader.MVBarcodeScanner;
 import harmony.java.awt.Color;
 
 public class Inventario extends AppCompatActivity implements CustomDialogInterface, CustomDialogInterfaceTag, ItemSpecialInterface, EditarRegistroInterface {
@@ -127,7 +121,7 @@ public class Inventario extends AppCompatActivity implements CustomDialogInterfa
         cargar = findViewById(R.id.cargarinventario);
         contadorderollos = findViewById(R.id.cantidadrollos);
         almacenView = findViewById(R.id.almacenmate);
-        text_cod_escaneado = findViewById(R.id.codigo);
+        text_cod_escaneado = findViewById(R.id.codigo_sp);
         nombreitem = findViewById(R.id.nombreitem);
         recyceritems = findViewById(R.id.detallesitem);
         unidaddemedida = findViewById(R.id.unidadmedida);

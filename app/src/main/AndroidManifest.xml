@@ -50,7 +50,7 @@
         <activity
             android:name=".Picking.SuirtirPicking.SurtirPicking"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Picking.ListapedidosPicking.Picking" />
+        <activity android:name=".Picking.ListapedidosPicking.ListaPicking" />
         <activity android:name=".MainActivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

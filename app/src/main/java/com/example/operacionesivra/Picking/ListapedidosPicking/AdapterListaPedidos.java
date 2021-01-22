@@ -34,7 +34,7 @@ public class AdapterListaPedidos extends RecyclerView.Adapter<AdapterListaPedido
             contexto = itemView.getContext();
             intent = new Intent(contexto, SurtirPicking.class);
             referencia = itemView.findViewById(R.id.referencia);
-            cliente = itemView.findViewById(R.id.cliente);
+            cliente = itemView.findViewById(R.id.cliente_sp);
             fecha = itemView.findViewById(R.id.fechaitemprioridades);
             numerodepedido = itemView.findViewById(R.id.numerodepedido);
             card = itemView.findViewById(R.id.carditem);

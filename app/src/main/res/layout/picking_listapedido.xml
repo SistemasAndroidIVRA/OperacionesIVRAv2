@@ -70,7 +70,7 @@
                         android:text="Cliente" />
 
                     <TextView
-                        android:id="@+id/cliente"
+                        android:id="@+id/cliente_sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight=".6"

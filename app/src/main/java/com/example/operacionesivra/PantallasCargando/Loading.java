@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.operacionesivra.Administrador.Administrador;
 import com.example.operacionesivra.Administrador.Permisos.DetallesUsuario;
@@ -15,7 +14,7 @@ import com.example.operacionesivra.Inventario.InventariosCerrados.Inventarioscer
 import com.example.operacionesivra.MainActivity.MainActivity;
 import com.example.operacionesivra.PantallaDePrioridades.PantalladePrioridades;
 import com.example.operacionesivra.PantallaRecepcion.PantallaDeRecepcion;
-import com.example.operacionesivra.Picking.ListapedidosPicking.Picking;
+import com.example.operacionesivra.Picking.ListapedidosPicking.ListaPicking;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Reportes.Chequeo.ListaChequeoTerminado;
 import com.example.operacionesivra.Reportes.Inventario.InventarioActual.InventarioActual;
@@ -88,9 +87,9 @@ public class Loading extends AsyncTask<Void, Void, Void> {
                 ((Pausa) mContext).cargardatos();
             }
         }
-        else if (mContext instanceof Picking) {
-            if (((Picking) mContext).loadingpicking== 1) {
-                ((Picking) mContext).cargardatos();
+        else if (mContext instanceof ListaPicking) {
+            if (((ListaPicking) mContext).loadingpicking== 1) {
+                ((ListaPicking) mContext).cargardatos();
             }
         }
         else if (mContext instanceof Inventarioscerrados) {
@@ -272,7 +271,7 @@ public class Loading extends AsyncTask<Void, Void, Void> {
                 System.out.println(e);
             }
         }
-        else if(mContext instanceof Picking){
+        else if(mContext instanceof ListaPicking){
             try{
                 dialog.dismiss();
             }catch (Exception e){
@@ -365,7 +364,7 @@ public class Loading extends AsyncTask<Void, Void, Void> {
                 System.out.println(e);
             }
         }
-        if(mContext instanceof Picking){
+        if(mContext instanceof ListaPicking){
             try{
                 dialog = ProgressDialog.show(mContext, "Cargando datos", "Espere...", false, false);
 

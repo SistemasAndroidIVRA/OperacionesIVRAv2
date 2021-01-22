@@ -2,28 +2,30 @@ package com.example.operacionesivra.Picking.SuirtirPicking;
 
 public class ModeloContenidodelPedido {
 
-    String nombredelmaterial, estado, cantidad, cantidadsolicitada, codpedido, coditem;
+    String nombredelmaterial, estado, codproducto, codPedido, codimpreso;
     int imagen;
+    float cantidad, cantidadsolicitada;
 
-    public ModeloContenidodelPedido(String cantidad, String nombredelmaterial, String cantidadsolicitada, String estado, String codpedido, int imagen, String coditem) {
+    public ModeloContenidodelPedido(float cantidad, String nombredelmaterial, float cantidadsolicitada, String estado, String codproducto, int imagen, String codPedido, String codimpreso) {
         this.cantidad = cantidad;
         this.nombredelmaterial = nombredelmaterial;
         this.cantidadsolicitada = cantidadsolicitada;
         this.estado = estado;
-        this.codpedido = codpedido;
+        this.codproducto = codproducto;
         this.imagen = imagen;
-        this.coditem = coditem;
+        this.codPedido = codPedido;
+        this.codimpreso = codimpreso;
     }
 
-    public String getCodpedido() {
-        return codpedido;
+    public String getCodproducto() {
+        return codproducto;
     }
 
     public String getEstado() {
         return estado;
     }
 
-    public String getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
@@ -31,7 +33,7 @@ public class ModeloContenidodelPedido {
         return nombredelmaterial;
     }
 
-    public String getCantidadsolicitada() {
+    public float getCantidadsolicitada() {
         return cantidadsolicitada;
     }
 
@@ -39,27 +41,12 @@ public class ModeloContenidodelPedido {
         return imagen;
     }
 
-    public String getCoditem() {
-        return coditem;
+    public String getCodPedido() {
+        return codPedido;
     }
 
-    public void setNombredelmaterial(String nombredelmaterial) {
-        this.nombredelmaterial = nombredelmaterial;
+    public String getCodimpreso(){
+        return codimpreso;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void setCantidadsolicitada(String cantidadsolicitada) {
-        this.cantidadsolicitada = cantidadsolicitada;
-    }
-
-    public void setCodpedido(String codpedido) {
-        this.codpedido = codpedido;
-    }
 }

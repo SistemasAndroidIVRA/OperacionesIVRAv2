@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Picking extends AppCompatActivity implements BuscarPedidoInterface {
+public class ListaPicking extends AppCompatActivity implements BuscarPedidoInterface {
     private RecyclerView recycerpedidos;
     private AdapterListaPedidos adaptador;
     List<ModeloListaPicking> pedidos = new ArrayList<>();
@@ -50,9 +50,12 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
         setSupportActionBar(toolbar);
         recycerpedidos = findViewById(R.id.listapedidosview);
         recycerpedidos.setLayoutManager(new LinearLayoutManager(this));
+        this.setTitle("Picking");
         //loadingpicking=1;
         //loadinglauncher();
     }
+
+    /*--------------------------------------ToolBar-----------------------------------------------*/
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.piking, menu);
@@ -66,13 +69,19 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
                 escogerdia();
                 break;
             case R.id.pedidopiking:
-                BuscarPedido buscarPedido = new BuscarPedido();
-                buscarPedido.show(getSupportFragmentManager(),null);
+                escogerpedido();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //Lanza un dialog
+    public void escogerpedido(){
+        BuscarPedido buscarPedido = new BuscarPedido();
+        buscarPedido.show(getSupportFragmentManager(),null);
+    }
+
+    //Lanza un datepicker
     public void escogerdia(){
         String date = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
         int mYear = Integer.parseInt(date.substring(0,4));
@@ -109,10 +118,9 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
         mDatePicker.show();
     }
 
-
     /*--------------------------------------Funciones---------------------------------------------*/
 
-    //Crea una lista que almacena los datos de la base de manera automatica (Implementacion)
+    //Actualiza la lista segun el dia seleccionado
     public List<ModeloListaPicking> cargardatosfecha(String fecha) {
         if(!pedidos.isEmpty()){
             pedidos.clear();
@@ -148,7 +156,7 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
         return pedidos;
     }
 
-    //Crea una lista que almacena los datos de la base de manera automatica (Implementacion)
+    //Actualiza la lista segun el numero de pedido
     public List<ModeloListaPicking> cargardatospedido(String pedido, String serie) {
         if(!pedidos.isEmpty()){
             pedidos.clear();
@@ -215,6 +223,7 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
         return pedidos;
     }
 
+    //Lanza un mensaje de cargando mientras realiza la obtencion de todos los pedidos dispobles para picking
     public void cargardatos(){
         runOnUiThread(new Runnable() {
             @Override
@@ -225,24 +234,15 @@ public class Picking extends AppCompatActivity implements BuscarPedidoInterface 
         });
     }
 
+    //Lanza mensaje de cargando
     public void loadinglauncher() {
         Loading loading = new Loading(this);
         loading.execute();
     }
 
-    /*--------------------------------------Botones---------------------------------------------*/
+    /*--------------------------------------Interface---------------------------------------------*/
 
-
-    public void recargar(View vista) {
-        obtenerpedidosdbImplementacion();
-    }
-    public void atras(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-
+    //Obtiene los datos del dialog usando una interface
     @Override
     public void obtenerDatos(String codigo, String serie) {
         adaptador = new AdapterListaPedidos(cargardatospedido(codigo,serie));

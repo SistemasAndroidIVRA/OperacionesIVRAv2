@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cliente"
+        android:id="@+id/cliente_sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -138,7 +138,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/codigo"
+                android:id="@+id/codigo_sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -156,7 +156,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/contadoritems"
+                android:id="@+id/contadoritems_sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -175,7 +175,7 @@
                 app:helperText="Coloque el código ">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/entradamanual"
+                    android:id="@+id/entradamanual_sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
@@ -191,14 +191,14 @@
                 android:hint="Scanner">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/entrada"
+                    android:id="@+id/scanner_sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/terminar_sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"

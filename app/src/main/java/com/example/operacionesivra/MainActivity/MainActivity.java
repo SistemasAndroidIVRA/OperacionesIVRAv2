@@ -8,14 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Chronometer;
 
 import com.example.operacionesivra.Administrador.Administrador;
 import com.example.operacionesivra.Chequeo.ListadePedidos.ListadeChequeo;
@@ -26,25 +23,21 @@ import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.Reportes.SelectordeReportes;
 import com.example.operacionesivra.Services.Conexion;
 import com.example.operacionesivra.Inventario.Inventario;
-import com.example.operacionesivra.Picking.ListapedidosPicking.Picking;
+import com.example.operacionesivra.Picking.ListapedidosPicking.ListaPicking;
 import com.example.operacionesivra.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+
+import static com.example.operacionesivra.ComprobaciondeDispositivo.TabletOTelefono.esTablet;
 
 public class MainActivity extends AppCompatActivity{
     Context context;
-    Conexion conexionService;
     CardView inventario, picking, listadeprioridades, recepcion, chequeo, reportes, monitoreo,administrador;
-    String usuario, contraseña, idusuario;
+    String usuario, password, idusuario;
     public int loadingMain=0;
 
     @Override
@@ -76,11 +69,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    public static boolean esTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
+
 
     public void listenersdeopcionesdisponibles(){
         inventario.setOnClickListener(new View.OnClickListener() {
@@ -237,7 +226,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void Picking(){
-        Intent picking = new Intent(getBaseContext(), Picking.class);
+        Intent picking = new Intent(getBaseContext(), ListaPicking.class);
         startActivity(picking);
     }
 
@@ -254,7 +243,7 @@ public class MainActivity extends AppCompatActivity{
     public void Inventario(){
         Intent inventario = new Intent(getBaseContext(), Inventario.class);
         inventario.putExtra("usuario",usuario);
-        inventario.putExtra("contraseña",contraseña);
+        inventario.putExtra("contraseña", password);
         startActivity(inventario);
     }
 
@@ -288,7 +277,7 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
         }else{
             usuario = user;
-            contraseña = pass;
+            password = pass;
             this.idusuario = idusuario;
             this.setTitle("Hola "+user);
 

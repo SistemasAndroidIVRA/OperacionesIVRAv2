@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Picking.ListapedidosPicking.Picking">
+    tools:context=".Picking.ListapedidosPicking.ListaPicking">
 
     <include
         android:id="@+id/toolbarpicking"
@@ -24,12 +24,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarpicking">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#3949AB"
-            android:orientation="vertical"></LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listapedidosview"
