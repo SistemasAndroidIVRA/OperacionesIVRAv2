@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#98AAEC">
+
+    <LinearLayout
+        android:id="@+id/linearLayout38"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="49dp"
+        android:background="@color/Inventario"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnMinutaRegresar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icono_regresar" />
+
+            <TextView
+                android:id="@+id/textView174"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Minutas de reunión"
+                android:textColor="@color/Recepcion"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250sp"
+            android:layout_height="250sp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_minutas" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout39"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout38"
+        app:layout_constraintVertical_bias="0.39">
+
+        <Button
+            android:id="@+id/btnMinutaNueva"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:backgroundTint="@color/Inventario"
+            android:drawableLeft="@drawable/logo_minuta_nueva"
+            android:drawableRight="@drawable/icono_entrar"
+            android:text="NUEVA MINUTA"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:iconGravity="end" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+        <Button
+            android:id="@+id/btnMinutaConsultar"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:backgroundTint="@color/Inventario"
+            android:drawableLeft="@drawable/logo_minuta_consultar"
+            android:drawableRight="@drawable/icono_entrar"
+            android:text="CONSULTAR MINUTAS"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:iconGravity="end" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

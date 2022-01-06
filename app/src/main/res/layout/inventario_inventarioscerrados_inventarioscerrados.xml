@@ -46,7 +46,7 @@
 
                 <TextView
                     android:id="@+id/textView68"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.15"
                     android:gravity="center"
@@ -55,8 +55,15 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/textView129"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.15"
+                    android:text="Almacén" />
+
+                <TextView
                     android:id="@+id/textView70"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:gravity="center"
@@ -66,7 +73,7 @@
 
                 <TextView
                     android:id="@+id/textView67"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="center"
@@ -76,7 +83,7 @@
 
                 <TextView
                     android:id="@+id/textView71"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="center"
@@ -86,7 +93,7 @@
 
                 <TextView
                     android:id="@+id/textView119"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="center"

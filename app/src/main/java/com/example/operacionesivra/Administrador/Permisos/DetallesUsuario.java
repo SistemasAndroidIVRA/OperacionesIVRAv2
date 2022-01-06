@@ -1,40 +1,26 @@
 package com.example.operacionesivra.Administrador.Permisos;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.operacionesivra.Administrador.Administrador;
-import com.example.operacionesivra.Administrador.Permisos.AdapterPermisos;
-import com.example.operacionesivra.Administrador.Permisos.ModeloPermisos;
-import com.example.operacionesivra.MainActivity.MainActivity;
 import com.example.operacionesivra.Monitoreo.ModeloTipoUsuario;
-import com.example.operacionesivra.PantallaRecepcion.ModeloVideos;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
-import com.example.operacionesivra.Reportes.Inventario.InventarioActual.AdapterInventarioActual;
-import com.example.operacionesivra.Reportes.Inventario.InventarioActual.ModeloInventarioActualBuscar;
 import com.example.operacionesivra.Services.Conexion;
 import com.example.operacionesivra.Services.ConexionMonitoreo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,8 +71,9 @@ public class DetallesUsuario extends AppCompatActivity {
                 findViewById(R.id.guardarda).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadingDetallesUsuario = 1;
-                        loadinglauncher();
+                        //loadingDetallesUsuario = 1;
+                        //loadinglauncher();
+                        crear_actualizarusuario();
                     }
                 });
 
@@ -107,7 +94,8 @@ public class DetallesUsuario extends AppCompatActivity {
         });
     }
 
-    public String vertipousuario(){
+    //Verifica el tipom de usuario
+    public String vertipousuario() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Seleccione el tipo de usuario")
                 .setCancelable(false)
@@ -120,8 +108,8 @@ public class DetallesUsuario extends AppCompatActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        for(int i =0;i<tipo.size();i++){
-                            if(tipo.get(i).getTipo().equals(seleccion)) {
+                        for (int i = 0; i < tipo.size(); i++) {
+                            if (tipo.get(i).getTipo().equals(seleccion)) {
                                 idtipo = tipo.get(i).getIdusuario();
                             }
                         }
@@ -137,22 +125,23 @@ public class DetallesUsuario extends AppCompatActivity {
         return idtipo;
     }
 
-    public String[] tiposUsuario(){
-        ConexionMonitoreo c = new ConexionMonitoreo(this);
-        int contador=0;
-        try{
+    //Carga el tipo de usuario según la base de datos
+    public String[] tiposUsuario() {
+        Conexion c = new Conexion(this);
+        int contador = 0;
+        try {
             Statement s = c.conexiondbImplementacion().createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM TipoUsuario");
-            while (r.next()){
-                tipo.add(new ModeloTipoUsuario(r.getString("tipo"),r.getString("IDUsuario")) );
+            ResultSet r = s.executeQuery("SELECT * FROM Movil_Tipo_Usuario");
+            while (r.next()) {
+                tipo.add(new ModeloTipoUsuario(r.getString("tipo"), r.getString("IDUsuario")));
                 contador++;
             }
             opciones = new String[contador];
-            for(int i = 0;i<tipo.size();i++){
-                opciones[i]=tipo.get(i).getTipo();
+            for (int i = 0; i < tipo.size(); i++) {
+                opciones[i] = tipo.get(i).getTipo();
             }
-        }catch (Exception e){
-            System.out.println("nel"+ e);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
         }
         return opciones;
     }
@@ -172,7 +161,7 @@ public class DetallesUsuario extends AppCompatActivity {
             s.execute();
             ok = 1;
         } catch (SQLException e) {
-            System.out.println("ert" + e);
+            System.out.println("Error: " + e);
         }
         return ok;
     }
@@ -182,7 +171,7 @@ public class DetallesUsuario extends AppCompatActivity {
         if (getIntent().getStringExtra("idusuario") != null) {
             datosdelusuario(getIntent().getStringExtra("idusuario"));
         } else {
-            System.out.println("nelpas");
+            System.out.println("Error");
         }
     }
 
@@ -202,18 +191,18 @@ public class DetallesUsuario extends AppCompatActivity {
     public void crear_actualizarusuario() {
         Conexion conexion = new Conexion(this);
         int comprobar = 0;
-        try (PreparedStatement s = conexion.conexiondbImplementacion().prepareCall("Execute PMovil_UpOrAddUsuario ?,?,?,?,?,?")) {
+        try (PreparedStatement s = conexion.conexiondbImplementacion().prepareCall("PMovil_UpOrAddUsuario ?,?,?,?,?,?")) {
             s.setString(1, getIntent().getStringExtra("idusuario"));
             s.setString(2, nombre.getText().toString());
             s.setString(3, usuario.getText().toString());
             s.setString(4, password.getText().toString());
             s.setString(5, area.getText().toString());
-            s.setString(6, idtipo);
+            s.setString(6, "728F24E0-529C-4059-9AE5-413D12B6E3F1");
             s.execute();
         } catch (SQLException e) {
             new MaterialAlertDialogBuilder(context)
                     .setTitle("Error")
-                    .setMessage("Imposible crear/actualizar usuario\nPor favor inténtelo más tarde")
+                    .setMessage("Imposible crear/actualizar usuario\nPor favor inténtelo más tarde. "+e.getMessage())
                     .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -246,7 +235,7 @@ public class DetallesUsuario extends AppCompatActivity {
                 Toast.makeText(this, "Datos cargados!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            System.out.println("Cayo pedo");
+            System.out.println("Error: " + e);
         }
     }
 
@@ -260,7 +249,7 @@ public class DetallesUsuario extends AppCompatActivity {
                 permisos.add(new ModeloPermisos("NombrePermiso", r.getString("NombrePermiso"), r.getString("IDPermiso"), r.getString("Descripcion"), getIntent().getStringExtra("idusuario"), false));
             }
         } catch (Exception e) {
-            System.out.println("Cayo pedo");
+            System.out.println("Error: " + e);
         }
         return permisos;
     }
@@ -269,6 +258,5 @@ public class DetallesUsuario extends AppCompatActivity {
         Loading loading = new Loading(this);
         loading.execute();
     }
-
 
 }

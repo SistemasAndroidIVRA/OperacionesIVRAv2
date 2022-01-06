@@ -1,10 +1,8 @@
 package com.example.operacionesivra.Ubicaciones;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.operacionesivra.R;
 
@@ -15,6 +13,4 @@ public class Ubicacaiones extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ubicaciones_ubicacaiones);
     }
-
-
 }

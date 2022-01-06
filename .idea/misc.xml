@@ -1,6 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout-land/activity_main.xml" value="0.23828125" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_administrador.xml" value="0.1" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_main.xml" value="0.18507281553398058" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_detalles_item.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_editar_item.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_eproceso.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_historico.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_historico_items.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_proceso.xml" value="0.18325242718446602" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_proceso_detalle_item.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_proceso_items.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_en_procesos_detalle.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_registro.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_a_registro_detalles_item.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_codigo_escaneado.xml" value="0.22390776699029127" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_editar_registro.xml" value="0.22390776699029127" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_inventario.xml" value="0.22390776699029127" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_inventarioscerrados_inventarioscerrados.xml" value="0.22390776699029127" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/inventario_inventarioscerrados_item.xml" value="0.22390776699029127" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_consultar_minutas.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_consultar_minutas_item.xml" value="0.18325242718446602" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_menu.xml" value="0.18325242718446602" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_principal.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_reunion_layout.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_a_spinner.xml" value="0.15594660194174756" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_consultar_minutas.xml" value="0.18325242718446602" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/minuta_principal.xml" value="0.18446601941747573" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/toolbar.xml" value="0.18325242718446602" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/inventario_a_spinner.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/inventario_a_spinner_ubicaciones.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/inventario_a_ubicaciones.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/inventario_inventario.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_consultar_minutas.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_consultar_minutas_item.xml" value="0.14199029126213591" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_menu.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_principal.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_edit_acuerdo_item.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_edit_empleado_item.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_edit_tema_item.xml" value="0.14375" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_editar.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_layout.xml" value="0.16990291262135923" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_registrar.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_reunion_registrar_asistente.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v5/app/src/main/res/layout/minuta_a_spinner.xml" value="0.19053398058252427" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/drawable/icono_foreground.xml" value="0.18984375" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout-land/chequeo_detalles_chequeo.xml" value="0.25234192037470726" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout-land/reportes_reporte_inventario_terminado.xml" value="0.25234192037470726" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/activity_main.xml" value="0.16262135922330098" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/chequeo_detalles_item.xml" value="0.21298543689320387" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/chequeo_lista_item.xml" value="0.21298543689320387" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/detalles_historicos.xml" value="0.2955097087378641" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_editar.xml" value="0.326025459688826" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_historico.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_historico_items.xml" value="0.22815533980582525" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_historicos_detalle.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_historicos_detalle_item.xml" value="0.19720873786407767" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_proceso.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_proceso_detalle_item.xml" value="0.18021844660194175" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_proceso_items.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_proceso_menu.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_proceso_reporte_menu.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_en_procesos_detalle.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_menu.xml" value="0.165625" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_principal.xml" value="0.16990291262135923" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_registro.xml" value="0.23462301587301587" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_registro_detalles_item.xml" value="0.19963592233009708" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/inventario_a_registro_editar_item.xml" value="0.19963592233009708" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_menu.xml" value="0.23361650485436894" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_principal.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_acuerdo_item.xml" value="0.16808252427184467" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_acuerdo_item_det.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_acuerdos_item.xml" value="0.16019417475728157" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_asistente_item.xml" value="0.2" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_asistente_item_det.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_consultar_minutas.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_consultar_minutas_detalle.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_consultar_minutas_item.xml" value="0.11286407766990292" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_edit_empleado_item.xml" value="0.16808252427184467" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_editar.xml" value="0.33073322932917315" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_personal_items.xml" value="0.16019417475728157" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_progressbar.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registrar.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registrar_asistente.xml" value="0.16808252427184467" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro.xml" value="0.18042813455657492" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos.xml" value="0.4525" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos_editar.xml" value="0.4525" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_asistente.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_asistentes.xml" value="0.4925" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_tema_editar.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_temas.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_registro_temas_editar.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_tema_item.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_tema_item_det.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_reunion_tema_items.xml" value="0.25" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/minuta_a_spinner.xml" value="0.16019417475728157" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/reportes_activity_encuestade_satisfacion_reporte.xml" value="0.19963592233009708" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/reportes_crear_reporte.xml" value="0.19963592233009708" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/layout/reportes_reporte_inventario_terminado.xml" value="0.19963592233009708" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/menu/administracion.xml" value="0.23125" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/menu/filtros.xml" value="0.23125" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6 (autocompletado)/app/src/main/res/menu/menu.xml" value="0.23125" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout-land/ubicaciones_ubicacaiones.xml" value="0.23515625" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/content_inventario_amenu_ajuste.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/detalles_historicos.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/ecepcion_reproductor_item.xml" value="0.2287621359223301" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/fragment_first.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/fragment_second.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inicio_sesion_dialogfragment.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_ajuste_materiales.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_ajuste_materiales_item.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_ajuste_nuevo_item.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_editar.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_historico.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_historico_items.xml" value="0.67" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_historicos_detalle.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_historicos_detalle_item.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso_detalle_item.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso_items.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso_menu.xml" value="0.16171875" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso_ubicaciones_eliminar.xml" value="0.20934466019417475" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_en_proceso_ubicaciones_eliminar_items.xml" value="0.1729368932038835" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_menu.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_menu_ajuste.xml" value="0.23240291262135923" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_menu_ajuste_item.xml" value="0.1941747572815534" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_nuevo_ajuste.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_principal.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_registro.xml" value="0.18932038834951456" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_registro_detalles_item.xml" value="0.1729368932038835" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_solicitud_ajuste.xml" value="0.2263349514563107" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_a_spinner.xml" value="0.2087378640776699" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/inventario_itemspecial.xml" value="0.2287621359223301" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/login_login.xml" value="0.1808252427184466" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/minuta_a_menu.xml" value="0.30339805825242716" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/minuta_a_reunion_consultar_minutas.xml" value="0.16154422788605696" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/minuta_a_reunion_registro.xml" value="0.20752427184466019" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/minuta_a_reunion_registro_asistentes.xml" value="0.20752427184466019" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/minuta_a_reunion_tema_item.xml" value="0.2287621359223301" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/monitoreo__mapa.xml" value="0.18264563106796117" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/monitoreo_detalles_monitoreo.xml" value="0.18264563106796117" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/monitoreo_detalles_monitoreo_item.xml" value="0.18264563106796117" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_administrador_videos_item.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_administrador_videos_nuevo.xml" value="0.22269417475728157" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_administrar_videos.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_item.xml" value="0.41509433962264153" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_pantalla_de_recepcion.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_reproductor.xml" value="0.5" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/recepcion_reproductor_item.xml" value="0.33" />
+        <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v6/app/src/main/res/layout/ubicaciones_ubicacaiones.xml" value="0.18264563106796117" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

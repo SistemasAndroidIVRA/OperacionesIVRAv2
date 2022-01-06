@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Minuta.Principal.MinutaPrincipal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/Inventario"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <TextView
+                android:id="@+id/textView275"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registro de minutas"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+
+        <TextView
+            android:id="@+id/textView168"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccione el lugar de la reunión:"
+            android:textAlignment="center"
+            android:textColor="@color/Inventario"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+
+        <Spinner
+            android:id="@+id/spinnerLugares"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15sp" />
+
+        <TextView
+            android:id="@+id/textView167"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Convocó:"
+            android:textAlignment="center"
+            android:textColor="@color/Inventario"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerConvoco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="80sp"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/button_color_text"
+                android:text="CANCELAR"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnAceptar"
+                android:layout_width="80sp"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="ACEPTAR"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

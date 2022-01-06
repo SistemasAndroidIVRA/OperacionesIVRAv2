@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Inventarios.Vistas.EnHistorico.InventariosEnHistorico">
+
+    <LinearLayout
+        android:id="@+id/linearLayout30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Inventario"
+        android:backgroundTint="@color/Inventario"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/btnEnHistoricoRegresar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icono_regresar"
+            android:text="IVRA"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView190"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Históricos de inventarios"
+            android:textColor="@color/Recepcion"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout31"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5sp"
+        android:layout_marginTop="5sp"
+        android:layout_marginEnd="5sp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout30"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView224"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="De"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtInvHistFInicial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Fecha inicial"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text" />
+
+                <ImageButton
+                    android:id="@+id/btnInvHistFInicial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Monitoreo"
+                    android:src="@drawable/icono_calendario" />
+
+                <Space
+                    android:layout_width="40sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView225"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="a"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/txtInvHistFFinal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Fecha final"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text" />
+
+                <ImageButton
+                    android:id="@+id/btnInvHistFFinal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Monitoreo"
+                    android:src="@drawable/icono_calendario" />
+
+                <CheckBox
+                    android:id="@+id/cbFechaHist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Activar fechas" />
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnInvHistFiltrador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="BUSCAR" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView226"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Buscador:"
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/txtInvHistBuscador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Ejem. dminic rojo..."
+                    android:inputType="textPersonName"
+                    android:textColor="@color/secondary_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnInvHistReporteGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/color3"
+                android:drawableRight="@drawable/icono_pdf"
+                android:text="Reporte general" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout31"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/Inventario"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnOrdenarHistNum"
+                        android:layout_width="25sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="#"
+                        android:textColor="@color/Recepcion"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button15"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Fecha"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Fecha fin"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button17"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Almacén"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button18"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Material"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button19"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Entradas"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button22"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Edo. Mcia."
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerInvHistoricos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

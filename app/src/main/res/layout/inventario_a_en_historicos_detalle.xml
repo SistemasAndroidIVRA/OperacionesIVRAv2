@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Inventarios.Vistas.EnHistorico.DetallesHistorico.InventarioAEnHistoricosDetalle">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayout32"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Inventario"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnInvHistDetRegresar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/icono_regresar"
+                    android:text="IVRA"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView191"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Información Hist. de inventario"
+                    android:textColor="@color/Recepcion"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblInvHistDetFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView205"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Información del material inventariado"
+                    android:textAlignment="center"
+                    android:textColor="@color/Inventario"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout33"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10sp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView227"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Almacén"
+                            android:textAlignment="center"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView228"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Material"
+                            android:textAlignment="center"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblInvHistDetAlmacen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TextView"
+                            android:textAlignment="center"
+                            android:textColor="@color/secondary_text" />
+
+                        <TextView
+                            android:id="@+id/lblInvHistDetAlMaterial"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TextView"
+                            android:textAlignment="center"
+                            android:textColor="@color/secondary_text" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout34"
+                android:layout_width="match_parent"
+                android:layout_height="350sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="5sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView243"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Registros del material"
+                    android:textAlignment="center"
+                    android:textColor="@color/Inventario"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="300sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Inventario"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView235"
+                                android:layout_width="60sp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="#"
+                                android:textAlignment="center"
+                                android:textColor="@color/Recepcion"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView251"
+                                android:layout_width="60sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Rollos"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView252"
+                                android:layout_width="60sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Cont."
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView250"
+                                android:layout_width="100sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Usuario"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView249"
+                                android:layout_width="100sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Ubicación"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView230"
+                                android:layout_width="100sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Fecha"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView236"
+                                android:layout_width="100sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Fecha fin"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView253"
+                                android:layout_width="100sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Incidencias"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView248"
+                                android:layout_width="60sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Edo. merc"
+                                android:textAlignment="center"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerInvHistDetalle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView238"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Entradas: "
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/Inventario"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lblInvHistDetEntradas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/Inventario" />
+
+                    <TextView
+                        android:id="@+id/textView246"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total mts: "
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/Inventario"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lblInvHistDetTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/Inventario" />
+
+                    <TextView
+                        android:id="@+id/textView260"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Sistema: "
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/Inventario"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lblInvHistDetSistema"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/Inventario" />
+
+                    <TextView
+                        android:id="@+id/textView290"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Diferencia: "
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/Inventario"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lblInvHistDetDiferencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/Inventario" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnInvHistDetReporte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawableRight="@drawable/icono_pdf"
+                    android:text="Generar reporte" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

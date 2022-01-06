@@ -2,10 +2,11 @@ package com.example.operacionesivra.Inventario.InventariosCerrados;
 
 public class ModeloInventariosCerrados {
 
-    String usuario,fecha,material,folio,almacen,fisico,sistema, diferencia;
+    String usuario, fecha, material, folio, almacen, fisico, sistema, diferencia;
+    int estadoIncidencia;
 
-    public ModeloInventariosCerrados(String fehca,String usuario, String material,String fisico,String sistema , String diferencia, String folio,String almacen){
-        this.usuario=usuario;
+    public ModeloInventariosCerrados(String fehca, String usuario, String material, String fisico, String sistema, String diferencia, String folio, String almacen, int estadoIncidencia) {
+        this.usuario = usuario;
         this.fecha = fehca;
         this.material = material;
         this.fisico = fisico;
@@ -13,6 +14,7 @@ public class ModeloInventariosCerrados {
         this.diferencia = diferencia;
         this.folio = folio;
         this.almacen = almacen;
+        this.estadoIncidencia = estadoIncidencia;
     }
 
     public String getUsuario() {
@@ -46,4 +48,6 @@ public class ModeloInventariosCerrados {
     public String getDiferencia() {
         return diferencia;
     }
+
+    public int getEstadoIncidencia(){return estadoIncidencia;}
 }

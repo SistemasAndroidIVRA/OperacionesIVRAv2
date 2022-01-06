@@ -1,9 +1,9 @@
 package com.example.operacionesivra.PantallaDePrioridades;
 
 public class ModeloReportePrioridades {
-    String cliente,pedido,entrega,referencia,fecha,horadeentrega, entregado, tiempotranscurrido;
+    String cliente, pedido, entrega, referencia, fecha, horadeentrega, entregado, tiempotranscurrido;
 
-    public ModeloReportePrioridades(String cliente, String pedido, String entrega, String referencia,String fecha, String horadeentrega, String entregado, String tiempotranscurrido) {
+    public ModeloReportePrioridades(String cliente, String pedido, String entrega, String referencia, String fecha, String horadeentrega, String entregado, String tiempotranscurrido) {
         this.cliente = cliente;
         this.pedido = pedido;
         this.entrega = entrega;
@@ -18,8 +18,8 @@ public class ModeloReportePrioridades {
         return cliente;
     }
 
-    public String getTiempotranscurrido(){
-        return  tiempotranscurrido;
+    public String getTiempotranscurrido() {
+        return tiempotranscurrido;
     }
 
     public String getPedido() {
@@ -42,7 +42,7 @@ public class ModeloReportePrioridades {
         return entregado;
     }
 
-    public String getFecha(){
+    public String getFecha() {
         return fecha;
     }
 

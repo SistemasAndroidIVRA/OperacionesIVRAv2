@@ -1,11 +1,9 @@
 package com.example.operacionesivra.Administrador;
 
-import com.example.operacionesivra.Monitoreo.ModeloDatosUsuario;
-
 public class ModeloDatosdeUsuarioAdministracion {
-    String nombre,usuario,password,area,ubicacion,idusuario;
+    String nombre, usuario, password, area, ubicacion, idusuario;
 
-    public ModeloDatosdeUsuarioAdministracion(String nombre, String usuario,String password, String area, String ubicacion, String idusuario) {
+    public ModeloDatosdeUsuarioAdministracion(String nombre, String usuario, String password, String area, String ubicacion, String idusuario) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.password = password;
@@ -22,15 +20,11 @@ public class ModeloDatosdeUsuarioAdministracion {
         return usuario;
     }
 
-    public String getPassword(){
-        return password;
-    }
-
     public String getArea() {
         return area;
     }
 
-    public String getIdusuario(){
+    public String getIdusuario() {
         return idusuario;
     }
 

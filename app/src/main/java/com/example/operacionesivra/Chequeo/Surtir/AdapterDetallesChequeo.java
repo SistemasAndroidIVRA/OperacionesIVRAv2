@@ -16,8 +16,8 @@ import java.util.List;
 
 public class AdapterDetallesChequeo extends RecyclerView.Adapter<AdapterDetallesChequeo.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView material,cantidad,unidad;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView material, cantidad, unidad;
         ImageView estado;
         boolean correcto;
         public Context contexto;
@@ -35,14 +35,14 @@ public class AdapterDetallesChequeo extends RecyclerView.Adapter<AdapterDetalles
 
     public List<ModeloDetallesChequeo> itemsChequeos;
 
-    public AdapterDetallesChequeo(List<ModeloDetallesChequeo> listaChequeos){
-        this.itemsChequeos =listaChequeos;
+    public AdapterDetallesChequeo(List<ModeloDetallesChequeo> listaChequeos) {
+        this.itemsChequeos = listaChequeos;
     }
 
     @NonNull
     @Override
     public AdapterDetallesChequeo.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chequeo_detalles_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chequeo_detalles_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -58,6 +58,6 @@ public class AdapterDetallesChequeo extends RecyclerView.Adapter<AdapterDetalles
 
     @Override
     public int getItemCount() {
-        return  itemsChequeos.size();
+        return itemsChequeos.size();
     }
 }

@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
 
-import com.example.operacionesivra.MainActivity.MainActivity;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.Picking.ListapedidosPicking.BuscarNota.BuscarPedido;
 import com.example.operacionesivra.Picking.ListapedidosPicking.BuscarNota.BuscarPedidoInterface;
@@ -35,7 +32,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
     private RecyclerView recycerpedidos;
     private AdapterListaPedidos adaptador;
     List<ModeloListaPicking> pedidos = new ArrayList<>();
-    public int loadingpicking=0;
+    public int loadingpicking = 0;
     Context context;
 
     String fecha;
@@ -57,14 +54,14 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
 
     /*--------------------------------------ToolBar-----------------------------------------------*/
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.piking, menu);
-        return  true;
+        return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.fechapiking:
                 escogerdia();
                 break;
@@ -76,38 +73,37 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
     }
 
     //Lanza un dialog
-    public void escogerpedido(){
+    public void escogerpedido() {
         BuscarPedido buscarPedido = new BuscarPedido();
-        buscarPedido.show(getSupportFragmentManager(),null);
+        buscarPedido.show(getSupportFragmentManager(), null);
     }
 
     //Lanza un datepicker
-    public void escogerdia(){
+    public void escogerdia() {
         String date = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
-        int mYear = Integer.parseInt(date.substring(0,4));
-        int mMonth = Integer.parseInt(date.substring(5,7));
-        int mDay = Integer.parseInt(date.substring(8,10));
+        int mYear = Integer.parseInt(date.substring(0, 4));
+        int mMonth = Integer.parseInt(date.substring(5, 7));
+        int mDay = Integer.parseInt(date.substring(8, 10));
         DatePickerDialog mDatePicker;
         mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                selectedmonth = selectedmonth+1;
+                selectedmonth = selectedmonth + 1;
                 System.out.println("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
-                if(selectedmonth<10){
-                    fecha="" + selectedyear + "-0" + selectedmonth + "-" + selectedday;
+                if (selectedmonth < 10) {
+                    fecha = "" + selectedyear + "-0" + selectedmonth + "-" + selectedday;
                     adaptador = new AdapterListaPedidos(cargardatosfecha(fecha));
                     recycerpedidos.setAdapter(adaptador);
                     //loadingListaDeReportes = 1;
                     //loadinglauncher();
-                }
-                else {
-                    fecha="" + selectedyear + "-" + selectedmonth + "-" + selectedday;
+                } else {
+                    fecha = "" + selectedyear + "-" + selectedmonth + "-" + selectedday;
                     adaptador = new AdapterListaPedidos(cargardatosfecha(fecha));
                     recycerpedidos.setAdapter(adaptador);
                     //loadingListaDeReportes = 1;
                     //loadinglauncher();
                 }
             }
-        }, mYear, mMonth- 1, mDay);
+        }, mYear, mMonth - 1, mDay);
         mDatePicker.setCancelable(false);
         mDatePicker.setTitle("Seleccione la fecha que desea consultar");
         mDatePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -122,7 +118,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
 
     //Actualiza la lista segun el dia seleccionado
     public List<ModeloListaPicking> cargardatosfecha(String fecha) {
-        if(!pedidos.isEmpty()){
+        if (!pedidos.isEmpty()) {
             pedidos.clear();
             recycerpedidos.getAdapter().notifyDataSetChanged();
         }
@@ -131,7 +127,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
         String idTemporal = null;
         try {
             Statement qu = conexion.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_fecha '"+fecha+"'");
+            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_fecha '" + fecha + "'");
             while (r.next()) {
                 if (!r.getString(1).equals(idTemporal)) {
                     pedidos.add(new ModeloListaPicking(r.getString("Referencia")
@@ -144,7 +140,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
             new MaterialAlertDialogBuilder(context)
                     .setCancelable(false)
                     .setTitle("Error")
-                    .setMessage("Lo sentimos, error:\n"+e.toString()+"\nPor favor, reporte la falla con el area de sistemas")
+                    .setMessage("Lo sentimos, error:\n" + e.toString() + "\nPor favor, reporte la falla con el area de sistemas")
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -158,7 +154,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
 
     //Actualiza la lista segun el numero de pedido
     public List<ModeloListaPicking> cargardatospedido(String pedido, String serie) {
-        if(!pedidos.isEmpty()){
+        if (!pedidos.isEmpty()) {
             pedidos.clear();
             recycerpedidos.getAdapter().notifyDataSetChanged();
         }
@@ -166,7 +162,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
         String idTemporal = null;
         try {
             Statement qu = conexion.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_pedido '"+pedido+"','"+serie+"'");
+            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_pedido '" + pedido + "','" + serie + "'");
             while (r.next()) {
                 if (!r.getString(1).equals(idTemporal)) {
                     pedidos.add(new ModeloListaPicking(r.getString("Referencia")
@@ -179,7 +175,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
             new MaterialAlertDialogBuilder(context)
                     .setCancelable(false)
                     .setTitle("Error")
-                    .setMessage("Lo sentimos, error:\n"+e.toString()+"\nPor favor, reporte la falla con el area de sistemas")
+                    .setMessage("Lo sentimos, error:\n" + e.toString() + "\nPor favor, reporte la falla con el area de sistemas")
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -211,7 +207,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
             new MaterialAlertDialogBuilder(context)
                     .setCancelable(false)
                     .setTitle("Error")
-                    .setMessage("Lo sentimos, error:\n"+e.toString()+"\nPor favor, reporte la falla con el area de sistemas")
+                    .setMessage("Lo sentimos, error:\n" + e.toString() + "\nPor favor, reporte la falla con el area de sistemas")
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -224,7 +220,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
     }
 
     //Lanza un mensaje de cargando mientras realiza la obtencion de todos los pedidos dispobles para picking
-    public void cargardatos(){
+    public void cargardatos() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -245,7 +241,7 @@ public class ListaPicking extends AppCompatActivity implements BuscarPedidoInter
     //Obtiene los datos del dialog usando una interface
     @Override
     public void obtenerDatos(String codigo, String serie) {
-        adaptador = new AdapterListaPedidos(cargardatospedido(codigo,serie));
+        adaptador = new AdapterListaPedidos(cargardatospedido(codigo, serie));
         recycerpedidos.setAdapter(adaptador);
     }
 }

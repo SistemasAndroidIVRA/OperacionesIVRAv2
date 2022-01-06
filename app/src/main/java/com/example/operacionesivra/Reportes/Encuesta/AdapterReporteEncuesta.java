@@ -17,26 +17,26 @@ public class AdapterReporteEncuesta extends RecyclerView.Adapter<AdapterReporteE
     public List<ModeloReporteEncuesta> reporteencuesta;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView r1,r2,r3,r4,r5cal1,r5cal2,r5cal3,r5cal4,r5cal5,r5cal6,r7,r8,r9,recomendacion,usuario,empresa,fecha;
+        public TextView r1, r2, r3, r4, r5cal1, r5cal2, r5cal3, r5cal4, r5cal5, r5cal6, r7, r8, r9, recomendacion, usuario, empresa, fecha;
         String idencuesta;
 
         //encargado de llenar la vista con los datod que se le envien
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            r1=itemView.findViewById(R.id.r1_REI);
-            r2=itemView.findViewById(R.id.r2_REI);
-            r3=itemView.findViewById(R.id.r3_REI);
-            r4=itemView.findViewById(R.id.r4_REI);
-            r5cal1=itemView.findViewById(R.id.r5cal1_REI);
-            r5cal2=itemView.findViewById(R.id.r5cal2_REI);
-            r5cal3=itemView.findViewById(R.id.r5cal3_REI);
-            r5cal4=itemView.findViewById(R.id.r5cal4_REI);
-            r5cal5=itemView.findViewById(R.id.r5cal5_REI);
-            r5cal6=itemView.findViewById(R.id.r5cal6_REI);
-            r7=itemView.findViewById(R.id.r7_REI);
-            r8=itemView.findViewById(R.id.r8_REI);
-            r9=itemView.findViewById(R.id.r9_REI);
-            usuario=itemView.findViewById(R.id.usuario_REI);
+            r1 = itemView.findViewById(R.id.r1_REI);
+            r2 = itemView.findViewById(R.id.r2_REI);
+            r3 = itemView.findViewById(R.id.r3_REI);
+            r4 = itemView.findViewById(R.id.r4_REI);
+            r5cal1 = itemView.findViewById(R.id.r5cal1_REI);
+            r5cal2 = itemView.findViewById(R.id.r5cal2_REI);
+            r5cal3 = itemView.findViewById(R.id.r5cal3_REI);
+            r5cal4 = itemView.findViewById(R.id.r5cal4_REI);
+            r5cal5 = itemView.findViewById(R.id.r5cal5_REI);
+            r5cal6 = itemView.findViewById(R.id.r5cal6_REI);
+            r7 = itemView.findViewById(R.id.r7_REI);
+            r8 = itemView.findViewById(R.id.r8_REI);
+            r9 = itemView.findViewById(R.id.r9_REI);
+            usuario = itemView.findViewById(R.id.usuario_REI);
             empresa = itemView.findViewById(R.id.empresa_REI);
             fecha = itemView.findViewById(R.id.fecha_REI);
             recomendacion = itemView.findViewById(R.id.recomendacion_REI);
@@ -53,7 +53,7 @@ public class AdapterReporteEncuesta extends RecyclerView.Adapter<AdapterReporteE
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reportes_encuesta_item, parent, false);
-       ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
@@ -81,7 +81,7 @@ public class AdapterReporteEncuesta extends RecyclerView.Adapter<AdapterReporteE
 
     @Override
     public int getItemCount() {
-        return  reporteencuesta.size();
+        return reporteencuesta.size();
     }
 
 }

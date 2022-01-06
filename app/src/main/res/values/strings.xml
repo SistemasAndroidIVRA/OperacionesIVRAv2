@@ -166,6 +166,15 @@
     <string name="hola">hola</string>
     <string name="title_activity_monitoreo__mapa">Map</string>
     <string name="title_activity_detalles_monitoreo">Map</string>
+    <string name="title_activity_inventario_amenu_ajuste">inventario_a_menu_ajuste</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>
 

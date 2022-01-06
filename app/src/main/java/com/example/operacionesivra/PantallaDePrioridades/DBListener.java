@@ -1,21 +1,12 @@
 package com.example.operacionesivra.PantallaDePrioridades;
 
 import android.content.Context;
-import android.os.Build;
-import android.os.Handler;
-import android.os.StrictMode;
 
-import androidx.annotation.RequiresApi;
+import com.example.operacionesivra.Services.Conexion;
 
-import com.example.operacionesivra.R;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class DBListener extends Thread implements Runnable {
@@ -26,7 +17,7 @@ public class DBListener extends Thread implements Runnable {
         this.mContext = mContext;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //Crea un ciclo para actualizar la tabla
     public void run() {
         do {
             if (estadodelaDB()) {
@@ -35,15 +26,15 @@ public class DBListener extends Thread implements Runnable {
             }
             ((PantalladePrioridades) mContext).cambiodevistas();
             try {
-                Thread.sleep(numeroRandom(10000, 15000));
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         } while (contadorgeneral >= 0);
     }
 
-    public void terminar(){
-        contadorgeneral=-1;
+    public void terminar() {
+        contadorgeneral = -1;
     }
 
     private static int numeroRandom(int min, int max) {
@@ -52,25 +43,13 @@ public class DBListener extends Thread implements Runnable {
         return randomNum;
     }
 
-    public Connection conexiondbImplementacion() {
-        Connection conexion = null;
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.1.252:1433;databaseName=Orange;user=leonel;password=;");
-            System.out.println("correcto base");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return conexion;
-    }
-
+    //Comprueba los pedidos actuales
     public boolean estadodelaDB() {
         boolean pruebasx = false;
+        Conexion c = new Conexion();
         int contador = 0;
         try {
-            Statement statement = conexiondbImplementacion().createStatement();
+            Statement statement = c.conexiondbImplementacion().createStatement();
             ResultSet resultSet = statement.executeQuery("Execute PMovil_Prioridades");
             while (resultSet.next()) {
                 contador++;

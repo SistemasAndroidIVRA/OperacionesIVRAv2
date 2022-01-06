@@ -1,7 +1,7 @@
 package com.example.operacionesivra.Chequeo.Surtir;
 
 public class ModeloDetallesChequeo {
-    String Material,Cantidad,Unidad;
+    String Material, Cantidad, Unidad;
     int estado;
     Boolean correcto;
 
@@ -29,7 +29,7 @@ public class ModeloDetallesChequeo {
         return estado;
     }
 
-    public  boolean getCorrecto(){
+    public boolean getCorrecto() {
         return correcto;
     }
 }

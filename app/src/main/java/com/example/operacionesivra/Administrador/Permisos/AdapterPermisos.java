@@ -23,9 +23,10 @@ public class AdapterPermisos extends RecyclerView.Adapter<AdapterPermisos.ViewHo
         Switch aSwitch;
         TextView descripcion, nombrepermiso;
         Context context;
-        String usuario,idpermiso;
+        String usuario, idpermiso;
         boolean check;
 
+        //Según los permisos del usuario activa (o no) los switches
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             aSwitch = itemView.findViewById(R.id.switchp);
@@ -33,21 +34,20 @@ public class AdapterPermisos extends RecyclerView.Adapter<AdapterPermisos.ViewHo
             context = itemView.getContext();
             nombrepermiso = itemView.findViewById(R.id.nombredelpermiso);
 
-            if(!check)
+            if (!check)
                 aSwitch.setThumbResource(R.drawable.switchof);
 
             aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    for(int i = 0; i<((DetallesUsuario)context).permisos.size(); i++){
-                            if (idpermiso.equals(((DetallesUsuario) context).permisos.get(i).getIdpermiso())) {
-                                ((DetallesUsuario) context).permisos.set(i, new ModeloPermisos(((DetallesUsuario) context).permisos.get(i).getArea(), ((DetallesUsuario) context).permisos.get(i).getNombre(), ((DetallesUsuario) context).permisos.get(i).idpermiso, ((DetallesUsuario) context).permisos.get(i).getDescripcion(), ((DetallesUsuario) context).permisos.get(i).getUsuario(), isChecked));
-                            }
+                    for (int i = 0; i < ((DetallesUsuario) context).permisos.size(); i++) {
+                        if (idpermiso.equals(((DetallesUsuario) context).permisos.get(i).getIdpermiso())) {
+                            ((DetallesUsuario) context).permisos.set(i, new ModeloPermisos(((DetallesUsuario) context).permisos.get(i).getArea(), ((DetallesUsuario) context).permisos.get(i).getNombre(), ((DetallesUsuario) context).permisos.get(i).idpermiso, ((DetallesUsuario) context).permisos.get(i).getDescripcion(), ((DetallesUsuario) context).permisos.get(i).getUsuario(), isChecked));
+                        }
                     }
-                    if(!isChecked){
+                    if (!isChecked) {
                         aSwitch.setThumbResource(R.drawable.switchof);
-                    }
-                    else{
+                    } else {
                         aSwitch.setThumbResource(R.drawable.switchon);
                     }
                 }
@@ -55,20 +55,21 @@ public class AdapterPermisos extends RecyclerView.Adapter<AdapterPermisos.ViewHo
 
         }
 
-        public void permisosdelusuario(String x){
+        //Verifica los permisos del usuario
+        public void permisosdelusuario(String x) {
             Conexion c = new Conexion(context);
             try {
                 Statement s = c.conexiondbImplementacion().createStatement();
                 ResultSet r = s.executeQuery("select Movil_Permisos.IDPermiso from Movil_Usuario_permiso\n" +
                         "inner join Movil_Permisos on Movil_Permisos.IDPermiso = Movil_Usuario_permiso.IDPermiso\n" +
-                        "where Movil_Usuario_permiso.IDUsuario='"+x+"'");
-                while(r.next()) {
-                    if(r.getString("IDPermiso").equals(idpermiso)) {
+                        "where Movil_Usuario_permiso.IDUsuario='" + x + "'");
+                while (r.next()) {
+                    if (r.getString("IDPermiso").equals(idpermiso)) {
                         aSwitch.setChecked(true);
                     }
                 }
-            }catch (Exception e){
-                System.out.println("elp" +e);
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
             }
         }
 
@@ -76,13 +77,15 @@ public class AdapterPermisos extends RecyclerView.Adapter<AdapterPermisos.ViewHo
 
     List<ModeloPermisos> permisos;
 
-    public AdapterPermisos(List<ModeloPermisos> permisos){
+    public AdapterPermisos(List<ModeloPermisos> permisos) {
         this.permisos = permisos;
     }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.administrador_permisos_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.administrador_permisos_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -101,7 +104,6 @@ public class AdapterPermisos extends RecyclerView.Adapter<AdapterPermisos.ViewHo
     public int getItemCount() {
         return permisos.size();
     }
-
 
 
 }

@@ -1,25 +1,11 @@
 package com.example.operacionesivra.PantallaDePrioridades;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,32 +14,16 @@ import android.widget.DigitalClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.operacionesivra.MainActivity.MainActivity;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.lowagie.text.Cell;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.ElementListener;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfCell;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTemplate;
-import com.lowagie.text.pdf.PdfWriter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -65,9 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import harmony.java.awt.Color;
-import online.devliving.mobilevisionpipeline.FrameGraphic;
 
 public class PantalladePrioridades extends AppCompatActivity {
     Conexion conexionService = new Conexion(this);
@@ -82,7 +49,7 @@ public class PantalladePrioridades extends AppCompatActivity {
     int disparador;
     TextView reporte, fechav, vistaactual, itemstotales;
 
-    private final DBListener duckFactory = new DBListener(this);
+    private final DBListener hiloextra = new DBListener(this);
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -96,7 +63,7 @@ public class PantalladePrioridades extends AppCompatActivity {
         digitalClock = findViewById(R.id.reloj);
         vistaactual = findViewById(R.id.vistaactual);
         itemstotales = findViewById(R.id.totaldeitems);
-        duckFactory.start();
+        hiloextra.start();
         context = this;
         disparador = 2;
         hotatem = digitalClock.getText().toString();
@@ -122,7 +89,7 @@ public class PantalladePrioridades extends AppCompatActivity {
 
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
+            //Arranca el ciclo para la comprobacion de la base de datos usando un reloj
             @Override
             public void afterTextChanged(Editable s) {
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -140,13 +107,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                         guardado.setTime(actual.getTime() + 5);
                         comprobarentrega();
                     }
-                    /*
-                    String horaactual = digitalClock.getText() + "";
-                    if (!disparadorautomatico) {
-                        crearreporteautomatico(horaactual);
-                    }
-
-                     */
 
                 } catch (ParseException e) {
                     Toast.makeText(context, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -185,7 +145,7 @@ public class PantalladePrioridades extends AppCompatActivity {
                 if (posicion == 0) {
                     idTemporal = r.getString(2);
                     if (r.getString("Entrega").substring(0, 10).equals(fecha)) {
-                        String horaactual=new SimpleDateFormat("HH: mm: ss", Locale.getDefault()).format(new Date());
+                        String horaactual = new SimpleDateFormat("HH: mm: ss", Locale.getDefault()).format(new Date());
                         listadepedidos.add(new ModeloPantalladePrioridades(r.getString("Cliente"), r.getString("Pedido"), r.getString("Entrega").substring(11, 16).concat(" Hrs"), r.getString("Referencia"), R.drawable.hoy, r.getString("Entrega").substring(0, 10), "On Time"));
                         //listadepedidos.add(new ModeloPantalladePrioridades(r.getString("Cliente"), r.getString("Pedido"), tiemportranscurrido(r.getString("Entrega").substring(11, 16)+":00",horaactual), r.getString("Referencia"), R.drawable.hoy, r.getString("Entrega").substring(0, 10), "On Time"));
                         //registrodeldia.add(new ModeloReportePrioridades(r.getString("Cliente"), r.getString("Pedido"), r.getString("Entrega").substring(11, 16).concat(" Hrs"), r.getString("Referencia"), r.getString("Entrega").substring(0, 10), "-", "NO", "-"));
@@ -215,7 +175,7 @@ public class PantalladePrioridades extends AppCompatActivity {
         return listadepedidos;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //Comprueba la hora para modificar la notificacion
     public void comprobarentrega() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date actual;
@@ -224,11 +184,11 @@ public class PantalladePrioridades extends AppCompatActivity {
             for (int i = 0; i < listadepedidos.size(); i++) {
                 base = format.parse(listadepedidos.get(i).getEntrega().replace("Hrs", ""));
                 actual = format.parse(digitalClock.getText().toString());
-                long diff = base.getTime() - actual.getTime();//as given
+                long diff = actual.getTime() - base.getTime();//as given
                 final long hours = TimeUnit.MILLISECONDS.toHours(diff);
                 final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-
-
+                System.out.println("Minutos: "+minutes);
+                System.out.println("Segundos: "+hours);
                 if (listadepedidos.get(i).getFecha().equals(fecha)) {
                     if (minutes > 20 && listadepedidos.get(i).getReferencia().equals("R3")) {
                         listadepedidos.set(i, new ModeloPantalladePrioridades(listadepedidos.get(i).getCliente(), listadepedidos.get(i).getPedido()
@@ -236,13 +196,11 @@ public class PantalladePrioridades extends AppCompatActivity {
                         Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(i);
                         final int finalI = i;
                         runOnUiThread(new Runnable() {
-                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void run() {
                                 MediaPlayer mp = MediaPlayer.create(context, R.raw.error_text_message);
                                 mp.start();
                                 Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI);
-                                //cumbia(listadepedidos.get(finalI).getPedido() + "Retrasado");
                             }
                         });
                     }
@@ -251,7 +209,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                                 , listadepedidos.get(i).getEntrega(), listadepedidos.get(i).getReferencia(), listadepedidos.get(i).getDia(), listadepedidos.get(i).getFecha(), "On Time"));
                         final int finalI1 = i;
                         runOnUiThread(new Runnable() {
-                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void run() {
                                 Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI1);
@@ -264,7 +221,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                         Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(i);
                         final int finalI = i;
                         runOnUiThread(new Runnable() {
-                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void run() {
                                 Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI);
@@ -279,7 +235,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                             Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(i);
                             final int finalI = i;
                             runOnUiThread(new Runnable() {
-                                @RequiresApi(api = Build.VERSION_CODES.O)
                                 @Override
                                 public void run() {
                                     Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI);
@@ -292,7 +247,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                             Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(i);
                             final int finalI = i;
                             runOnUiThread(new Runnable() {
-                                @RequiresApi(api = Build.VERSION_CODES.O)
                                 @Override
                                 public void run() {
                                     Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI);
@@ -306,7 +260,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                     Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(i);
                     final int finalI = i;
                     runOnUiThread(new Runnable() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
                             Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemChanged(finalI);
@@ -315,10 +268,11 @@ public class PantalladePrioridades extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error: "+e);
+            System.out.println("Error: " + e);
         }
     }
 
+    //Añade nuevos pedidos
     public void añadiralalista() {
         int contador = 0;
         String hour = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -377,7 +331,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                     final String pedido = r.getString("Pedido");
                     final String referencia = r.getString("Referencia");
                     runOnUiThread(new Runnable() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
                             Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemInserted(contador2);
@@ -386,11 +339,9 @@ public class PantalladePrioridades extends AppCompatActivity {
                     if (referencia.equals("R3")) {
                         MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                         mp.start();
-                        //cumbia("Nuevo erre 3, numero" + pedido.substring(2));
                     } else {
                         MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                         mp.start();
-                        //cumbia("Nuevo pedido");
                     }
                 }
                 contador++;
@@ -400,6 +351,7 @@ public class PantalladePrioridades extends AppCompatActivity {
         }
     }
 
+    //cuando un pedido es surtido o cancelado este lo saca de lista
     public void elimarlista() {
         String hour = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         try {
@@ -430,7 +382,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                     listadepedidos.remove(i);
                     final int finalI = i;
                     runOnUiThread(new Runnable() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
                             Objects.requireNonNull(listadeprioridades.getAdapter()).notifyItemRemoved(finalI);
@@ -438,7 +389,6 @@ public class PantalladePrioridades extends AppCompatActivity {
                     });
                     MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                     mp.start();
-                    //cumbia("Pedido " + pedido.substring(2) + " Entregado");
                 }
             }
         } catch (SQLException e) {
@@ -497,6 +447,7 @@ public class PantalladePrioridades extends AppCompatActivity {
         }
     }
 
+    //Actualiza el recycler para cambiar de vistas
     public void eleguirtipodepedido(List<ModeloPantalladePrioridades> list, final String itemactual) {
         final List<ModeloPantalladePrioridades> actual = list;
         runOnUiThread(new Runnable() {
@@ -513,6 +464,7 @@ public class PantalladePrioridades extends AppCompatActivity {
         });
     }
 
+    //--------------------Vacian el recycler y muestran la nueva informacion------------------------
     public List<ModeloPantalladePrioridades> todoslospedidos() {
         List<ModeloPantalladePrioridades> r3 = new ArrayList<>();
         for (int i = 0; i < listadepedidos.size(); i++) {
@@ -595,8 +547,9 @@ public class PantalladePrioridades extends AppCompatActivity {
         terminar();
     }
 
+    //Termina el siclo infinito
     public void terminar() {
-        duckFactory.terminar();
+        hiloextra.terminar();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();

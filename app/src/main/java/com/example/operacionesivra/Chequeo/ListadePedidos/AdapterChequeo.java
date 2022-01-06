@@ -23,8 +23,8 @@ import java.util.List;
 
 public class AdapterChequeo extends RecyclerView.Adapter<AdapterChequeo.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView pedido,cliente,referencia,ruta,fecha,estado;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView pedido, cliente, referencia, ruta, fecha, estado;
         String serie;
         CardView card;
         public Context contexto;
@@ -44,18 +44,12 @@ public class AdapterChequeo extends RecyclerView.Adapter<AdapterChequeo.ViewHold
             intent = new Intent(contexto, DetallesChequeo.class);
             intent2 = new Intent(contexto, CrearReporte.class);
 
-            if(estado.getText().toString().equals("Pendiente")) {
-                estado.setTextColor(Color.parseColor("#DD2C2B"));
-            }
-
-
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(contexto instanceof ListadeChequeo) {
+                    if (contexto instanceof ListadeChequeo) {
                         itemselecionado();
-                    }
-                    else{
+                    } else {
                         itemselecionadoreporte();
                     }
                 }
@@ -64,21 +58,22 @@ public class AdapterChequeo extends RecyclerView.Adapter<AdapterChequeo.ViewHold
 
         }
 
-        public void itemselecionado(){
+        //Confirma y envia las credenciales necesarias para el chequeo
+        public void itemselecionado() {
             new MaterialAlertDialogBuilder(contexto)
                     .setCancelable(false)
                     .setTitle("Confirmación")
-                    .setMessage("Comenzar revisión del pedido "+pedido.getText())
+                    .setMessage("Comenzar revisión del pedido " + pedido.getText())
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent.putExtra("pedidoChequeo",pedido.getText());
-                            intent.putExtra("serieChequeo",serie);
-                            intent.putExtra("clienteChequeo",cliente.getText());
-                            intent.putExtra("referenciaChequeo",referencia.getText());
+                            intent.putExtra("pedidoChequeo", pedido.getText());
+                            intent.putExtra("serieChequeo", serie);
+                            intent.putExtra("clienteChequeo", cliente.getText());
+                            intent.putExtra("referenciaChequeo", referencia.getText());
                             contexto.startActivity(intent);
-                            if(contexto instanceof ListadeChequeo) {
-                                ((ListadeChequeo)contexto).finish();
+                            if (contexto instanceof ListadeChequeo) {
+                                ((ListadeChequeo) contexto).finish();
                             }
                         }
                     })
@@ -91,21 +86,22 @@ public class AdapterChequeo extends RecyclerView.Adapter<AdapterChequeo.ViewHold
                     .show();
         }
 
-        public void itemselecionadoreporte(){
+        //Muestra mensaje para el inicio del reporte
+        public void itemselecionadoreporte() {
             new MaterialAlertDialogBuilder(contexto)
                     .setCancelable(false)
                     .setTitle("Confirmación")
-                    .setMessage("Comenzar revisión del pedido "+pedido.getText())
+                    .setMessage("Comenzar revisión del pedido " + pedido.getText())
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent2.putExtra("pedidoChequeo",pedido.getText());
-                            intent2.putExtra("serieChequeo",serie);
-                            intent2.putExtra("clienteChequeo",cliente.getText());
-                            intent2.putExtra("referenciaChequeo",referencia.getText());
+                            intent2.putExtra("pedidoChequeo", pedido.getText());
+                            intent2.putExtra("serieChequeo", serie);
+                            intent2.putExtra("clienteChequeo", cliente.getText());
+                            intent2.putExtra("referenciaChequeo", referencia.getText());
                             contexto.startActivity(intent2);
-                            if(contexto instanceof ListaChequeoTerminado) {
-                                ((ListaChequeoTerminado)contexto).finish();
+                            if (contexto instanceof ListaChequeoTerminado) {
+                                ((ListaChequeoTerminado) contexto).finish();
 
                             }
                         }
@@ -123,14 +119,14 @@ public class AdapterChequeo extends RecyclerView.Adapter<AdapterChequeo.ViewHold
 
     public List<ModeloListaChequeo> listaChequeos;
 
-    public AdapterChequeo(List<ModeloListaChequeo> listaChequeos){
-        this.listaChequeos =listaChequeos;
+    public AdapterChequeo(List<ModeloListaChequeo> listaChequeos) {
+        this.listaChequeos = listaChequeos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chequeo_lista_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chequeo_lista_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

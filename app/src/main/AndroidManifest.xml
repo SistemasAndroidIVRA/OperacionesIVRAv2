@@ -16,21 +16,66 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Ubicaciones.Ubicacaiones"/>
+        <activity
+            android:name=".Inventarios.Vistas.AjusteInventario.InventarioNuevoAjuste"
+            android:exported="true" />
+        <activity
+            android:name=".Inventarios.Vistas.AjusteInventario.AjusteMateriales"
+            android:exported="true" />
+        <activity
+            android:name=".Inventarios.Vistas.AjusteInventario.SolicitudAjuste"
+            android:exported="true" />
+        <activity
+            android:name=".Inventarios.Vistas.AjusteInventario.InventarioAjuste"
+            android:exported="true" />
+        <activity
+            android:name=".PantallaRecepcion.administrar.RecepcionAdministrarVideos"
+            android:exported="true" />
+        <activity
+            android:name=".Minuta.Vistas.MinutaReunionRegistro"
+            android:exported="true" />
+        <activity
+            android:name=".Minuta.Vistas.MinutaReunionDetalle"
+            android:exported="true" />
+        <activity
+            android:name=".Minuta.Vistas.MinutaConsultarMinutas"
+            android:exported="true" />
+        <activity
+            android:name=".Inventarios.Vistas.EnProceso.DetallesProceso.InventarioAEnProcesosDetalle"
+            android:exported="true" />
+        <activity android:name=".Inventarios.Vistas.EnHistorico.DetallesHistorico.InventarioAEnHistoricosDetalle" />
+        <activity android:name=".Inventarios.Vistas.EnHistorico.InventariosEnHistorico" />
+        <activity android:name=".Inventarios.Vistas.EnProceso.InventariosEnProceso" />
+        <activity android:name=".Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones" />
+        <activity android:name=".Inventarios.Vistas.InventariosRegistro" /> <!-- Minuta -->
+        <activity android:name=".Minuta.Vistas.MinutaMenu" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCyvWIGohTMdVWfPiC3I7jTpionX6J3OG0" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
 
-        <activity android:name=".Monitoreo.Detalles.DetallesMonitoreo" android:label="@string/title_activity_detalles_monitoreo" />
+        <activity android:name=".Minuta.Principal.MinutaPrincipal" />
+        <activity android:name=".Inventarios.Vistas.InventariosMenu" />
+        <activity android:name=".Ubicaciones.Ubicacaiones" />
+        <activity
+            android:name=".Monitoreo.Detalles.DetallesMonitoreo"
+            android:label="@string/title_activity_detalles_monitoreo" />
         <activity android:name=".Administrador.Permisos.DetallesUsuario" />
         <activity android:name=".Administrador.Administrador" />
         <activity android:name=".MainActivity.Login" />
-        <activity android:name=".Monitoreo.Monitoreo_Mapa" android:label="@string/title_activity_monitoreo__mapa" />
-        <activity android:name=".Monitoreo.Monitoreo" />
+        <activity
+            android:name=".Monitoreo.Monitoreo_Mapa"
+            android:label="@string/title_activity_monitoreo__mapa" />
         <activity android:name=".Reportes.AuxiliarPorProducto.AuxiliarPorProducto" />
         <activity android:name=".Reportes.Inventario.InventarioActual.InventarioActual" />
         <activity android:name=".Reportes.Inventario.InventariosCerrados.ReporteInventariosCerrados" />
@@ -45,6 +90,8 @@
         <activity android:name=".PantallaRecepcion.PantallaDeRecepcion" />
         <activity android:name=".PantallaDePrioridades.PantalladePrioridades" />
         <activity android:name=".Inventario.InventariosCerrados.Inventarioscerrados" />
+        <activity android:name=".Inventario.InventariosHistoricos.Inventario_InventariosHistoricos" />
+        <activity android:name=".Inventario.InventariosHistoricos.DetallesHistoricos.Detalles_Historicos" />
         <activity android:name=".Inventario.ConteosPausa.Pausa" />
         <activity android:name=".Inventario.Inventario" />
         <activity
@@ -58,6 +105,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCyvWIGohTMdVWfPiC3I7jTpionX6J3OG0" />
     </application>
 
 </manifest>

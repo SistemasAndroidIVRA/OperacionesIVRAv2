@@ -45,7 +45,7 @@ public class ModeloContenidodelPedido {
         return codPedido;
     }
 
-    public String getCodimpreso(){
+    public String getCodimpreso() {
         return codimpreso;
     }
 

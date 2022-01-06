@@ -44,7 +44,9 @@ public class Modelotag implements Parcelable {
         return ubicaión;
     }
 
-    public String getAsignada(){return asignada;}
+    public String getAsignada() {
+        return asignada;
+    }
 
     public void setAsignada(String asignada) {
         this.asignada = asignada;

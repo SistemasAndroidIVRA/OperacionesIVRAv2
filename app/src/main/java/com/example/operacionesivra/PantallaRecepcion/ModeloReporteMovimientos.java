@@ -1,7 +1,7 @@
 package com.example.operacionesivra.PantallaRecepcion;
 
 public class ModeloReporteMovimientos {
-    String pedido,cliente,estado,referencia,horadelmovimiento1,horadelmovimiento2,horadelmovimiento3,horadelmovimiento4;
+    String pedido, cliente, estado, referencia, horadelmovimiento1, horadelmovimiento2, horadelmovimiento3, horadelmovimiento4;
 
     public ModeloReporteMovimientos(String pedido, String cliente, String estado, String referencia, String horadelmovimiento1, String horadelmovimiento2, String horadelmovimiento3, String horadelmovimiento4) {
         this.pedido = pedido;

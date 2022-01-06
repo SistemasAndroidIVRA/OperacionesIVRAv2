@@ -24,7 +24,7 @@ public class ListadeChequeo extends AppCompatActivity {
     public RecyclerView recycerpedidos;
     public AdapterChequeo adaptador;
     List<ModeloListaChequeo> pedidosachecar = new ArrayList<>();
-    public int loadingListaChequeo=0;
+    public int loadingListaChequeo = 0;
     Context context;
 
     @Override
@@ -34,7 +34,7 @@ public class ListadeChequeo extends AppCompatActivity {
         recycerpedidos = findViewById(R.id.recyclerchequeo);
         recycerpedidos.setLayoutManager(new LinearLayoutManager(this));
         context = this;
-        loadingListaChequeo=1;
+        loadingListaChequeo = 1;
         loadinglauncher();
 
         findViewById(R.id.reportes).setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,8 @@ public class ListadeChequeo extends AppCompatActivity {
 
     }
 
-    public void cargardatosbackgroud(){
+    //carga los datos en un hilo diferente
+    public void cargardatosbackgroud() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -63,18 +64,19 @@ public class ListadeChequeo extends AppCompatActivity {
         loading.execute();
     }
 
+    //Obtiene los pedidos que ya han sido vendidos para su chequeo
     public List<ModeloListaChequeo> obtenerpedidosdbImplementacion() {
         //Guarda el id del pedido de manera momentanea para determinar si el mismo pedido ya exite
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("Execute PMovil_PedidosParaChequeo 5");
             while (r.next()) {
-                    pedidosachecar.add(new ModeloListaChequeo(r.getString("Numero")
-                            , r.getString("Cliente"), r.getString("Referencia")
-                            , r.getString("Ruta"), r.getString("Fechalimite"), "Pendiente",r.getString("Serie")));
+                pedidosachecar.add(new ModeloListaChequeo(r.getString("Numero")
+                        , r.getString("Cliente"), r.getString("Referencia")
+                        , r.getString("Ruta"), r.getString("Fechalimite"), "Pendiente", r.getString("Serie")));
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error: " + e);
         }
         return pedidosachecar;
     }

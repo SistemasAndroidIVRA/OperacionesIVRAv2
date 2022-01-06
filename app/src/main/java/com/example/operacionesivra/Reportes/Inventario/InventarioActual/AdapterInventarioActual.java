@@ -31,7 +31,7 @@ public class AdapterInventarioActual extends RecyclerView.Adapter<AdapterInventa
         LinearLayout inventario;
         Context context;
 
-        //encargado de llenar la vista con los datod que se le envien
+        //encargado de llenar la vista con los datos que se le envien
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -53,23 +53,6 @@ public class AdapterInventarioActual extends RecyclerView.Adapter<AdapterInventa
                 }
             });
 
-            /*
-            inventario = itemView.findViewById(R.id.inventarioactual_item);
-            inventario.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!fechaultimoinventariogamma.getText().toString().equals("No Realizado")){
-                        System.out.println("Datos perrones "+folio);
-                        Intent intent = new Intent(context, ReporteInventarioTerminado.class);
-                        intent.putExtra("folio",folio);
-                        context.startActivity(intent);
-                    }else{
-                        Toast.makeText(context, "No hay un inventario de este item", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-             */
         }
     }
 
@@ -93,7 +76,6 @@ public class AdapterInventarioActual extends RecyclerView.Adapter<AdapterInventa
         holder.comprometido.setText(inventarioscerrados.get(position).getComprometido());
         holder.fisico.setText(inventarioscerrados.get(position).getFisico());
         holder.disponible.setText(inventarioscerrados.get(position).getDisponible());
-
     }
 
 

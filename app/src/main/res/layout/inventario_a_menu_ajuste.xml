@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#98AAEC"
+    tools:context=".Inventarios.Vistas.AjusteInventario.InventarioAjuste">
+
+    <LinearLayout
+        android:id="@+id/linearLayout46"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Inventario"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRegresarMenuAjuste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:icon="@drawable/icono_regresar" />
+
+            <TextView
+                android:id="@+id/textView365"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ajustes de inventario"
+                android:textAlignment="center"
+                android:textColor="@color/Recepcion"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView367"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="IVRA"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            app:srcCompat="@drawable/correcto" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout46"
+        app:layout_constraintVertical_bias="0.45">
+
+        <Button
+            android:id="@+id/btnAjusteMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="80sp"
+            android:drawableRight="@drawable/icono_entrar"
+            android:text="Ajuste de materiales" />
+
+        <Button
+            android:id="@+id/btnSolicitudAjuste"
+            android:layout_width="match_parent"
+            android:layout_height="80sp"
+            android:drawableRight="@drawable/icono_entrar"
+            android:text="Solicitudes de ajuste" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

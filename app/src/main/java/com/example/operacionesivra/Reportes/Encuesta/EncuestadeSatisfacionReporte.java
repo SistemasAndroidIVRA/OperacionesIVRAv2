@@ -2,7 +2,6 @@ package com.example.operacionesivra.Reportes.Encuesta;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.example.operacionesivra.Inventario.InventariosCerrados.AdapterInventariosCerrados;
-import com.example.operacionesivra.Inventario.InventariosCerrados.ModeloInventariosCerrados;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
 import com.github.mikephil.charting.animation.Easing;
@@ -60,8 +56,8 @@ import java.util.Locale;
 public class EncuestadeSatisfacionReporte extends AppCompatActivity {
     Conexion conexion;
     List<ModeloReporteEncuesta> itemsdechequeo = new ArrayList<>();
-    PieChart r5p1,r5p2,r5p3,r5p4,r5p5,r5p6;
-    BarChart barChartr1,barChartr2,barChartr3,barChartr4, barChartr7, barChartr8, barChartr9;
+    PieChart r5p1, r5p2, r5p3, r5p4, r5p5, r5p6;
+    BarChart barChartr1, barChartr2, barChartr3, barChartr4, barChartr7, barChartr8, barChartr9;
     private AdapterReporteEncuesta adaptador;
     private RecyclerView recycerpedidos;
     View encuestasindividual;
@@ -116,44 +112,46 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.filtros, menu);
         menu.findItem(R.id.materialfiltro).setVisible(false);
         menu.findItem(R.id.fechafiltro).setVisible(false);
         menu.findItem(R.id.materialactualfiltro).setVisible(false);
-        return  true;
+        return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.exportarfiltro){
-            crearreporte(entriesr1,entriesr2,entriesr3,entriesr4,entriesr7,entriesr8,entriesr9);
+        if (id == R.id.exportarfiltro) {
+            crearreporte(entriesr1, entriesr2, entriesr3, entriesr4, entriesr7, entriesr8, entriesr9);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void slideUp(View view){
+    //Desplaza el contenido de manera automatica
+    public void slideUp(View view) {
         recycerpedidos = findViewById(R.id.recyclerreporteencuesta);
         recycerpedidos.setLayoutManager(new LinearLayoutManager(this));
-        adaptador = new AdapterReporteEncuesta(fechaloca());
+        adaptador = new AdapterReporteEncuesta(obtenerfecha());
         recycerpedidos.setAdapter(adaptador);
         view.setVisibility(View.VISIBLE);
         TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                view.getHeight(),  // fromYDelta
-                0);                // toYDelta
+                0,
+                0,
+                view.getHeight(),
+                0);
         animate.setDuration(500);
         animate.setFillAfter(true);
         view.startAnimation(animate);
     }
 
-    public void slideDown(View view){
+    //Desplaza el contenido de manera automatica
+    public void slideDown(View view) {
         view.setVisibility(View.INVISIBLE);
         TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                0,                 // fromYDelta
+                0,
+                0,
+                0,
                 view.getHeight()); // toYDelta
         animate.setDuration(500);
         animate.setFillAfter(true);
@@ -173,95 +171,96 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         isUp = !isUp;
     }
 
-    public List<ModeloReporteEncuesta> fechaloca(){
+    public List<ModeloReporteEncuesta> obtenerfecha() {
         try {
             Statement qu = conexion.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("select * from Movil_CalificacionesEncuesta order by fechayhora DESC  ");
             while (r.next()) {
-                itemsdechequeo.add(new ModeloReporteEncuesta(r.getString("r1"),r.getString("r2"),r.getString("r3")
-                        ,r.getString("r4"),r.getString("r5cal1"),r.getString("r5cal2"),r.getString("r5cal3")
-                        ,r.getString("r5cal4"),r.getString("r5cal5"),r.getString("r5cal6"),r.getString("r7")
-                        ,r.getString("r8"),r.getString("r9"),r.getString("recomendacion"),r.getString("usuario")
-                        ,r.getString("empresa"),r.getString("fechayhora"),r.getString("idencuesta")));
+                itemsdechequeo.add(new ModeloReporteEncuesta(r.getString("r1"), r.getString("r2"), r.getString("r3")
+                        , r.getString("r4"), r.getString("r5cal1"), r.getString("r5cal2"), r.getString("r5cal3")
+                        , r.getString("r5cal4"), r.getString("r5cal5"), r.getString("r5cal6"), r.getString("r7")
+                        , r.getString("r8"), r.getString("r9"), r.getString("recomendacion"), r.getString("usuario")
+                        , r.getString("empresa"), r.getString("fechayhora"), r.getString("idencuesta")));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return itemsdechequeo;
     }
 
-    public void obtenerdatos(){
-        int contador=0;
-        int contador1=0;
-        int contador2=0;
-        int contador3=0;
-        int contador4=0;
+    //Obtiene la lectura de los datos
+    public void obtenerdatos() {
+        int contador = 0;
+        int contador1 = 0;
+        int contador2 = 0;
+        int contador3 = 0;
+        int contador4 = 0;
         ArrayList<PieEntry> entriesr51 = new ArrayList();
         ArrayList<PieEntry> entriesr52 = new ArrayList();
         ArrayList<PieEntry> entriesr53 = new ArrayList();
         ArrayList<PieEntry> entriesr54 = new ArrayList();
         ArrayList<PieEntry> entriesr55 = new ArrayList();
         ArrayList<PieEntry> entriesr56 = new ArrayList();
-        int contador7=0;
-        int contador8=0;
-        int contador9=0;
+        int contador7 = 0;
+        int contador8 = 0;
+        int contador9 = 0;
 
         try {
             Statement qu = conexion.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("Execute PMovil_ReporteEncuesta");
             while (r.next()) {
-                switch (r.getString("Tipo")){
+                switch (r.getString("Tipo")) {
                     case "r1":
-                        entriesr1.add(new BarEntry(contador1,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr1.add(new BarEntry(contador1, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador1++;
                         break;
                     case "r2":
-                        entriesr2.add(new BarEntry(contador2,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr2.add(new BarEntry(contador2, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador2++;
                         break;
                     case "r3":
-                        entriesr3.add(new BarEntry(contador3,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr3.add(new BarEntry(contador3, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador3++;
                         break;
                     case "r4":
-                        entriesr4.add(new BarEntry(contador4, Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr4.add(new BarEntry(contador4, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador4++;
                         break;
                     case "r5cal1":
-                        entriesr51.add(new PieEntry(Float.parseFloat(r.getString("Total")) ,r.getString("Respuesta")));
+                        entriesr51.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r5cal2":
-                        entriesr52.add(new PieEntry(Float.parseFloat(r.getString("Total")) ,r.getString("Respuesta")));
+                        entriesr52.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r5cal3":
-                        entriesr53.add(new PieEntry(Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr53.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r5cal4":
-                        entriesr54.add(new PieEntry(Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr54.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r5cal5":
-                        entriesr55.add(new PieEntry(Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr55.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r5cal6":
-                        entriesr56.add(new PieEntry(Float.parseFloat(r.getString("Total")) ,r.getString("Respuesta")));
+                        entriesr56.add(new PieEntry(Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         break;
                     case "r7":
-                        entriesr7.add(new BarEntry(contador7,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr7.add(new BarEntry(contador7, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador7++;
                         break;
                     case "r8":
-                        entriesr8.add(new BarEntry(contador8,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr8.add(new BarEntry(contador8, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador8++;
                         break;
                     case "r9":
-                        entriesr9.add(new BarEntry(contador9,Float.parseFloat(r.getString("Total")),r.getString("Respuesta")));
+                        entriesr9.add(new BarEntry(contador9, Float.parseFloat(r.getString("Total")), r.getString("Respuesta")));
                         contador9++;
                         break;
                 }
 
                 contador++;
             }
-            respuesta1(entriesr1,contador);
+            respuesta1(entriesr1, contador);
             respuesta2(entriesr2);
             respuesta3(entriesr3);
             respuesta4(entriesr4);
@@ -276,23 +275,22 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             respuesta9(entriesr9);
 
         } catch (Exception e) {
-            System.out.println(e+"a ver a ver");
         }
-
 
 
     }
 
-    public void respuesta1( ArrayList<BarEntry> entradas, int itemstotales){
+    //Cargan una grafica con los datos obtenidos de la base de datos
+    public void respuesta1(ArrayList<BarEntry> entradas, int itemstotales) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         System.out.println(entradas.get(0).getData().toString());
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -302,7 +300,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr1.getDescription().setEnabled(false);
         barChartr1.getXAxis().setEnabled(false);
         barChartr1.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr1.setTouchEnabled(false);
         barChartr1.animateY(2500);
         barChartr1.invalidate();
@@ -331,16 +329,17 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
   */
 
     }
-    public void respuesta2( ArrayList<BarEntry> entradas){
+
+    public void respuesta2(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         System.out.println(entradas.get(0).getData().toString());
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -351,22 +350,23 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr2.getDescription().setEnabled(false);
         barChartr2.getXAxis().setEnabled(false);
         barChartr2.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr2.setTouchEnabled(false);
         barChartr2.animateY(2500);
         barChartr2.invalidate();
 
     }
-    public void respuesta3(  ArrayList<BarEntry> entradas){
+
+    public void respuesta3(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         System.out.println(entradas.get(0).getData().toString());
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -377,21 +377,22 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr3.getDescription().setEnabled(false);
         barChartr3.getXAxis().setEnabled(false);
         barChartr3.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr3.setTouchEnabled(false);
         barChartr3.animateY(2500);
         barChartr3.invalidate();
 
     }
-    public void respuesta4(   ArrayList<BarEntry> entradas){
+
+    public void respuesta4(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -402,18 +403,18 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr4.getDescription().setEnabled(false);
         barChartr4.getXAxis().setEnabled(false);
         barChartr4.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr4.setTouchEnabled(false);
         barChartr4.animateY(2500);
         barChartr4.invalidate();
 
     }
 
-    public void respuesta5p1(ArrayList entradas){
+    public void respuesta5p1(ArrayList entradas) {
         try {
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -423,7 +424,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p1.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -446,15 +447,16 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             l.setYOffset(0f);
             l.setTextSize(10f);
             */
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void respuesta5p2(  ArrayList entradas){
+
+    public void respuesta5p2(ArrayList entradas) {
         try {
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -464,7 +466,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p2.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -476,16 +478,17 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p2.invalidate();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void respuesta5p3( ArrayList entradas){
+
+    public void respuesta5p3(ArrayList entradas) {
         try {
 
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -495,7 +498,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p3.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -506,16 +509,17 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             r5p3.animateY(2000, Easing.EaseInOutQuad);
 
             r5p3.invalidate();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void respuesta5p4(  ArrayList entradas){
+
+    public void respuesta5p4(ArrayList entradas) {
         try {
 
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -525,7 +529,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p4.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -536,16 +540,17 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             r5p4.animateY(2000, Easing.EaseInOutQuad);
 
             r5p4.invalidate();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void respuesta5p5( ArrayList entradas){
+
+    public void respuesta5p5(ArrayList entradas) {
         try {
 
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -555,7 +560,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p5.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -566,16 +571,17 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             r5p5.animateY(2000, Easing.EaseInOutQuad);
 
             r5p5.invalidate();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void respuesta5p6( ArrayList entradas){
+
+    public void respuesta5p6(ArrayList entradas) {
         try {
 
-            PieDataSet dataSet = new  PieDataSet(entradas, "");
+            PieDataSet dataSet = new PieDataSet(entradas, "");
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setColors(new int[]{R.color.color3 , R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6} , this);
+            dataSet.setColors(new int[]{R.color.color3, R.color.color4, R.color.color2, R.color.color4, R.color.color5, R.color.color6}, this);
             dataSet.setDrawIcons(false);
             dataSet.setSliceSpace(3f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -585,7 +591,7 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
 
             r5p6.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -596,21 +602,21 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             r5p6.animateY(2000, Easing.EaseInOutQuad);
 
             r5p6.invalidate();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public void respuesta7(  ArrayList<BarEntry> entradas){
+    public void respuesta7(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         System.out.println(entradas.get(0).getData().toString());
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -621,20 +627,21 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr7.getDescription().setEnabled(false);
         barChartr7.getXAxis().setEnabled(false);
         barChartr7.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr7.setTouchEnabled(false);
         barChartr7.animateY(2500);
         barChartr7.invalidate();
 
     }
-    public void respuesta8( ArrayList<BarEntry> entradas){
+
+    public void respuesta8(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -645,20 +652,21 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr8.getDescription().setEnabled(false);
         barChartr8.getXAxis().setEnabled(false);
         barChartr8.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr8.setTouchEnabled(false);
         barChartr8.animateY(2500);
         barChartr8.invalidate();
     }
-    public void respuesta9(   ArrayList<BarEntry> entradas){
+
+    public void respuesta9(ArrayList<BarEntry> entradas) {
         BarDataSet bardataset;
-        bardataset= new BarDataSet(entradas, "");
+        bardataset = new BarDataSet(entradas, "");
 
         bardataset.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
-                String valores = barEntry.getData().toString()+" ("+barEntry.getY()+")";
-                return  valores.replace(".0","");
+                String valores = barEntry.getData().toString() + " (" + barEntry.getY() + ")";
+                return valores.replace(".0", "");
             }
         });
         bardataset.setValueTextSize(10);
@@ -669,19 +677,20 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
         barChartr9.getDescription().setEnabled(false);
         barChartr9.getXAxis().setEnabled(false);
         barChartr9.setData(data); // set the data and list of labels into chart
-        bardataset.setColors(new int[]{R.color.color1 , R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10} , this);
+        bardataset.setColors(new int[]{R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10}, this);
         barChartr9.setTouchEnabled(false);
         barChartr9.animateY(2500);
         barChartr9.invalidate();
 
     }
 
-    public void crearreporte(ArrayList<BarEntry> p1, ArrayList<BarEntry> p2, ArrayList<BarEntry> p3, ArrayList<BarEntry> p4,ArrayList<BarEntry> p7,ArrayList<BarEntry> p8,ArrayList<BarEntry> p9) {
+    //Genera el pedf correspondiente
+    public void crearreporte(ArrayList<BarEntry> p1, ArrayList<BarEntry> p2, ArrayList<BarEntry> p3, ArrayList<BarEntry> p4, ArrayList<BarEntry> p7, ArrayList<BarEntry> p8, ArrayList<BarEntry> p9) {
         Document documento = new Document();
-        String horafin= new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String horafin = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         try {
-            File file = crearFichero("Reporte de encuesta: "+date+" a las "+horafin+".pdf");
+            File file = crearFichero("Reporte de encuesta: " + date + " a las " + horafin + ".pdf");
             FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
             documento.setPageSize(PageSize.LEGAL);
             PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
@@ -755,9 +764,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla2 = new PdfPTable(2);
             tabla2.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Cuánto tiempo lleva utilizando nuestros productos?");
-            for(int i =0;i<p1.size();i++){
-                tabla2.addCell(p1.get(i).getData()+"");
-                tabla2.addCell(p1.get(i).getY()+"");
+            for (int i = 0; i < p1.size(); i++) {
+                tabla2.addCell(p1.get(i).getData() + "");
+                tabla2.addCell(p1.get(i).getY() + "");
             }
             tabla.addCell(tabla2);
             tabla.addCell(p1g);
@@ -769,9 +778,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla4 = new PdfPTable(2);
             tabla4.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Cómo conoció nuestra empresa?");
-            for(int i =0;i<p2.size();i++){
-                tabla4.addCell(p2.get(i).getData()+"");
-                tabla4.addCell(p2.get(i).getY()+"");
+            for (int i = 0; i < p2.size(); i++) {
+                tabla4.addCell(p2.get(i).getData() + "");
+                tabla4.addCell(p2.get(i).getY() + "");
             }
             tabla.addCell(tabla4);
             tabla.addCell(p2g);
@@ -783,9 +792,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla5 = new PdfPTable(2);
             tabla5.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Con qué frecuencia visita la empresa?");
-            for(int i =0;i<p3.size();i++){
-                tabla5.addCell(p3.get(i).getData()+"");
-                tabla5.addCell(p3.get(i).getY()+"");
+            for (int i = 0; i < p3.size(); i++) {
+                tabla5.addCell(p3.get(i).getData() + "");
+                tabla5.addCell(p3.get(i).getY() + "");
             }
             tabla.addCell(tabla5);
             tabla.addCell(p3g);
@@ -797,9 +806,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla6 = new PdfPTable(2);
             tabla6.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("En comparación con la competencia, los productos IVRA son:");
-            for(int i =0;i<p4.size();i++){
-                tabla6.addCell(p4.get(i).getData()+"");
-                tabla6.addCell(p4.get(i).getY()+"");
+            for (int i = 0; i < p4.size(); i++) {
+                tabla6.addCell(p4.get(i).getData() + "");
+                tabla6.addCell(p4.get(i).getY() + "");
             }
             tabla.addCell(tabla6);
             tabla.addCell(p4g);
@@ -825,9 +834,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla7 = new PdfPTable(2);
             tabla7.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Ha recomendado nuestra empresa a otras personas?");
-            for(int i =0;i<p7.size();i++){
-                tabla7.addCell(p7.get(i).getData()+"");
-                tabla7.addCell(p7.get(i).getY()+"");
+            for (int i = 0; i < p7.size(); i++) {
+                tabla7.addCell(p7.get(i).getData() + "");
+                tabla7.addCell(p7.get(i).getY() + "");
             }
             tabla.addCell(tabla7);
             tabla.addCell(p7g);
@@ -839,9 +848,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla8 = new PdfPTable(2);
             tabla8.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Recomendaría nuestros productos a otras personas?");
-            for(int i =0;i<p8.size();i++){
-                tabla8.addCell(p8.get(i).getData()+"");
-                tabla8.addCell(p8.get(i).getY()+"");
+            for (int i = 0; i < p8.size(); i++) {
+                tabla8.addCell(p8.get(i).getData() + "");
+                tabla8.addCell(p8.get(i).getY() + "");
             }
             tabla.addCell(tabla8);
             tabla.addCell(p8g);
@@ -853,9 +862,9 @@ public class EncuestadeSatisfacionReporte extends AppCompatActivity {
             PdfPTable tabla9 = new PdfPTable(2);
             tabla9.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             tablatitulos.addCell("¿Volvería a comprar nuestros productos?");
-            for(int i =0;i<p8.size();i++){
-                tabla9.addCell(p9.get(i).getData()+"");
-                tabla9.addCell(p9.get(i).getY()+"");
+            for (int i = 0; i < p8.size(); i++) {
+                tabla9.addCell(p9.get(i).getData() + "");
+                tabla9.addCell(p9.get(i).getY() + "");
             }
             tabla.addCell(tabla9);
             tabla.addCell(p9g);

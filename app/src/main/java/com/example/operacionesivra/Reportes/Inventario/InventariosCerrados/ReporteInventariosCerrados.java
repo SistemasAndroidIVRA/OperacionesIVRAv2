@@ -16,8 +16,6 @@ import android.os.Environment;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,8 +27,6 @@ import com.example.operacionesivra.R;
 import com.example.operacionesivra.Reportes.SelectordeReportes;
 import com.example.operacionesivra.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -123,45 +119,6 @@ public class ReporteInventariosCerrados extends AppCompatActivity {
     }
     /*--------------------------------------Funciones---------------------------------------------*/
 
-    /*
-    //Crea una lista que almacena los datos de la base de manera automatica (Implementacion)
-    public List<ModeloInventariosCerrados> obtenerpedidosdbImplementacion() {
-        //Guarda el id del pedido de manera momentanea para determinar si el mismo pedido ya exite
-        String idTemporal=null;
-        try {
-            Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery(Execute PMovil_Item_Scaneados fecha");
-            while (r.next()) {
-                if(!r.getString(7).equals(idTemporal)){
-                    inventariosterminados.add(new ModeloInventariosCerrados(r.getString("Fecha"),r.getString("Usuario"),r.getString("Material"),r.getString("total_registrado"),r.getString("Stock_Total"),r.getString("Folio"),r.getString("Almacen")));
-                }
-                idTemporal=r.getString(7);
-            }
-        } catch (Exception e) {
-            new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_MaterialComponents)
-                    .setCancelable(false)
-                    .setTitle("Error al conectar con el servidor...")
-                    .setMessage("Por favor verifique que existe una conexión wi-fi y presione 'Reintentar'.\n Si esto no soluciona el problema cierre la aplicacción y reportelo en el área de desarrollo.\n"+e)
-
-                    .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            obtenerpedidosdbImplementacion();
-                        }
-                    })
-                    .setIcon(R.drawable.snakerojo)
-                    .setNegativeButton("Cerrar App", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .show();
-        }
-        return inventariosterminados;
-    }
-
-     */
     //Crea una lista que almacena los datos de la base de manera automatica (Implementacion)
     public List<ModeloInventariosCerrados> obtenerpedidosdbImplementacion() {
         //Guarda el id del pedido de manera momentanea para determinar si el mismo pedido ya exite
@@ -181,7 +138,7 @@ public class ReporteInventariosCerrados extends AppCompatActivity {
                 inventariosterminados.add(new ModeloInventariosCerrados(r.getString("Fecha")
                         ,r.getString("Usuario"),r.getString("Material")
                         ,r.getString("total_registrado"),r.getString("StockTotal")
-                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen")));
+                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen"), 0));
             }
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_MaterialComponents)
@@ -228,7 +185,7 @@ public class ReporteInventariosCerrados extends AppCompatActivity {
                 inventariosterminados.add(new ModeloInventariosCerrados(r.getString("Fecha")
                         ,r.getString("Usuario"),r.getString("Material")
                         ,r.getString("total_registrado"),r.getString("StockTotal")
-                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen")));
+                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen"), 0));
             }
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_MaterialComponents)
@@ -274,7 +231,7 @@ public class ReporteInventariosCerrados extends AppCompatActivity {
                 inventariosterminados.add(new ModeloInventariosCerrados(r.getString("Fecha")
                         ,r.getString("Usuario"),r.getString("Material")
                         ,r.getString("total_registrado"),r.getString("StockTotal")
-                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen")));
+                        ,diferencia+"",r.getString("Folio"),r.getString("Almacen"), 0));
             }
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_MaterialComponents)
@@ -312,7 +269,7 @@ public class ReporteInventariosCerrados extends AppCompatActivity {
                 inventariosterminados.add(new ModeloInventariosCerrados(r.getString("Familia")
                         ,r.getString("Producto"),r.getString("Almacen")
                         ,r.getString("Unidad"),r.getString("Cantidad")
-                        ,r.getString("CodProducto"),r.getString("Ubicacion"),r.getString("Almacen")));
+                        ,r.getString("CodProducto"),r.getString("Ubicacion"),r.getString("Almacen"),0));
             }
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_MaterialComponents)

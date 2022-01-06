@@ -1,4 +1,5 @@
 package com.example.operacionesivra.Monitoreo.Detalles;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;

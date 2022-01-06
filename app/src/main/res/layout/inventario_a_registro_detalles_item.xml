@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewInvItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearInvItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblNumRegistro"
+                        android:layout_width="25sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="f" />
+
+                    <TextView
+                        android:id="@+id/lblMaterialRegistro"
+                        android:layout_width="250sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/lblInvItemCantidad"
+                        android:layout_width="25sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="t"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/lblInvItemContenido"
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/lblInvItemContTotal"
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/lblInvItemUbicacion"
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgInvItemEstadoEtiqueta"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/correcto" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgInvItemEstadoMercancia"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            app:srcCompat="@drawable/correcto" />
+
+                        <TextView
+                            android:id="@+id/lblInvItemIncidencias"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxInvRegistro"
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icono_eliminar_rojo"
+                        android:textColor="#000" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lineaSeparadora"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/button_color_text"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

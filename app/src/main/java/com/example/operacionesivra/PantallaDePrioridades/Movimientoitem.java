@@ -10,11 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.operacionesivra.R;
 
 public class Movimientoitem extends DialogFragment {
-    TextView pedido,cliente,hora,movimiento,referencia;
-    String pedidos,clientes,horas,movimientos,referencias;
+    TextView pedido, cliente, hora, movimiento, referencia;
+    String pedidos, clientes, horas, movimientos, referencias;
     ImageView imagenpedido;
 
     @Nullable
@@ -43,13 +44,13 @@ public class Movimientoitem extends DialogFragment {
         llenar();
     }
 
-    public void llenar(){
+    public void llenar() {
         pedido.setText(pedidos);
         cliente.setText(clientes);
         hora.setText(horas);
         movimiento.setText(movimientos);
         referencia.setText(referencias);
-        switch (movimientos){
+        switch (movimientos) {
             case "Nuevo pedido":
                 imagenpedido.setImageResource(R.drawable.nuevopedidoxml);
                 break;

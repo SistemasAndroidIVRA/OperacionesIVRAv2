@@ -33,10 +33,9 @@ public class BuscarPedido extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String Spedido = pedido.getText().toString().trim().substring(1);
-                String Sserie = pedido.getText().toString().trim().substring(0,1);
-                System.out.println(Spedido+" "+Sserie);
-                if (!Spedido.isEmpty() && !Sserie.isEmpty() ) {
-                    buscarPedidoInterface.obtenerDatos(Spedido,Sserie);
+                String Sserie = pedido.getText().toString().trim().substring(0, 1);
+                if (!Spedido.isEmpty() && !Sserie.isEmpty()) {
+                    buscarPedidoInterface.obtenerDatos(Spedido, Sserie);
                     dismiss();
 
                 }

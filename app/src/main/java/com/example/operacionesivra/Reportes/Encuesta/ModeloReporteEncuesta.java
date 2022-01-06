@@ -1,11 +1,11 @@
 package com.example.operacionesivra.Reportes.Encuesta;
 
 public class ModeloReporteEncuesta {
-    String r1,r2,r3,r4,r5cal1,r5cal2,r5cal3,r5cal4,r5cal5,r5cal6,r7,r8,r9,recomendacion,usuario,empresa,fecha,idencuesta;
+    String r1, r2, r3, r4, r5cal1, r5cal2, r5cal3, r5cal4, r5cal5, r5cal6, r7, r8, r9, recomendacion, usuario, empresa, fecha, idencuesta;
 
     public ModeloReporteEncuesta(String r1, String r2, String r3, String r4, String r5cal1
             , String r5cal2, String r5cal3, String r5cal4, String r5cal5, String r5cal6
-            , String r7, String r8, String r9, String recomendacion, String usuario,String empresa
+            , String r7, String r8, String r9, String recomendacion, String usuario, String empresa
             , String fecha, String idencuesta) {
         this.r1 = r1;
         this.r2 = r2;
@@ -94,6 +94,7 @@ public class ModeloReporteEncuesta {
     public String getIdencuesta() {
         return idencuesta;
     }
+
     public String getEmpresa() {
         return empresa;
     }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.operacionesivra.Chequeo.ListadePedidos.ListadeChequeo;
 import com.example.operacionesivra.R;
@@ -36,7 +37,7 @@ import java.util.UUID;
 
 public class DetallesChequeo extends AppCompatActivity {
     TextInputEditText manual, scanner;
-    TextView cliente,pedido;
+    TextView cliente, pedido;
     String serie, referencia;
     Context context;
     String horainicio;
@@ -53,6 +54,12 @@ public class DetallesChequeo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chequeo_detalles_chequeo);
 
+        inicializar();
+
+    }
+
+    //hace funcional los text input para que el usuario no tenga que ver un teclado
+    public void inicializar() {
         //Definir y dale valor al pedido
         pedido = findViewById(R.id.pedidoChequeo);
         pedido.setText(getIntent().getStringExtra("pedidoChequeo"));
@@ -79,10 +86,10 @@ public class DetallesChequeo extends AppCompatActivity {
         scanner.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER))){
+                if ((event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER))) {
                     comprobardatos(scanner.getText().toString());
                     scanner.setText("");
-                    if(Objects.requireNonNull(scanner.getText()).toString().equals("")){
+                    if (Objects.requireNonNull(scanner.getText()).toString().equals("")) {
                         scanner.requestFocus();
                         return true;
                     }
@@ -94,12 +101,12 @@ public class DetallesChequeo extends AppCompatActivity {
         manual.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER){
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     comprobardatos(manual.getText().toString());
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(manual.getWindowToken(), 0);
                     manual.setText("");
-                    return  true;
+                    return true;
                 }
                 return false;
             }
@@ -115,34 +122,36 @@ public class DetallesChequeo extends AppCompatActivity {
         horainicio = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
     }
 
+    //Obtiene los items del pedido actual
     public List<ModeloDetallesChequeo> obtenerpedidosdbImplementacion() {
         //Guarda el id del pedido de manera momentanea para determinar si el mismo pedido ya exite
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_Productos '"+pedido.getText().toString()+"', N'"+serie+ "'");
+            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_Productos '" + pedido.getText().toString() + "', N'" + serie + "'");
             while (r.next()) {
-                itemsdechequeo.add(new ModeloDetallesChequeo(r.getString("Producto"),r.getString("Cantidad"),r.getString("Unidad"),R.drawable.noescaneado,false));
+                itemsdechequeo.add(new ModeloDetallesChequeo(r.getString("Producto"), r.getString("Cantidad"), r.getString("Unidad"), R.drawable.noescaneado, false));
             }
         } catch (Exception e) {
-            System.out.println(e+"a ver a ver");
+            System.out.println(e + "a ver a ver");
         }
         return itemsdechequeo;
     }
 
-    public void comprobardatos(String codigo){
-        boolean comprobar=false;
+    //Revisa el codigo leido y lo compara con los items a ver si forman parte del pedido
+    public void comprobardatos(String codigo) {
+        boolean comprobar = false;
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("Execute PMovil_Item_Scaneados '" + codigo + "', '01 GAMMA'");
-            if(r.next()){
-                for (int i =0;i<itemsdechequeo.size();i++){
-                    if(r.getString("Producto").equals(itemsdechequeo.get(i).getMaterial())){
-                        itemsdechequeo.set(i, new ModeloDetallesChequeo(itemsdechequeo.get(i).getMaterial(),itemsdechequeo.get(i).getCantidad(),itemsdechequeo.get(i).getUnidad(),R.drawable.correcto,true));
+            if (r.next()) {
+                for (int i = 0; i < itemsdechequeo.size(); i++) {
+                    if (r.getString("Producto").equals(itemsdechequeo.get(i).getMaterial())) {
+                        itemsdechequeo.set(i, new ModeloDetallesChequeo(itemsdechequeo.get(i).getMaterial(), itemsdechequeo.get(i).getCantidad(), itemsdechequeo.get(i).getUnidad(), R.drawable.correcto, true));
                         Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemChanged(i);
                         comprobar = true;
                     }
                 }
-                if(!comprobar){
+                if (!comprobar) {
                     new MaterialAlertDialogBuilder(this)
                             .setTitle("Error")
                             .setIcon(R.drawable.noencontrado)
@@ -156,29 +165,20 @@ public class DetallesChequeo extends AppCompatActivity {
                             .show();
                 }
             }
-        }catch (SQLException e){
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Error")
-                    .setIcon(R.drawable.noencontrado)
-                    .setMessage("El material no existe")
-                    .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .show();
+        } catch (SQLException e) {
+            Toast.makeText(context, "El material no existe", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void terminarchequeo(){
-        int contadorcorrecto=0;
-        for(int i =0;i<itemsdechequeo.size();i++){
-            if(itemsdechequeo.get(i).getCorrecto()){
+    //Termina el chequeo guardando los datos en la tabla correspondiente (Ahora esta desactivada la comprobación)
+    public void terminarchequeo() {
+        int contadorcorrecto = 0;
+        for (int i = 0; i < itemsdechequeo.size(); i++) {
+            if (itemsdechequeo.get(i).getCorrecto()) {
                 contadorcorrecto++;
             }
         }
-        if(contadorcorrecto!=itemsdechequeo.size()){
+        if (contadorcorrecto != itemsdechequeo.size()) {
             subirtablaDB();
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Todo listo!")
@@ -192,8 +192,7 @@ public class DetallesChequeo extends AppCompatActivity {
                         }
                     })
                     .show();
-        }
-        else{
+        } else {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Datos Incompletos")
                     .setIcon(R.drawable.noescaneado)
@@ -208,12 +207,14 @@ public class DetallesChequeo extends AppCompatActivity {
         }
     }
 
-    public void terminado(){
+    //Termina la ejecición de la actividad
+    public void terminado() {
         Intent i = new Intent(this, ListadeChequeo.class);
         startActivity(i);
         finish();
     }
 
+    //Lanza un mensaje de confimación al avandonar la activity
     @Override
     public void onBackPressed() {
         new MaterialAlertDialogBuilder(this)
@@ -234,6 +235,7 @@ public class DetallesChequeo extends AppCompatActivity {
                 .show();
     }
 
+    //Sube la informacion a la base de datos
     public void subirtablaDB() {
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         horafin = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
@@ -245,8 +247,8 @@ public class DetallesChequeo extends AppCompatActivity {
                     var.setString(3, cliente.getText().toString());
                     var.setString(4, referencia);
                     var.setString(5, date);
-                    var.setString(6,horainicio);
-                    var.setString(7,horafin);
+                    var.setString(6, horainicio);
+                    var.setString(7, horafin);
                     var.execute();
                 } catch (SQLException e) {
                     System.out.println("Error" + e);

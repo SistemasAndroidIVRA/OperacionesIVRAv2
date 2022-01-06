@@ -24,7 +24,7 @@
                 android:id="@+id/registrado"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/nuevopedidoxml" />
+                app:srcCompat="@drawable/cliente" />
 
             <ProgressBar
                 android:id="@+id/progressBarregistrado"
@@ -32,15 +32,15 @@
                 android:layout_width="181dp"
                 android:layout_height="20dp"
                 android:indeterminate="false"
-                android:progressTint="#82D52A" />
+                android:progressTint="@color/Inventario" />
 
             <ImageView
                 android:id="@+id/aprobado"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/pedidoaprobado" />
+                android:backgroundTint="@color/divider"
+                app:srcCompat="@drawable/pedido_registrado" />
 
             <ProgressBar
                 android:id="@+id/progressBaraprobado"
@@ -48,15 +48,15 @@
                 android:layout_width="181dp"
                 android:layout_height="20dp"
                 android:indeterminate="false"
-                android:progressTint="#82D52A" />
+                android:progressTint="@color/Inventario" />
 
             <ImageView
                 android:id="@+id/revisado"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/pedidorevisado" />
+                android:backgroundTint="@color/divider"
+                app:srcCompat="@drawable/pedido_autorizado" />
 
             <ProgressBar
                 android:id="@+id/progressBarrevisado"
@@ -64,15 +64,15 @@
                 android:layout_width="181dp"
                 android:layout_height="20dp"
                 android:indeterminate="false"
-                android:progressTint="#82D52A" />
+                android:progressTint="@color/Inventario" />
 
             <ImageView
                 android:id="@+id/surtido"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/surtiendo" />
+                android:backgroundTint="@color/divider"
+                app:srcCompat="@drawable/surtiendo_pedido" />
 
             <ProgressBar
                 android:id="@+id/progressBarsurtido"
@@ -80,15 +80,15 @@
                 android:layout_width="181dp"
                 android:layout_height="20dp"
                 android:indeterminate="false"
-                android:progressTint="#82D52A" />
+                android:progressTint="@color/Inventario" />
 
             <ImageView
                 android:id="@+id/nota"
                 android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFFFF"
-                app:srcCompat="@drawable/generarnota" />
+                android:backgroundTint="@color/divider"
+                app:srcCompat="@drawable/generando_nota" />
         </LinearLayout>
 
         <Space
@@ -105,14 +105,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cliente: "
-                android:textSize="18sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/clienterecepcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="18sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <Space

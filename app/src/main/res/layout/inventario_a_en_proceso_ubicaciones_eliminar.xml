@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Inve">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/Inventario"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+
+                <TextView
+                    android:id="@+id/textView244"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Depuración de ubicaciones "
+                    android:textAlignment="center"
+                    android:textColor="@color/Recepcion"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView342"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ubicaciones encontradas: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/secondary_text" />
+
+                <TextView
+                    android:id="@+id/lblTotalUbicacionesNulas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="@color/negativo"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/Inventario"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView340"
+                            android:layout_width="20sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="#"
+                            android:textAlignment="center"
+                            android:textColor="@color/Recepcion"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView336"
+                            android:layout_width="150sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Ubicación"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView338"
+                            android:layout_width="150sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Cantidad"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView339"
+                            android:layout_width="150sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Depurar"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerUbicacionesDepuradas"
+                        android:layout_width="match_parent"
+                        android:layout_height="200sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnUbicacionDepurar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Picking"
+                    android:drawableRight="@drawable/icono_quitar"
+                    android:text="DEPURAR" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

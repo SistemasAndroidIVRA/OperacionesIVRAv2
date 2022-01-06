@@ -1,7 +1,7 @@
 package com.example.operacionesivra.Monitoreo;
 
 public class ModeloTipoUsuario {
-    String tipo,idusuario;
+    String tipo, idusuario;
 
     public ModeloTipoUsuario(String tipo, String idusuario) {
         this.tipo = tipo;

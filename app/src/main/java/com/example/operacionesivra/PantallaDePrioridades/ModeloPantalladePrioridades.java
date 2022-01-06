@@ -1,10 +1,10 @@
 package com.example.operacionesivra.PantallaDePrioridades;
 
 public class ModeloPantalladePrioridades {
-    String cliente,pedido,entrega,referencia,fecha,estadotexto;
+    String cliente, pedido, entrega, referencia, fecha, estadotexto;
     int dia;
 
-    public ModeloPantalladePrioridades(String cliente, String pedido, String entrega, String referencia,int dia,String fecha, String estadotexto) {
+    public ModeloPantalladePrioridades(String cliente, String pedido, String entrega, String referencia, int dia, String fecha, String estadotexto) {
         this.cliente = cliente;
         this.pedido = pedido;
         this.entrega = entrega;
@@ -30,15 +30,15 @@ public class ModeloPantalladePrioridades {
         return referencia;
     }
 
-    public int getDia(){
-        return  dia;
+    public int getDia() {
+        return dia;
     }
 
-    public String getFecha(){
+    public String getFecha() {
         return fecha;
     }
 
-    public String getEstadotexto(){
+    public String getEstadotexto() {
         return estadotexto;
     }
 }

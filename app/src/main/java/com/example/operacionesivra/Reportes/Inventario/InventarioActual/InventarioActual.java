@@ -111,7 +111,7 @@ public class InventarioActual extends AppCompatActivity implements InventarioAct
             this.startActivity(intent);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
-            Toast.makeText(this, "El dispositivo no tiene instalada la aplicación", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "El dispositivo no tiene instalada la aplicación", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -192,7 +192,7 @@ public class InventarioActual extends AppCompatActivity implements InventarioAct
                 opciones[i]=materiales.get(i).getNombre();
             }
         }catch (Exception e){
-            System.out.println("nel"+ e);
+            System.out.println("Error: "+ e);
         }
         return opciones;
     }
@@ -236,6 +236,7 @@ public class InventarioActual extends AppCompatActivity implements InventarioAct
                 .show();
     }
 
+    //obtiene los datos segun el almacen
     public ArrayList<BarEntry> enviardatos(String almacen){
         ArrayList<BarEntry> entries = new ArrayList<>();
         for(int i =0;i<inventariosterminados.size();i++){
@@ -275,6 +276,7 @@ public class InventarioActual extends AppCompatActivity implements InventarioAct
 
     }
 
+    //Muestra la suma total de cada almacen
     public void sumartotales(){
         float fisicot=0;
         float comprometidot=0;

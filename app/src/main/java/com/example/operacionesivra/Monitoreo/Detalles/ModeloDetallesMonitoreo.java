@@ -1,7 +1,7 @@
 package com.example.operacionesivra.Monitoreo.Detalles;
 
 public class ModeloDetallesMonitoreo {
-    String idubicaion,idusuario,latitud,longitud,fechahora;
+    String idubicaion, idusuario, latitud, longitud, fechahora;
 
     public ModeloDetallesMonitoreo(String idubicaion, String idusuario, String latitud, String longitud, String fechahora) {
         this.idubicaion = idubicaion;

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion "29.0.2"
 
     defaultConfig {
         applicationId "com.example.operacionesivra"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -19,6 +19,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
     }
     configurations.all { exclude group: 'com.android.support', module: 'support-v8' }
 }
@@ -40,6 +47,8 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

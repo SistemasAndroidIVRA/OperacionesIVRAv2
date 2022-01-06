@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Inventarios.Vistas.AjusteInventario.InventarioNuevoAjuste">
+
+    <LinearLayout
+        android:id="@+id/linearLayout47"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Inventario"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnRegresarNuevoAjuste"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:icon="@drawable/icono_regresar" />
+
+        <TextView
+            android:id="@+id/textView369"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Nuevo ajuste"
+            android:textAlignment="center"
+            android:textColor="@color/Recepcion"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView371"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="IVRA"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout47"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView346"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Serie: "
+                    android:textColor="@color/secondary_text" />
+
+                <Spinner
+                    android:id="@+id/spinnerSerie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView350"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Almacén: "
+                    android:textColor="@color/secondary_text" />
+
+                <Spinner
+                    android:id="@+id/spinnerAlmacen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView351"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Obs1: "
+                    android:textColor="@color/secondary_text" />
+
+                <Spinner
+                    android:id="@+id/spinnerObs1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView352"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Obs2: "
+                    android:textColor="@color/secondary_text" />
+
+                <Spinner
+                    android:id="@+id/spinnerObs2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView353"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Producto: "
+                    android:textColor="@color/secondary_text" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/txtProductoAutocompletado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:completionThreshold="1"
+                    android:hint="Teclear el producto"
+                    android:singleLine="true"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView354"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unidad: "
+                    android:textColor="@color/secondary_text" />
+
+                <Spinner
+                    android:id="@+id/spinnerUnidadMedida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView355"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cantidad"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondary_text"
+                        android:textColorHint="@color/secondary_text"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtCantidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="0.0"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondary_text"
+                        android:textColorHint="@color/button_color_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView376"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contenido p/u"
+                        android:textColor="@color/secondary_text"
+                        android:textColorHint="@color/secondary_text"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtContenido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="0.0"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/button_color_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <Button
+                android:id="@+id/btnAgregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar +" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Inventario"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView356"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Número"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView357"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Código"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView358"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Producto"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView359"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Unidad"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView360"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Cantidad"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerAjustes"
+                            android:layout_width="match_parent"
+                            android:layout_height="250sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAceptarAjuste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/color2"
+                    android:drawableRight="@drawable/icono_aceptar"
+                    android:text="Guardar" />
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnEliminarAjuste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Picking"
+                    android:drawableRight="@drawable/icono_eliminar"
+                    android:text="Eliminar" />
+
+                <Space
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView378"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cont. Tot: "
+                    android:textColor="@color/secondary_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblContTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0.0"
+                    android:textColor="@color/color3"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

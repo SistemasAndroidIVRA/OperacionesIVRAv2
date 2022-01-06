@@ -52,7 +52,7 @@ public class EditarRegistroPicking extends DialogFragment {
 
 
         materialT.setText(material);
-        cantidad.setText(contenido+"");
+        cantidad.setText(contenido + "");
 
         view.findViewById(R.id.editarAceptar).setOnClickListener(new View.OnClickListener() {
             @Override

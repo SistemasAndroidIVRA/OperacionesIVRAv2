@@ -25,7 +25,7 @@ public class AdapterConteos_pausa extends RecyclerView.Adapter<AdapterConteos_pa
         Context context;
         CardView cardView;
         TextView fecha, material, usuario, contador;
-        String bloqueado,folio,stocktotal, almacen;
+        String bloqueado, folio, stocktotal, almacen;
         Intent intent;
 
         //encargado de llenar la vista con los datod que se le envien
@@ -42,7 +42,7 @@ public class AdapterConteos_pausa extends RecyclerView.Adapter<AdapterConteos_pa
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.startAnimation(AnimationUtils.loadAnimation(context,R.anim.fragment_fade_enter));
+                    v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fragment_fade_enter));
                     cardView.setOnClickListener(this);
                     confirmacion();
                 }
@@ -50,19 +50,19 @@ public class AdapterConteos_pausa extends RecyclerView.Adapter<AdapterConteos_pa
         }
 
         //Lanza un alert y en caso de aceptar envia datos para iniciar el activity
-        public void confirmacion(){
+        public void confirmacion() {
             new MaterialAlertDialogBuilder(context, R.style.MaterialAlertDialog_MaterialComponents_Title_Icon)
                     .setCancelable(false)
                     .setTitle("Elemento Seleccionado")
-                    .setMessage("¿Continuar el inventario del material "+material.getText()+" con fecha del "+fecha.getText()+"?")
+                    .setMessage("¿Continuar el inventario del material " + material.getText() + " con fecha del " + fecha.getText() + "?")
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent.putExtra("usuario",usuario.getText().toString());
+                            intent.putExtra("usuario", usuario.getText().toString());
                             intent.putExtra("folio", folio);
-                            intent.putExtra("StockTotal",stocktotal);
-                            intent.putExtra("disparadorpausa",1);
-                            intent.putExtra("almacen",almacen);
+                            intent.putExtra("StockTotal", stocktotal);
+                            intent.putExtra("disparadorpausa", 1);
+                            intent.putExtra("almacen", almacen);
                             context.startActivity(intent);
                         }
                     })
@@ -94,10 +94,10 @@ public class AdapterConteos_pausa extends RecyclerView.Adapter<AdapterConteos_pa
         holder.fecha.setText(Item.get(position).getFecha());
         holder.material.setText(Item.get(position).getMaterial());
         holder.usuario.setText(Item.get(position).getUsuario());
-        holder.bloqueado=Item.get(position).getBloqueado();
-        holder.contador.setText(Item.get(position).getContador()+"");
-        holder.folio=Item.get(position).getFolio();
-        holder.stocktotal=Item.get(position).getStocktotal();
+        holder.bloqueado = Item.get(position).getBloqueado();
+        holder.contador.setText(Item.get(position).getContador() + "");
+        holder.folio = Item.get(position).getFolio();
+        holder.stocktotal = Item.get(position).getStocktotal();
         holder.almacen = Item.get(position).getAlmacen();
     }
 

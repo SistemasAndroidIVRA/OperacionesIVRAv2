@@ -1,7 +1,7 @@
 package com.example.operacionesivra.Reportes.Chequeo;
 
 public class ModeloChequeoterminado {
-    String pedido,serie, cliente,referencia,fecha,horainicio,horafin;
+    String pedido, serie, cliente, referencia, fecha, horainicio, horafin;
 
     public ModeloChequeoterminado(String pedido, String serie, String cliente, String referencia, String fecha, String horainicio, String horafin) {
         this.pedido = pedido;

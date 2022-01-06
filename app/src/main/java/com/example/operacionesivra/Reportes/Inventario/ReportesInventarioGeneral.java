@@ -90,8 +90,8 @@ public class ReportesInventarioGeneral extends AppCompatActivity {
         }
     }
 
+    //Muestra los datos de la base de datos
     public void consulta(String fecha){
-        System.out.println("Fehca consulta "+fecha);
         this.fecha.setText( fecha);
         if(!reporte.isEmpty()){
             reporte.clear();
@@ -123,12 +123,11 @@ public class ReportesInventarioGeneral extends AppCompatActivity {
             llenar(sistema,fisico);
 
         }catch (SQLException e){
-
+            System.out.println("Error: "+e);
         }
     }
 
-    //Purebas de tabla
-
+    //llena la tabla con las entradas del sistema compararndo contra el fisico
     public void llenar(final ArrayList<BarEntry> sistema, ArrayList<BarEntry> fisico){
         //InterfazG
 
@@ -187,8 +186,6 @@ public class ReportesInventarioGeneral extends AppCompatActivity {
                 inventario.invalidate();
                 total.setText(sistema.size() + "");
     }
-
-
 
 
     public void crearPDF() {

@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class CrearReporte extends AppCompatActivity {
-    TextView pedido,tiempo,metrostotales,items;
+    TextView pedido, tiempo, metrostotales, items;
 
     String serie;
     PieChart pieChart;
@@ -81,7 +81,7 @@ public class CrearReporte extends AppCompatActivity {
         recycerpedidos.setAdapter(adaptador);
 
         pie();
-        tiemportranscurrido(getIntent().getStringExtra("horainicioChequeo"),getIntent().getStringExtra("horafinChequeo"));
+        tiemportranscurrido(getIntent().getStringExtra("horainicioChequeo"), getIntent().getStringExtra("horafinChequeo"));
     }
 
     public long tiemportranscurrido(String actuals, String bases) {
@@ -99,33 +99,33 @@ public class CrearReporte extends AppCompatActivity {
             final long seginfods = TimeUnit.MILLISECONDS.toSeconds(diffsegundos);
             segundos = seginfods;
             minutesr = minutes;
-            if(minutesr==0){
-                tiempo.setText(segundos+" Seg");
-            }else {
+            if (minutesr == 0) {
+                tiempo.setText(segundos + " Seg");
+            } else {
                 tiempo.setText(minutesr + " Min");
             }
         } catch (Exception e) {
-            System.out.println("Error" +e);
+            System.out.println("Error" + e);
         }
 
         return minutesr;
     }
 
-    public List<ModeloDetallesChequeo> llenardatos(){
-        float metrost= 0f;
+    public List<ModeloDetallesChequeo> llenardatos() {
+        float metrost = 0f;
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_Productos '"+pedido.getText()+"', N'"+serie+ "'");
+            ResultSet r = qu.executeQuery("Execute PMovil_PedidosPorSurtir_Productos '" + pedido.getText() + "', N'" + serie + "'");
             while (r.next()) {
-                itemsdechequeo.add(new ModeloDetallesChequeo(r.getString("Producto"),r.getString("Cantidad"),r.getString("Unidad"),R.drawable.correcto,false));
+                itemsdechequeo.add(new ModeloDetallesChequeo(r.getString("Producto"), r.getString("Cantidad"), r.getString("Unidad"), R.drawable.correcto, false));
                 float tem = Float.parseFloat(r.getString("Cantidad"));
-                metrost = metrost+tem;
+                metrost = metrost + tem;
             }
         } catch (Exception e) {
-            System.out.println(e+"a ver a ver");
+            System.out.println(e + "a ver a ver");
         }
-        metrostotales.setText(metrost+" Ml");
-        items.setText(itemsdechequeo.size()+"");
+        metrostotales.setText(metrost + " Ml");
+        items.setText(itemsdechequeo.size() + "");
         return itemsdechequeo;
     }
 
@@ -161,9 +161,9 @@ public class CrearReporte extends AppCompatActivity {
             ArrayList<PieEntry> NoOfEmp = new ArrayList();
             for (int i = 0; i < itemsdechequeo.size(); i++) {
                 float valor = Float.parseFloat(itemsdechequeo.get(i).getCantidad());
-                NoOfEmp.add(new PieEntry(valor,itemsdechequeo.get(i).getMaterial()));
+                NoOfEmp.add(new PieEntry(valor, itemsdechequeo.get(i).getMaterial()));
             }
-            PieDataSet dataSet = new  PieDataSet(NoOfEmp, "");
+            PieDataSet dataSet = new PieDataSet(NoOfEmp, "");
             dataSet.setValueTextColor(Color.BLACK);
             dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
             dataSet.setDrawIcons(false);
@@ -188,7 +188,7 @@ public class CrearReporte extends AppCompatActivity {
 
             pieChart.getDescription().setEnabled(false);
 
-            PieData data = new PieData( dataSet);
+            PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(10f);
             data.setValueTextColor(Color.BLACK);
@@ -262,7 +262,7 @@ public class CrearReporte extends AppCompatActivity {
         return ruta;
     }
 
-    public void salir(){
+    public void salir() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Confirmación")
                 .setIcon(R.drawable.confirmacion)

@@ -2,10 +2,8 @@ package com.example.operacionesivra.Services;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.StrictMode;
 
-import com.example.operacionesivra.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.sql.Connection;
@@ -15,8 +13,12 @@ import java.sql.SQLException;
 public class Conexion {
     public Context context;
 
-    public Conexion(Context context){
+    public Conexion(Context context) {
         this.context = context;
+        conexiondbImplementacion();
+    }
+
+    public Conexion() {
         conexiondbImplementacion();
     }
 
@@ -27,12 +29,13 @@ public class Conexion {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://ivradns.ddns.net:1433;databaseName=Orange;user=leonel;password=;");
+            //Puertos 1480/1433
+            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://ivradns.ddns.net:1480;databaseName=Orange;user=leonel;password=;");
             System.out.println("correcto base");
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.toString());
             String errorsininternet = "No existe conexión a internet. \npor favor verifique que se encuentre conectado a una red wi-fi o bien los datos de su dispositivo estén activos.";
-            if(e.toString().equals("java.sql.SQLException: Unknown server host name 'ivradns.ddns.net'.")){
+            if (e.toString().equals("java.sql.SQLException: Unknown server host name 'ivradns.ddns.net'.")) {
                 new MaterialAlertDialogBuilder(context)
                         .setCancelable(false)
                         .setTitle("Error al conectar con el servidor...")
@@ -43,12 +46,18 @@ public class Conexion {
                                 conexiondbImplementacion();
                             }
                         })
+                        .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                
+                            }
+                        })
                         .show();
-            }else{
+            } else {
                 new MaterialAlertDialogBuilder(context)
                         .setCancelable(false)
                         .setTitle("Error al conectar con el servidor...")
-                        .setMessage("Error:" +e.toString())
+                        .setMessage("Error:" + e.toString())
                         .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -1,10 +1,10 @@
 package com.example.operacionesivra.Administrador.Permisos;
 
 public class ModeloPermisos {
-    String area,nombre,idpermiso,descripcion,usuario;
+    String area, nombre, idpermiso, descripcion, usuario;
     boolean check;
 
-    public ModeloPermisos(String area, String nombre, String idpermiso, String descripcion,String usuario, boolean check) {
+    public ModeloPermisos(String area, String nombre, String idpermiso, String descripcion, String usuario, boolean check) {
         this.area = area;
         this.nombre = nombre;
         this.idpermiso = idpermiso;
@@ -29,11 +29,11 @@ public class ModeloPermisos {
         return descripcion;
     }
 
-    public String getUsuario(){
+    public String getUsuario() {
         return usuario;
     }
 
-    public boolean isCheck(){
+    public boolean isCheck() {
         return check;
     }
 }

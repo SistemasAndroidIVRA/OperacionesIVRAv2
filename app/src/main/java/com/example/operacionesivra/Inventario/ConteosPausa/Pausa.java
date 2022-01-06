@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.operacionesivra.Services.Conexion;
 import com.example.operacionesivra.MainActivity.MainActivity;
+import com.example.operacionesivra.Services.Conexion;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,7 +27,7 @@ public class Pausa extends AppCompatActivity {
 
     Conexion conexionService;
     Context context;
-    public int loadingPausa=0;
+    public int loadingPausa = 0;
     //Variables del programa
     private RecyclerView recyceritems;
     private AdapterConteos_pausa adaptador;
@@ -44,7 +44,7 @@ public class Pausa extends AppCompatActivity {
         recargar = findViewById(R.id.actualizar_pausa);
         recyceritems.setAdapter(adaptador);
 
-        loadingPausa=3;
+        loadingPausa = 3;
         loadinglauncher();
 
         //Botones
@@ -59,16 +59,16 @@ public class Pausa extends AppCompatActivity {
         recargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingPausa=1;
+                loadingPausa = 1;
                 loadinglauncher();
             }
         });
 
 
-
     }
 
-    public void cargardatos(){
+    //Carga el proceso en un hilo distinto
+    public void cargardatos() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -84,13 +84,14 @@ public class Pausa extends AppCompatActivity {
         loading.execute();
     }
 
+    //Carga los inventarios detenidos
     public ArrayList<Modelo_conteos_pausa> crearlista() {
-        int contador =1;
+        int contador = 1;
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("SELECT  DISTINCT Fecha,Bloqueado,Material,Folio, Usuario,StockTotal,Almacen FROM Movil_Reporte where Pausado='SI' order by(Folio)");
             while (r.next()) {
-                    conteosPausas.add(new Modelo_conteos_pausa(contador, r.getString(1), r.getString(2), r.getString(3), r.getString(4), r.getString(5), r.getString(6), r.getString(7)));
+                conteosPausas.add(new Modelo_conteos_pausa(contador, r.getString(1), r.getString(2), r.getString(3), r.getString(4), r.getString(5), r.getString(6), r.getString(7)));
 
                 contador++;
             }
@@ -100,8 +101,9 @@ public class Pausa extends AppCompatActivity {
         return conteosPausas;
     }
 
-    public void comprobarlista(){
-        if(conteosPausas.isEmpty()){
+    //Comprueba que exista algún inventario detenido
+    public void comprobarlista() {
+        if (conteosPausas.isEmpty()) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Vacio")
                     .setIcon(R.drawable.snakerojo)
@@ -109,7 +111,7 @@ public class Pausa extends AppCompatActivity {
                     .setPositiveButton("Recargar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            loadingPausa=1;
+                            loadingPausa = 1;
                             loadinglauncher();
                         }
                     })
@@ -125,7 +127,7 @@ public class Pausa extends AppCompatActivity {
         }
     }
 
-    public void activityMain(){
+    public void activityMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

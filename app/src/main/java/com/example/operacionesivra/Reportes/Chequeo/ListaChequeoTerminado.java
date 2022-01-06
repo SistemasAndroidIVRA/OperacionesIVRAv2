@@ -30,7 +30,7 @@ public class ListaChequeoTerminado extends AppCompatActivity {
     public RecyclerView recycerpedidos;
     public AdapterChequeoTerminado adaptador;
     List<ModeloChequeoterminado> pedidosachecar = new ArrayList<>();
-    public int loadingListaDeReportes=0;
+    public int loadingListaDeReportes = 0;
     Context context;
     String fecha;
 
@@ -46,28 +46,28 @@ public class ListaChequeoTerminado extends AppCompatActivity {
 
     }
 
-    public void escogerdia(){
+    //Lanza un date picker para hacer el filtro por fecha
+    public void escogerdia() {
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        int mYear = Integer.parseInt(date.substring(0,4));
-        int mMonth = Integer.parseInt(date.substring(5,7));
-        int mDay = Integer.parseInt(date.substring(8,10));
+        int mYear = Integer.parseInt(date.substring(0, 4));
+        int mMonth = Integer.parseInt(date.substring(5, 7));
+        int mDay = Integer.parseInt(date.substring(8, 10));
         DatePickerDialog mDatePicker;
         mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 System.out.println("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
-                selectedmonth = selectedmonth+1;
-                if(selectedmonth<10){
-                    fecha="" + selectedyear + "-0" + selectedmonth + "-" + selectedday;
+                selectedmonth = selectedmonth + 1;
+                if (selectedmonth < 10) {
+                    fecha = "" + selectedyear + "-0" + selectedmonth + "-" + selectedday;
                     loadingListaDeReportes = 1;
                     loadinglauncher();
-                }
-                else {
-                    fecha="" + selectedyear + "-" + selectedmonth + "-" + selectedday;
+                } else {
+                    fecha = "" + selectedyear + "-" + selectedmonth + "-" + selectedday;
                     loadingListaDeReportes = 1;
                     loadinglauncher();
                 }
             }
-        }, mYear, mMonth- 1, mDay);
+        }, mYear, mMonth - 1, mDay);
         mDatePicker.setCancelable(false);
         mDatePicker.setTitle("Seleccione la fecha que desea consultar");
         mDatePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -79,7 +79,7 @@ public class ListaChequeoTerminado extends AppCompatActivity {
         mDatePicker.show();
     }
 
-    public void cargardatosbackgroud(){
+    public void cargardatosbackgroud() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -94,20 +94,20 @@ public class ListaChequeoTerminado extends AppCompatActivity {
         loading.execute();
     }
 
+    //Busca los chequeos con esa fecha en la base datos
     public List<ModeloChequeoterminado> obtenerpedidosdbImplementacion(String fecha) {
-        //Guarda el id del pedido de manera momentanea para determinar si el mismo pedido ya exite
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("select * from Movil_Registros_Chequeo where fecha='"+fecha+"'");
+            ResultSet r = qu.executeQuery("select * from Movil_Registros_Chequeo where fecha='" + fecha + "'");
             while (r.next()) {
                 pedidosachecar.add(new ModeloChequeoterminado(r.getString("pedido")
                         , r.getString("serie"), r.getString("cliente")
-                        , r.getString("referencia"), r.getString("fecha"),  r.getString("horainicio"),r.getString("horafin")));
+                        , r.getString("referencia"), r.getString("fecha"), r.getString("horainicio"), r.getString("horafin")));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        if(pedidosachecar.isEmpty()){
+        if (pedidosachecar.isEmpty()) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Atencion")
                     .setMessage("No hay ningún registro con esa fecha. ¿Quiere eleguir una fecha diferente?")
@@ -129,7 +129,7 @@ public class ListaChequeoTerminado extends AppCompatActivity {
         return pedidosachecar;
     }
 
-    public void terminar(){
+    public void terminar() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();

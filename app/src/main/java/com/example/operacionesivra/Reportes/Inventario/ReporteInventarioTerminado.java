@@ -124,7 +124,7 @@ public class ReporteInventarioTerminado extends AppCompatActivity {
 
     }
 
-    //Revisado
+    //Verifica el inventario con la clave unica
     public List<ModeloDetallesItem> consultarInventario(String folio) {
         Conexion conexionService = new Conexion(this);
         float total=0f;
@@ -140,7 +140,7 @@ public class ReporteInventarioTerminado extends AppCompatActivity {
                                 ,resultado.getString("Cantidad"),resultado.getString("Total_registrado")
                                 ,resultado.getString("Ubicacion"),resultado.getString("Estado")
                                 ,R.drawable.correcto,resultado.getString("Observaciones")
-                                ,resultado.getString("Folio")));
+                                ,resultado.getString("Folio"), resultado.getString("UbicacionID"), 0));
                         totalrequerido.setText(resultado.getString("StockTotal"));
                         fecha.setText(resultado.getString("Fecha"));
                         material.setText(resultado.getString("Material"));
@@ -158,6 +158,7 @@ public class ReporteInventarioTerminado extends AppCompatActivity {
         return inventarioterminado;
     }
 
+    //Genera la grafica de pastel del inventario seleccionado
     public void pie() {
         try {
             if(Float.parseFloat(totalrequerido.getText().toString())<Float.parseFloat(totalregistrado.getText().toString())){

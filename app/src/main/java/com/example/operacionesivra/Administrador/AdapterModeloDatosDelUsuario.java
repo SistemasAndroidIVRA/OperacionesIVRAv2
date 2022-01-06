@@ -20,11 +20,12 @@ import java.util.List;
 
 public class AdapterModeloDatosDelUsuario extends RecyclerView.Adapter<AdapterModeloDatosDelUsuario.ViewHolder> {
 
-    public static class ViewHolder extends  RecyclerView.ViewHolder{
-    public TextView nombre,usuario,area, ubicacion,nombrepermiso;
-    public LinearLayout card;
-    public Context context;
-    public String idusuario;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView nombre, usuario, area, ubicacion, nombrepermiso;
+        public LinearLayout card;
+        public Context context;
+        public String idusuario;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombrecompletoa);
@@ -37,7 +38,6 @@ public class AdapterModeloDatosDelUsuario extends RecyclerView.Adapter<AdapterMo
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("id:"+ idusuario );
                     seleccionarusuario(idusuario);
                 }
             });
@@ -51,24 +51,26 @@ public class AdapterModeloDatosDelUsuario extends RecyclerView.Adapter<AdapterMo
             });
         }
 
-        public void seleccionarusuario(String id){
+        //Si el usuario existe envia el id a la pantalla de los detalles para poder modificarlos
+        public void seleccionarusuario(String id) {
             Intent i = new Intent(context, DetallesUsuario.class);
-            i.putExtra("idusuario",id);
+            i.putExtra("idusuario", id);
             context.startActivity(i);
-            if(context instanceof DetallesUsuario){
-                ((DetallesUsuario)context).finish();
+            if (context instanceof DetallesUsuario) {
+                ((DetallesUsuario) context).finish();
             }
         }
 
-        public void eliminarusuario(final String idusuario){
+        //Lanza un mensaje de confirmación tras mantener presionado la card del usuario
+        public void eliminarusuario(final String idusuario) {
             new MaterialAlertDialogBuilder(context)
                     .setTitle("Confimación")
-                    .setMessage("¿Está seguro que desea eliminar al usuario: " +nombre.getText())
+                    .setMessage("¿Está seguro que desea eliminar al usuario: " + nombre.getText())
                     .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if(context instanceof Administrador){
-                                ((Administrador)context).eliminarusuario(idusuario);
+                            if (context instanceof Administrador) {
+                                ((Administrador) context).eliminarusuario(idusuario);
                             }
                         }
                     })
@@ -85,16 +87,16 @@ public class AdapterModeloDatosDelUsuario extends RecyclerView.Adapter<AdapterMo
 
     List<ModeloDatosdeUsuarioAdministracion> usuarios;
 
-    public AdapterModeloDatosDelUsuario(List<ModeloDatosdeUsuarioAdministracion> usuarios){
+    public AdapterModeloDatosDelUsuario(List<ModeloDatosdeUsuarioAdministracion> usuarios) {
         this.usuarios = usuarios;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.administrador_lista_item,parent,false);
-       ViewHolder viewHolder = new ViewHolder(view);
-       return viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.administrador_lista_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override

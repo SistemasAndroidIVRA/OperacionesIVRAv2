@@ -18,9 +18,11 @@ public class ModeloRecepcion_Sinfiltro {
         return estado;
     }
 
-    public String getCliente(){
+    public String getCliente() {
         return cliente;
     }
 
-    public String getReferencia(){return referencia;}
+    public String getReferencia() {
+        return referencia;
+    }
 }

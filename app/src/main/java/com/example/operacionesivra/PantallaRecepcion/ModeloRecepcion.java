@@ -17,7 +17,7 @@ public class ModeloRecepcion {
         return estado;
     }
 
-    public String getCliente(){
+    public String getCliente() {
         return cliente;
     }
 }

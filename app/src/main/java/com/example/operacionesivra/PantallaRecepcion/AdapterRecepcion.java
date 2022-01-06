@@ -1,6 +1,7 @@
 package com.example.operacionesivra.PantallaRecepcion;
 
-import android.graphics.drawable.ColorDrawable;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,16 +20,15 @@ import com.example.operacionesivra.R;
 
 import java.util.List;
 
-import harmony.java.awt.Color;
 
-
-public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.ViewHolder>{
+public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-    public String estado,pedido;
-    public TextView cliente;
-    public ImageView f1,f2,f3,f4,f5;
-    public ProgressBar p1,p2,p3,p4;
+        public String estado, pedido;
+        public TextView cliente;
+        public ImageView f1, f2, f3, f4, f5;
+        public ProgressBar p1, p2, p3, p4;
+
         @RequiresApi(api = Build.VERSION_CODES.N)
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,66 +60,144 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
             });
         }
 
-
+        //Segun el itemn muestra el progreso y actuliza la imagen que lo representa
         @RequiresApi(api = Build.VERSION_CODES.N)
-        public void llenar(){
-            switch (estado){
+        public void llenar() {
+            switch (estado) {
                 case "1":
-                    f1.setImageResource(R.drawable.vpedidonuevo);
-                    p1.setProgress(100,true);
+                    f1.setImageResource(R.drawable.clienteverde);
+                    final int[] i = {0};
+                    Thread hilo1 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while(i[0] <=100){
+                                p1.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p1.setProgress(i[0]);
+                                    }
+                                });
+                                try{
+                                    Thread.sleep(50);
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
+                                i[0]++;
+                                if(i[0]>=99)i[0]=0;
+                            }
+                        }
+                    });
+                    hilo1.start();
                     f2.setImageResource(R.drawable.play);
-                    p2.setProgress(0,true);
-                    f3.setImageResource(R.drawable.pedidorevisado);
-                    p3.setProgress(0,true);
-                    f4.setImageResource(R.drawable.surtiendo);
-                    p4.setProgress(0,true);
-                    f5.setImageResource(R.drawable.generarnota);
+                    p2.setProgress(0, true);
+                    f3.setImageResource(R.drawable.pedido_autorizado);
+                    p3.setProgress(0, true);
+                    f4.setImageResource(R.drawable.surtiendo_pedido);
+                    p4.setProgress(0, true);
+                    f5.setImageResource(R.drawable.generando_nota);
                     break;
                 case "2":
-                    f1.setImageResource(R.drawable.vpedidonuevo);
-                    p1.setProgress(100,true);
-                    f2.setImageResource(R.drawable.vpedidoaprobado);
-                    p2.setProgress(100,true);
+                    f1.setImageResource(R.drawable.clienteverde);
+                    p1.setProgress(100, true);
+                    p1.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    f2.setImageResource(R.drawable.aprobadoverde);
+                    final int[] i2 = {0};
+                    Thread hilo2 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while(i2[0] <=100){
+                                p2.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p2.setProgress(i2[0]);
+                                    }
+                                });
+                                try{
+                                    Thread.sleep(50);
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
+                                i2[0]++;
+                                if(i2[0]>=99)i2[0]=0;
+                            }
+                        }
+                    });
+                    hilo2.start();
                     f3.setImageResource(R.drawable.play);
-                    p3.setProgress(0,true);
-                    f4.setImageResource(R.drawable.surtiendo);
-                    p4.setProgress(0,true);
-                    f5.setImageResource(R.drawable.generarnota);
+                    p3.setProgress(0, true);
+                    f4.setImageResource(R.drawable.surtiendo_pedido);
+                    p4.setProgress(0, true);
+                    f5.setImageResource(R.drawable.generando_nota);
                     break;
                 case "3":
-                    f1.setImageResource(R.drawable.vpedidonuevo);
-                    p1.setProgress(100,true);
-                    f2.setImageResource(R.drawable.vpedidoaprobado);
-                    p2.setProgress(100,true);
-                    f3.setImageResource(R.drawable.vpedidorevisado);
-                    p3.setProgress(100,true);
+                    f1.setImageResource(R.drawable.clienteverde);
+                    p1.setProgress(100, true);
+                    p1.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    f2.setImageResource(R.drawable.aprobadoverde);
+                    p2.setProgress(100, true);
+                    p2.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    f3.setImageResource(R.drawable.revisadoverde);
+                    final int[] i3 = {0};
+                    Thread hilo3 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while(i3[0] <=100){
+                                p3.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p3.setProgress(i3[0]);
+                                    }
+                                });
+                                try{
+                                    Thread.sleep(50);
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
+                                i3[0]++;
+                                if(i3[0]>=99)i3[0]=0;
+                            }
+                        }
+                    });
+                    hilo3.start();
                     f4.setImageResource(R.drawable.play);
-                    p4.setProgress(0,true);
-                    f5.setImageResource(R.drawable.generarnota);
+                    p4.setProgress(0, true);
+                    f5.setImageResource(R.drawable.generando_nota);
                     break;
                 case "4":
-                    p1.setProgress(100,true);
-                    f1.setImageResource(R.drawable.vpedidonuevo);
-                    p2.setProgress(100,true);
-                    f2.setImageResource(R.drawable.vpedidoaprobado);
-                    p3.setProgress(100,true);
-                    f3.setImageResource(R.drawable.vpedidorevisado);
-                    p4.setProgress(100,true);
-                    f4.setImageResource(R.drawable.vpedidosurtido);
+                    p1.setProgress(100, true);
+                    f1.setImageResource(R.drawable.clienteverde);
+                    p1.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    p2.setProgress(100, true);
+                    f2.setImageResource(R.drawable.aprobadoverde);
+                    p2.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    p3.setProgress(100, true);
+                    f3.setImageResource(R.drawable.revisadoverde);
+                    p3.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#82D52A")));
+                    f4.setImageResource(R.drawable.surtidoverde);
+                    final int[] i4 = {0};
+                    Thread hilo4 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while(i4[0] <=100){
+                                p4.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p4.setProgress(i4[0]);
+                                    }
+                                });
+                                try{
+                                    Thread.sleep(50);
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
+                                i4[0]++;
+                                if(i4[0]>=99)i4[0]=0;
+                            }
+                        }
+                    });
+                    hilo4.start();
                     f5.setImageResource(R.drawable.play);
                     break;
-                case "5":
-                    p1.setProgress(100,true);
-                    f1.setImageResource(R.drawable.vpedidonuevo);
-                    p2.setProgress(100,true);
-                    f2.setImageResource(R.drawable.vpedidoaprobado);
-                    p3.setProgress(100,true);
-                    f3.setImageResource(R.drawable.vpedidorevisado);
-                    p4.setProgress(100,true);
-                    f4.setImageResource(R.drawable.vpedidosurtido);
-                    f5.setImageResource(R.drawable.vpedidonota);
-                    break;
-
             }
 
         }
@@ -128,7 +206,7 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
 
     public List<ModeloRecepcion> listaPedidos;
 
-    public AdapterRecepcion(List<ModeloRecepcion> pedidolista){
+    public AdapterRecepcion(List<ModeloRecepcion> pedidolista) {
         this.listaPedidos = pedidolista;
     }
 
@@ -136,8 +214,8 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recepcion_item,parent,false);
-        ViewHolder viewHolder= new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recepcion_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 

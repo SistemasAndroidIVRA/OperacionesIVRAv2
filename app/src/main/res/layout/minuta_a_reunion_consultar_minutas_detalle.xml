@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_principal_consultar_minutas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3F0FF"
+    tools:context=".Minuta.Vistas.MinutaReunionDetalle">
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Inventario"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnMinutaDetRegresar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/icono_regresar" />
+
+                <TextView
+                    android:id="@+id/textView176"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Detalle minuta"
+                    android:textColor="@color/Recepcion"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/Inventario"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView18"
+                    android:layout_width="200sp"
+                    android:layout_height="200sp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/logo_minuta_detalle" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView289"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CONVOCÓ"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblMinutaDetElaboro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/Picking"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp" />
+
+                <TextView
+                    android:id="@+id/textView334"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FECHAS Y HORAS"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnShowFechaHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/icono_desplegar"
+                    android:text="INICIO Y FIN"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/linearShowFechaHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Inventario"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView291"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lugar: "
+                            android:textAlignment="viewEnd"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblMinutaDetLugar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/Recepcion"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView293"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fecha: "
+                            android:textAlignment="viewEnd"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblMinutaDetFecha"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/Recepcion"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView283"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="H.Inicio: "
+                            android:textAlignment="viewEnd"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblMinutaDetHoraI"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/Recepcion"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView287"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="H.Fin: "
+                            android:textAlignment="viewEnd"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblMinutaDetHoraF"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/Recepcion"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="5sp"
+                        android:layout_weight="1"
+                        android:background="@color/divider"
+                        android:orientation="vertical"></LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView300"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ASISTENTES"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnShowAsistentes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/icono_desplegar"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/linearShowAsistentes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Inventario"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView302"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Nombre"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView303"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Correo"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView304"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Asistencia"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerAsistentesMinutaDet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="5sp"
+                            android:layout_weight="1"
+                            android:background="@color/divider"
+                            android:orientation="vertical"></LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView295"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ACUERDOS"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnShowAcuerdos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/icono_desplegar"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/linearShowAcuerdos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Inventario"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView297"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Acuerdo"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView298"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Reponsable"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView299"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Fecha"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerAcuerdosMinutaDet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="5sp"
+                            android:layout_weight="1"
+                            android:background="@color/divider"
+                            android:orientation="vertical"></LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView280"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TEMAS"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnShowTemas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/icono_desplegar"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/linearShowTemas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Inventario"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView278"
+                                android:layout_width="150sp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="Tema"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView279"
+                                android:layout_width="150sp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="Tiempo estimado"
+                                android:textAlignment="center"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerTemasMinutaDet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="5sp"
+                            android:layout_weight="1"
+                            android:background="@color/divider"
+                            android:orientation="vertical"></LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

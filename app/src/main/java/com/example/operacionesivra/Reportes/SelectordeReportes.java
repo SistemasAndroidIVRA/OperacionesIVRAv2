@@ -60,7 +60,7 @@ public class SelectordeReportes extends AppCompatActivity {
         });
     }
 
-    public void chequeoterminado(){
+    public void chequeoterminado() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Chequeo")
                 .setMessage("¿Ver los chequeos terminados?")
@@ -82,7 +82,7 @@ public class SelectordeReportes extends AppCompatActivity {
                 .show();
     }
 
-    public void inventarioterminado(){
+    public void inventarioterminado() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Inventario")
                 .setMessage("¿Ver los inventarios terminados?")
@@ -104,7 +104,7 @@ public class SelectordeReportes extends AppCompatActivity {
                 .show();
     }
 
-    public void encuestaterminada(){
+    public void encuestaterminada() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Encuesta")
                 .setMessage("¿Ver los datos de la encuesta?")
@@ -126,7 +126,7 @@ public class SelectordeReportes extends AppCompatActivity {
                 .show();
     }
 
-    public void inventariogeneral(){
+    public void inventariogeneral() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Inventario general")
                 .setMessage("¿Ver los datos recabados por el equipo de inventarios?")
@@ -148,7 +148,7 @@ public class SelectordeReportes extends AppCompatActivity {
                 .show();
     }
 
-    public void inventarioactual(){
+    public void inventarioactual() {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Inventario actual")
                 .setMessage("¿Ver inventario en tiempo real?")

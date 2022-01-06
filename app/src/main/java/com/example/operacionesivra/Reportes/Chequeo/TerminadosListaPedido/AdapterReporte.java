@@ -15,10 +15,10 @@ import com.example.operacionesivra.R;
 
 import java.util.List;
 
-public class AdapterReporte extends RecyclerView.Adapter<AdapterReporte.ViewHolder>{
+public class AdapterReporte extends RecyclerView.Adapter<AdapterReporte.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView material,cantidad,unidad;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView material, cantidad, unidad;
         ImageView estado;
         boolean correcto;
         public Context contexto;
@@ -36,14 +36,14 @@ public class AdapterReporte extends RecyclerView.Adapter<AdapterReporte.ViewHold
 
     public List<ModeloDetallesChequeo> itemsChequeos;
 
-    public AdapterReporte(List<ModeloDetallesChequeo> listaChequeos){
-        this.itemsChequeos =listaChequeos;
+    public AdapterReporte(List<ModeloDetallesChequeo> listaChequeos) {
+        this.itemsChequeos = listaChequeos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reportes_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reportes_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -59,6 +59,6 @@ public class AdapterReporte extends RecyclerView.Adapter<AdapterReporte.ViewHold
 
     @Override
     public int getItemCount() {
-        return  itemsChequeos.size();
+        return itemsChequeos.size();
     }
 }

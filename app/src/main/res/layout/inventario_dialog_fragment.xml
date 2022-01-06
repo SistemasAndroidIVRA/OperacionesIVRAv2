@@ -44,12 +44,12 @@
                 app:helperText="Ingrese el codigo deseado">
 
 
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/codigomaterial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -89,8 +89,10 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/Reportes"/>
 
         <Space
             android:layout_width="match_parent"
@@ -121,7 +123,7 @@
             <Button
                 android:id="@+id/atras_DF"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/atras_DF" />
 

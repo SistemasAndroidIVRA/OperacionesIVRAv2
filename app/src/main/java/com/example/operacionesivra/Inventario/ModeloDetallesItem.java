@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class ModeloDetallesItem extends ArrayList<ModeloDetallesItem> implements Parcelable {
-    String cantidad, longitud, ubicacion, estado, materialregistrado, folioadd, incidencia;
+    String cantidad, longitud, ubicacion, estado, materialregistrado, folioadd, incidencia, ubicacionId;
     int imagen;
-
-    public ModeloDetallesItem(String cantidad, String longitud, String materialregistrado, String ubicacion, String estado, int imagen, String incidencia, String folioadd) {
+    int isSelected;
+    public ModeloDetallesItem(String cantidad, String longitud, String materialregistrado, String ubicacion, String estado, int imagen, String incidencia, String folioadd, String ubicacionId, int isSelected) {
         this.cantidad = cantidad;
         this.longitud = longitud;
         this.ubicacion = ubicacion;
@@ -21,6 +21,8 @@ public class ModeloDetallesItem extends ArrayList<ModeloDetallesItem> implements
         this.materialregistrado = materialregistrado;
         this.folioadd = folioadd;
         this.incidencia = incidencia;
+        this.ubicacionId = ubicacionId;
+        this.isSelected = isSelected;
     }
 
     protected ModeloDetallesItem(Parcel in) {
@@ -76,6 +78,18 @@ public class ModeloDetallesItem extends ArrayList<ModeloDetallesItem> implements
 
     public String getIncidencia() {
         return incidencia;
+    }
+
+    public String getUbicacionId(){
+        return ubicacionId;
+    }
+
+    public int getIsSelected(){
+        return isSelected;
+    }
+
+    public void setIsSelected(int isSelected){
+        this.isSelected = isSelected;
     }
 
     @Override

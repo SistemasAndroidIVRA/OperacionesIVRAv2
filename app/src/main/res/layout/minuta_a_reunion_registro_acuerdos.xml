@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MinutaAReunionRegistroAcuerdosActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Inventario"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <TextView
+                android:id="@+id/textView323"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nuevo acuerdo"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView325"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Acuerdo"
+                android:textAlignment="center"
+                android:textColor="@color/secondary_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtMinutaRegistroAcuerdoAcuerdo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Requerido"
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView326"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Responsable"
+                android:textAlignment="center"
+                android:textColor="@color/secondary_text"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerMinutaRegistroAcuerdoResponsable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView327"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha compromiso"
+                android:textAlignment="center"
+                android:textColor="@color/secondary_text"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnMinutaRegistroAcuerdoPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableBottom="@drawable/icono_calendario"
+                android:text="SELECCIONAR" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnMinutaRegistroAcuerdoCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/button_color_text"
+                android:text="CANCELAR" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnMinutaRegistroAcuerdoAceptar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color2"
+                android:text="ACEPTAR" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5sp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

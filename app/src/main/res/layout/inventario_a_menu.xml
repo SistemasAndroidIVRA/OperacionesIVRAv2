@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    tools:context=".Inventarios.Vistas.InventariosMenu">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:text="¿Qué desea hacer?"
+        android:textColor="@color/Inventario"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.736"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnRegresar"
+        android:layout_width="100dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="@color/icons"
+        android:text="ATRÁS"
+        android:textColor="@color/Inventario"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnInfo"
+        android:layout_width="100dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="@color/icons"
+        android:text="INFO"
+        android:textColor="@color/Inventario"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/btnRegresar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnHistoricoInventarios"
+        android:layout_width="400dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInventariosTerminados"
+        app:srcCompat="@drawable/historico_inventarios" />
+
+    <ImageButton
+        android:id="@+id/btnInventariosTerminados"
+        android:layout_width="400dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrarInventarios"
+        app:srcCompat="@drawable/inventarios_en_proceso" />
+
+    <ImageButton
+        android:id="@+id/btnRegistrarInventarios"
+        android:layout_width="400dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/registro_de_inventarios" />
+
+    <Button
+        android:id="@+id/btnAjusteInventario"
+        android:layout_width="400sp"
+        android:layout_height="60sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="120dp"
+        android:text="Ajuste de inventario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoricoInventarios" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

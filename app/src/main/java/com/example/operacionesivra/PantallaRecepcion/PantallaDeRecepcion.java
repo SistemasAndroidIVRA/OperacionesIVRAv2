@@ -1,27 +1,35 @@
 package com.example.operacionesivra.PantallaRecepcion;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Display;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DigitalClock;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.operacionesivra.MainActivity.MainActivity;
-import com.example.operacionesivra.PantallasCargando.Loading;
+import com.example.operacionesivra.PantallaRecepcion.administrar.RecepcionAdministrarVideos;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,40 +42,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
-import repack.org.bouncycastle.cms.CMSAttributeTableGenerationException;
-
-public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
-    public static final  String APY_KEY = "AIzaSyBz6_qZa1BXC7xl8Rn8NnOipqxrpMwunBM";
+public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+    public static final String APY_KEY = "AIzaSyBz6_qZa1BXC7xl8Rn8NnOipqxrpMwunBM";
     Conexion conexionService = new Conexion(this);
     Context context;
     private RecyclerView recycerpedidos;
     private AdapterRecepcion adaptador;
     List<ModeloRecepcion> pedidos = new ArrayList<>();
-    List<ModeloVideos> videos = new ArrayList<>();
-    //List<ModeloRecepcion_Sinfiltro>  = new ArrayList<>();
-    //List<ModeloReporteMovimientos> reportedemovimientos = new ArrayList<>();
     private final DBListenerRecepcion duckFactory = new DBListenerRecepcion(this);
     TextToSpeech tts;
     YouTubePlayerView youTubePlayerView;
-    boolean disparadorautomatico =false;
-    public int loadingRecepcion =0;
-    int listener2=0;
+    public int loadingRecepcion = 0;
+    int listener2 = 0;
     DigitalClock recepcion;
-    ImageView logoShimaco,surtiendo,revisado, liberado, generandonota,registrado;
-    String seleccion;
+    ImageView logoShimaco, surtiendo, revisado, liberado, generandonota, registrado;
+    String videoSeleccionado;
+    int posicionSeleccionado = -1;
     String liga;
     PantallaDeRecepcion pantallaDeRecepcion;
     String[] opciones;
-
+    Button btnReproductor;
+    ImageButton imgButtonNext, imgButtonAtras;
+    ArrayList<ModeloVideos> arrayVideos = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +76,7 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
         pantallaDeRecepcion = this;
         context = this;
         recycerpedidos = findViewById(R.id.recyclerRecepcion);
-        recycerpedidos.setLayoutManager(new LinearLayoutManager(this));
+        recycerpedidos.setLayoutManager(new LinearLayoutManager(context));
         adaptador = new AdapterRecepcion(obtenerpedidosdbImplementacion());
         recepcion = findViewById(R.id.relojrecepcion);
         recycerpedidos.setAdapter(adaptador);
@@ -86,211 +87,167 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
         surtiendo.setImageResource(R.drawable.surtiendo);
         revisado = findViewById(R.id.previsado);
         revisado.setImageResource(R.drawable.pedidorevisado);
-        liberado= findViewById(R.id.pliberado);
+        liberado = findViewById(R.id.pliberado);
         liberado.setImageResource(R.drawable.pedidoaprobado);
         generandonota = findViewById(R.id.pnota);
         generandonota.setImageResource(R.drawable.generarnota);
-        registrado= findViewById(R.id.pregistrado);
+        registrado = findViewById(R.id.pregistrado);
         registrado.setImageResource(R.drawable.nuevopedido);
-
-        seleccionarplaylist();
-
+        arrayVideos = getVideos();
+        btnReproductor = findViewById(R.id.btnReproductor);
+        seleccionarCancion();
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status==TextToSpeech.SUCCESS){
+                if (status == TextToSpeech.SUCCESS) {
                     int lang = tts.setLanguage(Locale.ENGLISH);
                 }
             }
         });
 
-        logoShimaco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialAlertDialogBuilder(context)
-                        .setTitle("Confirmación")
-                        .setMessage("¿Quiere cambiar la playlist actual?")
-                        .setCancelable(false)
-                        .setIcon(R.drawable.confirmacion)
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                loadingRecepcion=1;
-                                //loadinglauncher();
-                                reiniciarActivity(pantallaDeRecepcion);
-                            }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .show();
-            }
+        btnReproductor.setOnClickListener(view -> {
+            reiniciarActivity(pantallaDeRecepcion);
         });
     }
 
-    //Lanza un alert dialog con las listas de reproducción disponibles
-    public String seleccionarplaylist(){
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("¿Qué vamos a escuchar hoy?")
-                .setCancelable(false)
-                .setSingleChoiceItems(cargarplaylist(), -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                            seleccion = opciones[which];
-                            youTubePlayerView=null;
-                    }
-                })
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        seleccionarvideo();
-                    }
-                })
-                .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
-                    }
-                })
-                .show();
-        return liga;
-    }
+    //Método para seleccionar la canción
+    public void seleccionarCancion(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        View view2 = inflater.inflate(R.layout.recepcion_reproductor, null);
+        alert.setView(view2);
+        AlertDialog dialog = alert.create();
+        dialog.show();
+        //Referenciar elementos
+        RecyclerView recyclerReproductor = view2.findViewById(R.id.recyclerReproductor);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerReproductor.setLayoutManager(layoutManager);
+        //Adaptador
+        AdapterVideos adapterVideos = new AdapterVideos();
+        recyclerReproductor.setAdapter(adapterVideos);
+        //BtnAceptar
+        Button btnAceptarReporductor, btnAdministrar, btnCerrarReproductor;
+        btnAceptarReporductor = view2.findViewById(R.id.btnAceptarReporductor);
+        btnAdministrar = view2.findViewById(R.id.btnAdministrar);
+        btnCerrarReproductor = view2.findViewById(R.id.btnCerrarReproductor);
+        imgButtonNext = view2.findViewById(R.id.imgButtonNext);
+        imgButtonNext.setImageResource(R.drawable.next);
+        imgButtonAtras = view2.findViewById(R.id.imgButtonAtras);
+        imgButtonAtras.setImageResource(R.drawable.backbtn);
+        //Acciones
+        imgButtonAtras.setOnClickListener(view -> {
+            ModeloVideos video = arrayVideos.get(arrayVideos.size()-1);
+            arrayVideos.add(0, video);
+            arrayVideos.remove(arrayVideos.size()-1);
+            adapterVideos.notifyDataSetChanged();
+        });
+        imgButtonNext.setOnClickListener(view -> {
+            ModeloVideos video = arrayVideos.get(0);
+            arrayVideos.remove(0);
+            arrayVideos.add(arrayVideos.size(), video);
+            adapterVideos.notifyDataSetChanged();
+        });
+        btnAceptarReporductor.setOnClickListener(view1 -> {
+            videoSeleccionado = arrayVideos.get(0).getNombre();
+            youTubePlayerView = findViewById(R.id.video);
+            youTubePlayerView.initialize(APY_KEY, this);
+            dialog.dismiss();
+        });
+        btnAdministrar.setOnClickListener(view -> {
+            //Checar clave
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Introduzca el código de validación");
+            builder.setIcon(R.drawable.confirmacion);
+            final EditText input = new EditText(context);
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            builder.setView(input);
 
-    public void seleccionarvideo(){
-        youTubePlayerView = findViewById(R.id.video);
-        youTubePlayerView.initialize(APY_KEY, this);
-    }
-
-    /*
-    public void actualizarRegistros(String pedido, String movimiento, String cliente, String referencia) {
-        boolean existe=false;
-        String hora = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        for (int i = 0; i < reportedemovimientos.size(); i++) {
-            if (reportedemovimientos.get(i).getPedido().equals(pedido)) {
-                switch (movimiento) {
-                    case "1":
-                        reportedemovimientos.set(i, new ModeloReporteMovimientos(reportedemovimientos.get(i).getPedido()
-                                , reportedemovimientos.get(i).getCliente(),movimiento,reportedemovimientos.get(i).getReferencia(), hora, reportedemovimientos.get(i).getHoradelmovimiento2()
-                                , reportedemovimientos.get(i).getHoradelmovimiento3(), reportedemovimientos.get(i).getHoradelmovimiento4()));
-                        break;
-                    case "2":
-                        reportedemovimientos.set(i, new ModeloReporteMovimientos(reportedemovimientos.get(i).getPedido()
-                                , reportedemovimientos.get(i).getCliente(),movimiento,reportedemovimientos.get(i).getReferencia(), reportedemovimientos.get(i).getHoradelmovimiento1(), hora
-                                , reportedemovimientos.get(i).getHoradelmovimiento3(), reportedemovimientos.get(i).getHoradelmovimiento4()));
-                        break;
-                    case "3":
-                        reportedemovimientos.set(i, new ModeloReporteMovimientos(reportedemovimientos.get(i).getPedido()
-                                , reportedemovimientos.get(i).getCliente(),movimiento,reportedemovimientos.get(i).getReferencia(), reportedemovimientos.get(i).getHoradelmovimiento1(), reportedemovimientos.get(i).getHoradelmovimiento2()
-                                , hora, reportedemovimientos.get(i).getHoradelmovimiento4()));
-                        break;
-                    case "4":
-                        reportedemovimientos.set(i, new ModeloReporteMovimientos(reportedemovimientos.get(i).getPedido()
-                                , reportedemovimientos.get(i).getCliente(), movimiento, reportedemovimientos.get(i).getReferencia(),reportedemovimientos.get(i).getHoradelmovimiento1(), reportedemovimientos.get(i).getHoradelmovimiento2()
-                                , reportedemovimientos.get(i).getHoradelmovimiento3(), hora));
-                        break;
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Validamos
+                    if(input.getText().toString().equals("AdminVideos")){
+                        Intent intent = new Intent(context, RecepcionAdministrarVideos.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                        finish();
+                        //setTerminarInventarios();
+                    }else{
+                        new MaterialAlertDialogBuilder(context)
+                                .setTitle("¡Contraseña inválida!")
+                                .setIcon(R.drawable.snakerojo)
+                                .setMessage("Si continúa se notificará a los administradores.")
+                                .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //No hacer nada
+                                    }
+                                })
+                                .show();
+                    }
                 }
-                existe=true;
-            }
-        }
-        if(!existe){
-            switch (movimiento){
-                case "1":
-                    reportedemovimientos.add(new ModeloReporteMovimientos(pedido
-                            , cliente, movimiento,referencia, hora, ""
-                            , "",""));
-                    break;
-                case "2":
-                    reportedemovimientos.add(new ModeloReporteMovimientos(pedido
-                            , cliente,movimiento,referencia, "", hora
-                            , "",""));
-                    break;
-                case "3":
-                    reportedemovimientos.add(new ModeloReporteMovimientos(pedido
-                            , cliente, movimiento,referencia, "", ""
-                            , hora,""));
-                    break;
-                case "4":
-                    reportedemovimientos.add(new ModeloReporteMovimientos(pedido
-                            , cliente,movimiento, referencia,"", ""
-                            , "",hora));
-                    break;
-            }
-        }
-
-
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        });
+        btnCerrarReproductor.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
     }
 
-     */
-
-    //Crea una lista que almacena los datos de la base de manera automatica (Implementacion)
+    //Crea una lista que almacena los datos de la base de manera automatica
     public List<ModeloRecepcion> obtenerpedidosdbImplementacion() {
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion");
             while (r.next()) {
-                    pedidos.add(new ModeloRecepcion(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente")) );
-                                }
+                pedidos.add(new ModeloRecepcion(r.getString("Pedido"), r.getString("Estado_Clave"), r.getString("Cliente")));
+            }
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("error: " + e);
         }
-        //Crearlistadepedidos_sinfiltro();
         return pedidos;
     }
 
-    /*
-    public List<ModeloRecepcion_Sinfiltro> Crearlistadepedidos_sinfiltro() {
-        try {
-            Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion_sinfiltro");
-            while (r.next()) {
-                pedidossinfiltro.add(new ModeloRecepcion_Sinfiltro(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente"),r.getString("Referencia")) );
-                actualizarRegistros(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente"),r.getString("Referencia"));
-            }
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-        return pedidossinfiltro;
-    }
-
-     */
-
     //Actualiza el registro segun el esta del pedido
-    public void actualizarlista(){
+    public void actualizarlista() {
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion");
             while (r.next()) {
-                for (int i =0;i<pedidos.size();i ++){
-                    if(pedidos.get(i).getPedido().equals(r.getString("Pedido"))){
-                        if(!pedidos.get(i).getEstado().equals(r.getString("Estado_Clave"))){
-                                pedidos.set(i, new ModeloRecepcion(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente")) );
-                                MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
+                for (int i = 0; i < pedidos.size(); i++) {
+                    if (pedidos.get(i).getPedido().equals(r.getString("Pedido"))) {
+                        if (!pedidos.get(i).getEstado().equals(r.getString("Estado_Clave"))) {
+                            pedidos.set(i, new ModeloRecepcion(r.getString("Pedido"), r.getString("Estado_Clave"), r.getString("Cliente")));
+                            MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                             mp.start();
-                                final int finalI = i;
+                            final int finalI = i;
                             final String cliente = r.getString("Cliente");
-                                  final String fase = r.getString("Estado_clave");
+                            final String fase = r.getString("Estado_clave");
                             runOnUiThread(new Runnable() {
                                 @RequiresApi(api = Build.VERSION_CODES.O)
                                 @Override
                                 public void run() {
-                                    switch (fase){
+                                    switch (fase) {
                                         case "1":
-                                            speech(cliente+", pedido registrado");
+                                            speech(cliente + ", pedido registrado");
                                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemChanged(finalI);
                                             break;
                                         case "2":
-                                            speech(cliente+", pedido autorizado");
+                                            speech(cliente + ", pedido autorizado");
                                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemChanged(finalI);
                                             break;
                                         case "3":
-                                            speech(cliente+", pedido en surtido");
+                                            speech(cliente + ", pedido en surtido");
                                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemChanged(finalI);
                                             break;
                                         case "4":
-                                            speech(cliente+", preparando nota");
+                                            speech(cliente + ", preparando nota");
                                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemChanged(finalI);
                                             break;
                                     }
@@ -301,60 +258,38 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
                 }
             }
         } catch (Exception e) {
-            System.out.println("error");
-        }
-        //actualizarlista_sinfiltro();
-    }
-
-    /*
-    public void actualizarlista_sinfiltro(){
-        try {
-            Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion_sinfiltro");
-            while (r.next()) {
-                for (int i =0;i<pedidossinfiltro.size();i ++){
-                    if(pedidossinfiltro.get(i).getPedido().equals(r.getString("Pedido"))){
-                        if(!pedidossinfiltro.get(i).getEstado().equals(r.getString("Estado_Clave"))){
-                            pedidossinfiltro.set(i, new ModeloRecepcion_Sinfiltro(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente"),r.getString("Referencia")) );
-                            actualizarRegistros(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente"),r.getString("Referencia"));
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("error: " + e);
         }
     }
-     */
 
     //Añade registros nuevos en caso de existir
-    public void añadiralalista(){
+    public void añadiralalista() {
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
             final ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion");
-            while (r.next()){
-                boolean comprobarexistencia=false;
-                for(int i=0;i<pedidos.size();i++){
-                    if(r.getString("Pedido").equals(pedidos.get(i).getPedido())){
-                        comprobarexistencia=true;
+            while (r.next()) {
+                boolean comprobarexistencia = false;
+                for (int i = 0; i < pedidos.size(); i++) {
+                    if (r.getString("Pedido").equals(pedidos.get(i).getPedido())) {
+                        comprobarexistencia = true;
                     }
                 }
-                if(!comprobarexistencia){
+                if (!comprobarexistencia) {
                     MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                     mp.start();
-                    final String cliente=r.getString("Cliente");
-                        pedidos.add(new ModeloRecepcion(r.getString("Pedido"), r.getString("Estado_clave"), r.getString("Cliente")));
-                        runOnUiThread(new Runnable() {
+                    final String cliente = r.getString("Cliente");
+                    pedidos.add(new ModeloRecepcion(r.getString("Pedido"), r.getString("Estado_clave"), r.getString("Cliente")));
+                    runOnUiThread(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyDataSetChanged();
-                            speech("¡Pedido nuevo de "+cliente+ "!");
+                            speech("¡Pedido nuevo de " + cliente + "!");
                         }
                     });
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Error al cargar")
                     .setMessage("Por favor intentelo mas tarde")
@@ -366,49 +301,25 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
                     })
                     .show();
         }
-        //añadiralalista_sinfiltro();
     }
-
-    /*
-    public void añadiralalista_sinfiltro(){
-        try {
-            Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            final ResultSet r = qu.executeQuery("Execute PMovil_PantallaRecepcion_sinfiltro");
-            while (r.next()){
-                boolean comprobarexistencia=false;
-                for(int i=0;i<pedidossinfiltro.size();i++){
-                    if(r.getString("Pedido").equals(pedidossinfiltro.get(i).getPedido())){
-                        comprobarexistencia=true;
-                    }
-                }
-                if(!comprobarexistencia){
-                    pedidossinfiltro.add(new ModeloRecepcion_Sinfiltro(r.getString("Pedido"), r.getString("Estado_clave"), r.getString("Cliente"),r.getString("Referencia")));
-                    actualizarRegistros(r.getString("Pedido"),r.getString("Estado_Clave"),r.getString("Cliente"),r.getString("Referencia"));
-                }
-            }
-        }catch (Exception e){
-            Toast.makeText(context,"Error al cargar",Toast.LENGTH_SHORT);
-        }
-    }
-     */
 
     //Elimina el elemto al estar completado o bien es eliminado
-    public int elimarlista(){
-        int listaner=0;
+    public int elimarlista() {
+        int listaner = 0;
         try {
             Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            for(int i =0;i<pedidos.size();i++){
+            for (int i = 0; i < pedidos.size(); i++) {
                 ResultSet r2 = qu.executeQuery("Execute PMovil_PantallaRecepcion");
-                boolean comprobarexistencia=false;
-                while (r2.next()){
-                    if(pedidos.get(i).getPedido().equals(r2.getString("Pedido"))){
-                        comprobarexistencia=true;
+                boolean comprobarexistencia = false;
+                while (r2.next()) {
+                    if (pedidos.get(i).getPedido().equals(r2.getString("Pedido"))) {
+                        comprobarexistencia = true;
                     }
                 }
-                if(!comprobarexistencia){
+                if (!comprobarexistencia) {
                     MediaPlayer mp = MediaPlayer.create(this, R.raw.notification_ring);
                     mp.start();
-                    listaner=1;
+                    listaner = 1;
                     final String cliente = pedidos.get(i).getCliente();
                     pedidos.remove(i);
                     final int finalI = i;
@@ -417,103 +328,49 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
                         @Override
                         public void run() {
                             Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemRemoved(finalI);
-                            speech(cliente+", su nota está lista");
+                            speech(cliente + ", su nota está lista");
                         }
                     });
                 }
             }
-        }catch (SQLException e){
-            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
-        //elimarlista_sinfiltro();
-        listener2=listaner;
+        listener2 = listaner;
         return listaner;
     }
-
-    /*
-    public int elimarlista_sinfiltro(){
-        int listaner=0;
-        try {
-            Statement qu = conexionService.conexiondbImplementacion().createStatement();
-            for(int i =0;i<pedidossinfiltro.size();i++){
-                ResultSet r2 = qu.executeQuery("Execute PMovil_PantallaRecepcion_sinfiltro");
-                boolean comprobarexistencia=false;
-                while (r2.next()){
-                    if(pedidossinfiltro.get(i).getPedido().equals(r2.getString("Pedido"))){
-                        comprobarexistencia=true;
-                    }
-                }
-                if(!comprobarexistencia){
-                    actualizarRegistros(pedidossinfiltro.get(i).getPedido(),pedidossinfiltro.get(i).getEstado(),pedidossinfiltro.get(i).getCliente(),pedidossinfiltro.get(i).getReferencia());
-                    pedidossinfiltro.remove(i);
-                }
-            }
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-        listener2=listaner;
-        return listaner;
-    }
-     */
 
     //Lanza la voz
-    public void speech(String text){
+    public void speech(String text) {
         Locale locSpanish = new Locale("spa", "MEX");
         tts.setLanguage(locSpanish);
         tts.speak(text, TextToSpeech.QUEUE_ADD, null);
     }
 
+    public ArrayList<ModeloVideos> getVideos(){
+        try {
+            ArrayList<ModeloVideos> array = new ArrayList<>();
+            PreparedStatement stmt = conexionService.conexiondbImplementacion().prepareCall("PMovil_Recepcion_Videos_SELECT");
+            ResultSet r = stmt.executeQuery();
+            while(r.next()){
+                array.add(new ModeloVideos(r.getString("Nombre"), r.getString("URL"), 0));
+            }
+            return array;
+        }catch (Exception e){
+            Toast.makeText(context, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            return new ArrayList<ModeloVideos>();
+        }
+    }
+
     //Util pero no lo uso ahora
-    public static void reiniciarActivity(Activity actividad){
-        Intent intent=new Intent();
+    public static void reiniciarActivity(Activity actividad) {
+        Intent intent = new Intent();
         intent.setClass(actividad, actividad.getClass());
         //llamamos a la actividad
         actividad.startActivity(intent);
         //finalizamos la actividad actual
         actividad.finish();
     }
-
-    /*
-    public void loadinglauncher() {
-        Loading loading = new Loading(this);
-        loading.execute();
-    }
-
-     */
-
-    /*
-
-    public void subirtablaDB() {
-        String uuid = UUID.randomUUID().toString();
-        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        try {
-            for (int i = 0; i < reportedemovimientos.size(); i++) {
-                try (PreparedStatement var = conexionService.conexiondbImplementacion().prepareCall("execute PMovil_Crearinformedemovimientos ?,?,?,?,?,?,?,?,?")) {
-                    try {
-                        var.setString(1, reportedemovimientos.get(i).getPedido());
-                        var.setString(2, reportedemovimientos.get(i).getCliente());
-                        var.setString(3, reportedemovimientos.get(i).getReferencia());
-                        var.setString(4, reportedemovimientos.get(i).getHoradelmovimiento1());
-                        var.setString(5, reportedemovimientos.get(i).getHoradelmovimiento2());
-                        var.setString(6, reportedemovimientos.get(i).getHoradelmovimiento3());
-                        var.setString(7, reportedemovimientos.get(i).getHoradelmovimiento4());
-                        var.setString(8, date);
-                        var.setString(9, uuid);
-                        var.execute();
-                    } catch (SQLException e) {
-                        System.out.println("Error"+e);
-                    }
-                } catch (SQLException a) {
-                    System.out.println("Error2"+a);
-                }
-
-            }
-        } catch (Exception e) {
-            System.out.println("Error3"+e);
-        }
-    }
-
-     */
 
     @Override
     public void onBackPressed() {
@@ -523,34 +380,20 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
         startActivity(i);
     }
 
-    public String[] cargarplaylist(){
-        Conexion c = new Conexion(this);
-        int contador=0;
-        try{
-            Statement s = c.conexiondbImplementacion().createStatement();
-            ResultSet r = s.executeQuery("select * from Movil_Recepcion_videos");
-            while (r.next()){
-                videos.add(new ModeloVideos(r.getString("Nombre"),r.getString("URL")));
-                contador++;
-            }
-            opciones = new String[contador];
-            for(int i = 0;i<videos.size();i++){
-                opciones[i]=videos.get(i).getNombre();
-            }
-        }catch (Exception e){
-            System.out.println("nel"+ e);
-        }
-        return opciones;
-    }
-
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        if(null== youTubePlayer) return;
+        if (null == youTubePlayer) return;
         if (!b) {
-            for (int i = 0; i < videos.size(); i++) {
-                if (videos.get(i).getNombre().equals(seleccion)) {
-                    youTubePlayer.cuePlaylist(videos.get(i).getUrl());
-                    youTubePlayer.play();
+            for (int i = 0; i < arrayVideos.size(); i++) {
+                if (arrayVideos.get(i).getNombre().equals(videoSeleccionado)) {
+                    if(youTubePlayer.isPlaying()){
+                        youTubePlayer.release();
+                        youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
+                        youTubePlayer.play();
+                    }else{
+                        youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
+                        youTubePlayer.play();
+                    }
                 }
             }
         }
@@ -559,12 +402,12 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
         new MaterialAlertDialogBuilder(this)
-                .setTitle("Omposible cargar, por favor, inténtelo más tarde")
+                .setTitle("Imposible cargar, por favor, inténtelo más tarde")
                 .setIcon(R.drawable.snakerojo)
-                .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        reiniciarActivity(pantallaDeRecepcion);
+
                     }
                 })
                 .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
@@ -575,4 +418,63 @@ public class PantallaDeRecepcion extends  YouTubeBaseActivity implements YouTube
                 })
                 .show();
     }
+
+    //Adapter videos
+
+    public class AdapterVideos extends RecyclerView.Adapter<AdapterVideos.AdapterVideosHolder>{
+        @NonNull
+        @Override
+        public AdapterVideosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+            return new AdapterVideosHolder(getLayoutInflater().inflate(R.layout.recepcion_reproductor_item, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(AdapterVideosHolder holder, int position){
+            holder.printAdapter(position);
+        }
+
+        @Override
+        public int getItemCount(){
+            return arrayVideos.size();
+        }
+
+        class AdapterVideosHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            TextView lblConsecutivoReproductor, lblNombreReproductor;
+            ImageView imagenLista;
+            LinearLayout layoutSeleccionar;
+            public AdapterVideosHolder(@NonNull View itemView){
+                super(itemView);
+                lblConsecutivoReproductor = itemView.findViewById(R.id.lblConsecutivoReproductor);
+                lblNombreReproductor = itemView.findViewById(R.id.lblNombreReproductor);
+                imagenLista = itemView.findViewById(R.id.imagenLista);
+                imagenLista.setImageResource(R.drawable.icono_mp3);
+                layoutSeleccionar = itemView.findViewById(R.id.layoutSeleccionar);
+                //Acciones
+                layoutSeleccionar.setOnClickListener(view -> {
+                    for (int i=0; i<arrayVideos.size();i++){
+                        arrayVideos.get(i).setIsSelected(0);
+                    }
+                    arrayVideos.get(getAdapterPosition()).setIsSelected(1);
+                    posicionSeleccionado = getAdapterPosition();
+                    notifyDataSetChanged();
+                });
+            }
+
+            public void printAdapter(int position){
+                lblConsecutivoReproductor.setText(""+(position+1));
+                lblNombreReproductor.setText(arrayVideos.get(position).getNombre());
+                if(arrayVideos.get(position).getIsSelected() == 0){
+                    layoutSeleccionar.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }else{
+                    layoutSeleccionar.setBackgroundColor(Color.parseColor("#D8E7FF"));
+                }
+            }
+
+            @Override
+            public void onClick(View view){
+
+            }
+        }
+    }
+
 }
