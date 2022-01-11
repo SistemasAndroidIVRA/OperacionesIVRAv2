@@ -61,7 +61,7 @@
             android:id="@+id/imageView2"
             android:layout_width="200sp"
             android:layout_height="200sp"
-            app:srcCompat="@drawable/correcto" />
+            app:srcCompat="@drawable/ajuste_inventario" />
 
         <Space
             android:layout_width="match_parent"
@@ -83,6 +83,7 @@
             android:id="@+id/btnAjusteMaterial"
             android:layout_width="match_parent"
             android:layout_height="80sp"
+            android:drawableLeft="@drawable/ajuste_inventario_icono"
             android:drawableRight="@drawable/icono_entrar"
             android:text="Ajuste de materiales" />
 
@@ -91,7 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="80sp"
             android:drawableRight="@drawable/icono_entrar"
-            android:text="Solicitudes de ajuste" />
+            android:text="Solicitudes de ajuste"
+            android:visibility="gone" />
 
     </LinearLayout>
 
