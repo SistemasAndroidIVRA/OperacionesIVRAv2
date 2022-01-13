@@ -1510,7 +1510,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         return ruta;
     }
 
-    //Método para habilitar los botones
+    //Método para deshabilitar los botones
     public void desableButtons(){
         Toast.makeText(contexto, "Realizando la acción, por favor espere.", Toast.LENGTH_SHORT).show();
         btnMinutaRegistroAceptar.setEnabled(false);
@@ -1526,7 +1526,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
 
     }
 
-    //Método para deshabilitar los botones
+    //Método para habilitar los botones
     public void enableButtons(){
         btnMinutaRegistroAceptar.setEnabled(true);
         btnMinutaRegistroRegresar.setEnabled(true);

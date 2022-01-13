@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_acuerdo_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_acuerdo_item_det.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_asistente_item.xml" value="0.25" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_consultar_minutas.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos_editar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout-land/activity_main.xml" value="0.23828125" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_administrador.xml" value="0.1" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_main.xml" value="0.18507281553398058" />
