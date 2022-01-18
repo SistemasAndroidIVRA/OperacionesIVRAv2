@@ -3,12 +3,15 @@ package com.example.operacionesivra.Minuta.Vistas;
 import static com.example.operacionesivra.ComprobaciondeDispositivo.TabletOTelefono.esTablet;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -98,18 +101,31 @@ public class MinutaMenu extends AppCompatActivity {
                 final AlertDialog dialog = alert.create();
                 dialog.show();
                 dialog.setCancelable(false);
+
+                //Autocomplete
+                AutoCompleteTextView autoCompleteTextViewLugar;
+                autoCompleteTextViewLugar = (AutoCompleteTextView) view.findViewById(R.id.aCtxtMinutaRegistroLugar);
+
                 //Componentes de la otra vista
                 Button btnCancelar = view.findViewById(R.id.btnCancelar);
                 Button btnAceptar = view.findViewById(R.id.btnAceptar);
-                Spinner spinner = view.findViewById(R.id.spinnerLugares);
                 Spinner spinnerConvoco = view.findViewById(R.id.spinnerConvoco);
 
-                //Llenar Spinner lugares
-                fullSpinner(getLugares(), view, spinner);
                 //Personales
                 ArrayList<ModeloAsistente> personales = getPersonales();
                 ArrayAdapter<ModeloAsistente> adaptadorPersonales = new ArrayAdapter<ModeloAsistente>(MinutaMenu.this, R.layout.minuta_a_spinner, personales);
                 spinnerConvoco.setAdapter(adaptadorPersonales);
+
+                //Añadir los lugares para el autoComplete
+                ArrayList<ModeloLugar> lugares = getLugares();
+                ArrayAdapter<ModeloLugar> adaptadorLugar = new ArrayAdapter<>(MinutaMenu.this,R.layout.minuta_a_spinner,lugares);
+                autoCompleteTextViewLugar.setAdapter(adaptadorLugar);
+
+                //Para obtener el usuario (Metodo a implementar para spinner de convoco)
+                //SharedPreferences sharedPref = getSharedPreferences("credenciales",Context.MODE_PRIVATE);
+                //String name = sharedPref.getString("iduser","null");
+                //Toast.makeText(MinutaMenu.this, name+"", Toast.LENGTH_LONG).show();
+
                 //Acción del btnCancelar
                 btnCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,10 +135,11 @@ public class MinutaMenu extends AppCompatActivity {
                 });
                 //Accción del btnAceptar
                 btnAceptar.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         //Traer lugar
-                        ModeloLugar modeloLugarSelected = (ModeloLugar) spinner.getSelectedItem();
+                        ModeloLugar modeloLugarSelected = (ModeloLugar) findLugar(autoCompleteTextViewLugar.getText().toString(),lugares);
                         String lugar = modeloLugarSelected.getLugar();
                         int lugarID = modeloLugarSelected.getIdLugar();
                         //Traer convocó
@@ -195,4 +212,28 @@ public class MinutaMenu extends AppCompatActivity {
         return modeloLugarArray;
 
     }
+    //Para encontrar el lugar
+    public ModeloLugar findLugar(String lugar, ArrayList<ModeloLugar> lugares){
+        for (int i = 0; i < lugares.size(); i++) {
+            if(lugares.get(i).getLugar().equals(lugar)){
+                return lugares.get(i);
+            }
+        }
+        Conexion con = new Conexion(this);
+        //Cachar las exepciones
+        try {
+            //Creamos un enunciado
+            Statement stmt = con.conexiondbImplementacion().createStatement();
+            //Definimos la sentencia
+            String query = "Insert into Movil_Minuta_R_Lugar values('"+lugar+"',1)";
+            //Ejecutamos el enunciado cargado con la sentencia
+            ResultSet r = stmt.executeQuery(query);
+        } catch (SQLException throwables) {
+            //Mostramos el error
+            throwables.printStackTrace();
+        }
+        lugares = getLugares();
+        return lugares.get(lugares.size()-1);
+    }
+
 }
