@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F0FF"
     tools:context=".Minuta.Vistas.MinutaReunionRegistro">
 
     <ScrollView
@@ -96,23 +95,41 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView337"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Hora:"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/txtMinutaRegistroHora"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:enabled="true"
-                        android:inputType="textPersonName" />
+                        <TextView
+                            android:id="@+id/textView337"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Hora:"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/txtMinutaRegistroHora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:editable="false"
+                            android:ems="10" />
+
+                        <ImageButton
+                            android:id="@+id/btnMinutaReloj"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="#1D031CFF"
+                            app:srcCompat="@drawable/clock"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <Space

@@ -89,15 +89,35 @@
                 android:textColor="@color/secondary_text"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/txtMinutaRegistroTemaTiempoEst"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="true"
-                android:hint="No necesario"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtMinutaRegistroTemaTiempoEst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:ems="10"
+                    android:enabled="true"
+                    android:hint="No necesario"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnMinutaRelojTema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:background="#1D031CFF"
+                    android:src="@drawable/clock"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/txtMinutaRegistroTemaTiempoEst"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

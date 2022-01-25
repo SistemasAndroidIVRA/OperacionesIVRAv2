@@ -138,22 +138,26 @@ public class MinutaMenu extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        //Traer lugar
-                        ModeloLugar modeloLugarSelected = (ModeloLugar) findLugar(autoCompleteTextViewLugar.getText().toString(),lugares);
-                        String lugar = modeloLugarSelected.getLugar();
-                        int lugarID = modeloLugarSelected.getIdLugar();
-                        //Traer convocó
-                        ModeloAsistente convoco = (ModeloAsistente) spinnerConvoco.getSelectedItem();
-                        //Mandar lugar a travez de interfaz
-                        Intent intent = new Intent(view.getContext(), MinutaReunionRegistro.class);
-                        intent.putExtra("Lugar", lugar);
-                        intent.putExtra("LugarID", lugarID);
-                        intent.putExtra("Convoco", convoco.getNombre());
-                        intent.putExtra("ConvocoID", convoco.getEmpleadoID());
-                        intent.putExtra("usuario", usuario);
-                        //Iniciamos la activity
-                        view.getContext().startActivity(intent);
-                        dialog.dismiss();
+                        if(autoCompleteTextViewLugar.getText().toString().equals("")){
+                            Toast.makeText(view.getContext(), "Completa todos los campos",Toast.LENGTH_LONG).show();
+                        }else{
+                            //Traer lugar
+                            ModeloLugar modeloLugarSelected = (ModeloLugar) findLugar(autoCompleteTextViewLugar.getText().toString(),lugares);
+                            String lugar = modeloLugarSelected.getLugar();
+                            int lugarID = modeloLugarSelected.getIdLugar();
+                            //Traer convocó
+                            ModeloAsistente convoco = (ModeloAsistente) spinnerConvoco.getSelectedItem();
+                            //Mandar lugar a travez de interfaz
+                            Intent intent = new Intent(view.getContext(), MinutaReunionRegistro.class);
+                            intent.putExtra("Lugar", lugar);
+                            intent.putExtra("LugarID", lugarID);
+                            intent.putExtra("Convoco", convoco.getNombre());
+                            intent.putExtra("ConvocoID", convoco.getEmpleadoID());
+                            intent.putExtra("usuario", usuario);
+                            //Iniciamos la activity
+                            view.getContext().startActivity(intent);
+                            dialog.dismiss();
+                        }
                     }
                 });
             }
@@ -192,12 +196,11 @@ public class MinutaMenu extends AppCompatActivity {
         Conexion con = new Conexion(this);
         //Cachar las exepciones
         try {
-            //Creamos un enunciado
-            Statement stmt = con.conexiondbImplementacion().createStatement();
-            //Definimos la sentencia
-            String query = "SELECT * FROM Movil_Minuta_R_Lugar WHERE estado = 1";
+
+            //Se ejecuta el procedimiento almacenado en sql
+            PreparedStatement var = con.conexiondbImplementacion().prepareCall("PMovil_Minuta_R_Lugares_SELECT");
             //Ejecutamos el enunciado cargado con la sentencia
-            ResultSet r = stmt.executeQuery(query);
+            ResultSet r = var.executeQuery();
             //Recorremos los resultados
             while(r.next()){
                 //Creamos modelos de tipo lugar y se los agregamos al arraylist
@@ -222,12 +225,10 @@ public class MinutaMenu extends AppCompatActivity {
         Conexion con = new Conexion(this);
         //Cachar las exepciones
         try {
-            //Creamos un enunciado
-            Statement stmt = con.conexiondbImplementacion().createStatement();
-            //Definimos la sentencia
-            String query = "Insert into Movil_Minuta_R_Lugar values('"+lugar+"',1)";
-            //Ejecutamos el enunciado cargado con la sentencia
-            ResultSet r = stmt.executeQuery(query);
+            //Se prepara el enunciado del procedimiento almacenado en sql
+            PreparedStatement var = con.conexiondbImplementacion().prepareCall("PMovil_Minuta_R_Lugar_INSERT '"+lugar+"'"+",1");
+            //Se ejecuta el enunciado
+            ResultSet r = var.executeQuery();
         } catch (SQLException throwables) {
             //Mostramos el error
             throwables.printStackTrace();

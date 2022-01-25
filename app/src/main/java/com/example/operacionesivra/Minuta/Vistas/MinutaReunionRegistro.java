@@ -3,6 +3,7 @@ package com.example.operacionesivra.Minuta.Vistas;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,6 +72,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -77,6 +80,8 @@ import java.util.Objects;
 public class MinutaReunionRegistro extends AppCompatActivity {
     //public int
     public int loadingRegistrarMinuta = 0;
+    //private int
+    private  int hora, minutos;
     //Conexión
     Conexion con;
     //Contexto
@@ -84,7 +89,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
     //File para guardar y abrir al instante
     File fileUri;
     //Variables principales
-    String convoco, convocoID, lugar, fecha, horaInicio, horaFin, usuario;
+    String convoco, convocoID, lugar, fecha, horaInicio, horaFin, usuario, horaS, minutosS;
     int lugarID;
     //Recyclerviews
     RecyclerView recyclerViewRegistroAsistentes;
@@ -112,6 +117,8 @@ public class MinutaReunionRegistro extends AppCompatActivity {
     Button btnMinutaRegistrarTema, btnMinutaEliminarTema;
     //Buttons acuerdos
     Button btnMinutaRegistrarAcuerdo, btnMinutaEliminarAcuerdo;
+    //Button reloj
+    ImageButton btnMinutaReloj;
     //ImageButton
     //Intent
     Intent intent;
@@ -158,6 +165,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         btnMinutaEliminarAcuerdo = findViewById(R.id.btnMinutaEliminarAcuerdo);
         //ImageButton
         btnMinutaRegistroPicker = findViewById(R.id.btnMinutaRegistroPicker);
+        btnMinutaReloj = findViewById(R.id.btnMinutaReloj);
         //getInfoPrincipal
         otorgarpermisos();
         startVariablesPrincipales();
@@ -198,6 +206,29 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         btnMinutaEliminarAcuerdo.setOnClickListener(view -> {
             openDialogEliminarAcuerdo();
         });
+        btnMinutaReloj.setOnClickListener(view -> {
+            final Calendar c = Calendar.getInstance();
+            hora = c.get(Calendar.HOUR_OF_DAY);
+            minutos = c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    if(i < 10){
+                        horaS = "0"+i;
+                    }else{
+                        horaS = i+"";
+                    }
+                    if(i1 < 10){
+                        minutosS = "0"+i1;
+                    }else{
+                        minutosS = i1+"";
+                    }
+                    txtMinutaRegistroHora.setText(horaS+":"+minutosS);
+                }
+            },hora, minutos, true);
+            timePickerDialog.show();
+        });
 
     }
 
@@ -231,7 +262,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         lugar = getIntent().getStringExtra("Lugar");
         lugarID = getIntent().getIntExtra("LugarID", 0);
         fecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        horaInicio = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        horaInicio = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
     }
 
     //Método que inicia la información principal
@@ -539,6 +570,8 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         EditText txtMinutaRegistroTemaTema, txtMinutaRegistroTemaTiempoEst;
         //Botónes
         Button btnMinutaRegistroTemaAceptar, btnMinutaRegistroTemaCancelar;
+        //ImageButton
+        ImageButton btnMinutaRelojTema;
         //Referenciar elementos
         //EditText
         txtMinutaRegistroTemaTema = (EditText) view.findViewById(R.id.txtMinutaRegistroTemaTema);
@@ -546,6 +579,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         //Buttons
         btnMinutaRegistroTemaAceptar = (Button) view.findViewById(R.id.btnMinutaRegistroTemaAceptar);
         btnMinutaRegistroTemaCancelar = (Button) view.findViewById(R.id.btnMinutaRegistroTemaCancelar);
+        btnMinutaRelojTema = view.findViewById(R.id.btnMinutaRelojTema);
         //Acciones botones
         //Cancelar acción
         btnMinutaRegistroTemaCancelar.setOnClickListener(new View.OnClickListener() {
@@ -554,7 +588,48 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        btnMinutaRelojTema.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                hora = c.get(Calendar.HOUR_OF_DAY);
+                minutos = c.get(Calendar.MINUTE);
 
+                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        if(i < 10){horaS = "0"+i;}else{horaS = i+"";}
+                        if(i1 < 10){minutosS = "0"+i1;}else{minutosS = i1+"";}
+                        txtMinutaRegistroTemaTiempoEst.setText(horaS+":"+minutosS);
+                    }
+                },hora, minutos, true);
+                timePickerDialog.show();
+            }
+        });
+        /*
+        btnMinutaRelojTema.setOnClickListener(view -> {
+            final Calendar c = Calendar.getInstance();
+            hora = c.get(Calendar.HOUR_OF_DAY);
+            minutos = c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    if(i < 10){
+                        horaS = "0"+i;
+                    }else{
+                        horaS = i+"";
+                    }
+                    if(i1 < 10){
+                        minutosS = "0"+i1;
+                    }else{
+                        minutosS = i1+"";
+                    }
+                    txtMinutaRegistroHora.setText(horaS+":"+minutosS);
+                }
+            },hora, minutos, true);
+            timePickerDialog.show();
+        });*/
         //Agregar tema
         btnMinutaRegistroTemaAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
