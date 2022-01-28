@@ -24,9 +24,11 @@ import com.example.operacionesivra.Monitoreo.Monitoreo_Mapa;
 import com.example.operacionesivra.PantallaDePrioridades.PantalladePrioridades;
 import com.example.operacionesivra.PantallaRecepcion.PantallaDeRecepcion;
 import com.example.operacionesivra.PantallasCargando.Loading;
+import com.example.operacionesivra.Pedidos.Pedidos;
 import com.example.operacionesivra.Picking.ListapedidosPicking.ListaPicking;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Reportes.SelectordeReportes;
+import com.example.operacionesivra.Seguridad.Seguridad;
 import com.example.operacionesivra.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -37,7 +39,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Context context;
-    CardView inventario, picking, listadeprioridades, recepcion, chequeo, reportes, monitoreo, administrador, minutas, ocococ;
+    CardView pedidos, inventario, picking, listadeprioridades, recepcion, chequeo, reportes, monitoreo, administrador, minutas, seguridad;
     String usuario, password, idusuario;
     public int loadingMain = 0;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        pedidos = findViewById(R.id.pedidos);
         inventario = findViewById(R.id.inventario);
         picking = findViewById(R.id.picking);
         listadeprioridades = findViewById(R.id.prioridades);
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         monitoreo = findViewById(R.id.monitoreo);
         administrador = findViewById(R.id.administrador);
         minutas = findViewById(R.id.minutas);
+        seguridad = findViewById(R.id.seguridad);
         //Minuta prelistener
         if(esTablet(context)){
             minutas.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
 
     //Carga los permisos del usuario
     public void listenersdeopcionesdisponibles() {
+
+        pedidos.setOnClickListener(view -> {
+            Intent intent = new Intent(context, Pedidos.class);
+            startActivity(intent);
+        });
+
+        seguridad.setOnClickListener(view -> {
+            Intent intent = new Intent(context, Seguridad.class);
+            startActivity(intent);
+        });
 
         inventario.setOnClickListener(new View.OnClickListener() {
             @Override

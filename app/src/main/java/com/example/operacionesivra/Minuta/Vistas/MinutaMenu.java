@@ -3,9 +3,7 @@ package com.example.operacionesivra.Minuta.Vistas;
 import static com.example.operacionesivra.ComprobaciondeDispositivo.TabletOTelefono.esTablet;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +26,6 @@ import com.example.operacionesivra.Services.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MinutaMenu extends AppCompatActivity {
@@ -192,7 +189,7 @@ public class MinutaMenu extends AppCompatActivity {
     public ArrayList<ModeloLugar> getLugares(){
         //Declarar arraylist de tipo modelo Lugar para almacenar los resulatdos de la BD
         ArrayList<ModeloLugar> modeloLugarArray = new ArrayList<>();
-        //Abrir coneción
+        //Abrir conexión
         Conexion con = new Conexion(this);
         //Cachar las exepciones
         try {

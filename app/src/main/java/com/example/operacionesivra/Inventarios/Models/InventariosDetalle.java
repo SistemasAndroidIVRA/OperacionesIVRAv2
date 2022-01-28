@@ -4,6 +4,11 @@ public class InventariosDetalle {
     String folio, registroID, cantidad, longitud, ubicacion, incidencia, estado, ubicacionId, productoID, codigoViejo, codigoNuevo;
     int isSelected, estadoEtiqueta, status;
 
+    //Constructor vacío
+    public InventariosDetalle(){
+
+    }
+
     //ConstructorPrincipal
     public InventariosDetalle(String folio, String cantidad, String longitud, String ubicacion, String incidencia, String estado, String ubicacionId, String productoID, String codigoViejo, String codigoNuevo, int isSelected, int estadoEtiqueta) {
         this.folio = folio;

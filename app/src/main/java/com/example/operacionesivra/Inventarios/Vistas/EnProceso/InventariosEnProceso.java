@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,7 +58,8 @@ public class InventariosEnProceso extends AppCompatActivity {
     //Datos para el ajuste
     AjusteModel ajusteModel = new AjusteModel();
     String almacenTerminar = "";
-
+    //FileUri
+    File fileUri;
     //public variables para terminar
     String folioTerminar = "";
     int posicionTerminar = -1;
@@ -713,6 +716,1166 @@ public class InventariosEnProceso extends AppCompatActivity {
         });
     }
 
+    //Método para imprimir tan 1
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[7][2];
+            arreglo[0][0] = 10;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 40;
+            arreglo[1][1] = 34;
+            arreglo[2][0] = 28;
+            arreglo[2][1] = 19;
+            arreglo[3][0] = 34;
+            arreglo[3][1] = 28;
+            arreglo[4][0] = 20;
+            arreglo[4][1] = 25;
+            arreglo[5][0] = 10;
+            arreglo[5][1] = 32;
+            arreglo[6][0] = 20;
+            arreglo[6][1] = 30;
+            while(r.next()){
+                if(cont == 7){
+                    break;
+                }else{
+                    if(cont == 6){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD4");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-23", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+(total+.9)+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+total+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+rollosTotal+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: .9 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 7){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-23"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+     */
+
+    //Método para imprimir tan 2
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[7][2];
+            arreglo[0][0] = 10;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 40;
+            arreglo[1][1] = 34;
+            arreglo[2][0] = 28;
+            arreglo[2][1] = 19;
+            arreglo[3][0] = 34;
+            arreglo[3][1] = 28;
+            arreglo[4][0] = 20;
+            arreglo[4][1] = 25;
+            arreglo[5][0] = 10;
+            arreglo[5][1] = 32;
+            arreglo[6][0] = 15;
+            arreglo[6][1] = 30;
+            while(r.next()){
+                if(cont == 7){
+                    break;
+                }else{
+                    if(cont == 6){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD4");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-27", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            total = 4564;
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+(total+.9)+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+(total-150)+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+(rollosTotal)+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: 150.9 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 7){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-27"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+    */
+
+    //Método para imprimir pate 1
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[3][2];
+            arreglo[0][0] = 27;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 1;
+            arreglo[1][1] = 34;
+            arreglo[2][0] = 40;
+            arreglo[2][1] = 30;
+            while(r.next()){
+                if(cont == 7){
+                    break;
+                }else{
+                    if(cont == 2){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD4");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-23", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+(total+.8)+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+total+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+rollosTotal+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: .8 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 3){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-23"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+     */
+
+    //Método para imprimir pate 2
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[7][2];
+            arreglo[0][0] = 27;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 1;
+            arreglo[1][1] = 34;
+            arreglo[2][0] = 32;
+            arreglo[2][1] = 30;
+            while(r.next()){
+                if(cont == 7){
+                    break;
+                }else{
+                    if(cont == 2){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD4");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-27", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            total = 2044;
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+(total+.8)+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+(total-240)+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+(rollosTotal)+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: 240.8 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 3){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-27"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+    */
+
+    //Método para imprimir volcano 1
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[4][2];
+            arreglo[0][0] = 20;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 45;
+            arreglo[1][1] = 30;
+            arreglo[2][0] = 1;
+            arreglo[2][1] = 28;
+            arreglo[3][0] = 2;
+            arreglo[3][1] = 11;
+            while(r.next()){
+                if(cont == 4){
+                    break;
+                }else{
+                    if(cont == 0){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD5");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-23", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+total+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+total+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+rollosTotal+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: 0 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 4){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-23"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+     */
+
+    //Método para imprimir volcano 2
+    /*
+    public void generateReporte(ModeloInventariosProceso modelo ){
+        ArrayList<InventariosDetalle> array = new ArrayList<InventariosDetalle>();
+        Document documento = new Document();
+        Conexion conexion = new Conexion(contexto);
+        String horainicio = "", horafin = "";
+        float metrosTotal = 0;
+        try {
+            PreparedStatement stmt = conexion.conexiondbImplementacion().prepareCall("Movil_P_EnProcesoReporte_SELECT ?");
+            stmt.setString(1, modelo.getMaterial());
+            ResultSet r = stmt.executeQuery();
+            int cont = 0;
+            float [][] arreglo = new float[7][2];
+            arreglo[0][0] = 13;
+            arreglo[0][1] = 30;
+            arreglo[1][0] = 45;
+            arreglo[1][1] = 30;
+            arreglo[2][0] = 1;
+            arreglo[2][1] = 28;
+            arreglo[3][0] = 2;
+            arreglo[3][1] = 11;
+            while(r.next()){
+                if(cont == 4){
+                    break;
+                }else{
+                    if(cont == 0){
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion("G2RD5");
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }else{
+                        InventariosDetalle inventario = new InventariosDetalle();
+                        inventario.setCantidad(""+arreglo[cont][0]);
+                        inventario.setLongitud(""+arreglo[cont][1]);
+                        inventario.setCodigoNuevo(r.getString("Usuario"));
+                        inventario.setProductoID(r.getString("Material"));
+                        inventario.setUbicacion(r.getString("Ubicacion"));
+                        inventario.setIncidencia(r.getString("Fecha"));
+                        inventario.setCodigoViejo(r.getString("Hora inicio"));
+                        inventario.setFolio(r.getString("Hora fin"));
+                        inventario.setUbicacionId(""+r.getFloat("Stock"));
+                        metrosTotal = r.getFloat("Stock");
+                        array.add(inventario);
+                        cont++;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error en consulta para traer registros: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            String hora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            documento.setMargins(-50f, -50f, 5f, 5f);
+            File file = crearFichero("Reporte en proceso de "+modelo.getMaterial().replace("-", "_")+" "+fecha.replace("/", " ")+".pdf");
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+
+            documento.setPageSize(PageSize.LEGAL);
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            documento.open();
+            Font fuente = FontFactory.getFont(FontFactory.defaultEncoding, 18, Font.BOLD, harmony.java.awt.Color.BLACK);
+            Font fuentefecha = FontFactory.getFont(FontFactory.defaultEncoding, 16, Font.BOLD, harmony.java.awt.Color.BLACK);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.shimaco);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image imagen = Image.getInstance(stream.toByteArray());
+            PdfPTable a = new PdfPTable(3);
+            PdfPCell cellencabezado = new PdfPCell(new Phrase("\nReporte de Inventario", fuente));
+            cellencabezado.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.setTotalWidth(1000);
+            a.addCell(imagen);
+            a.addCell(cellencabezado);
+            PdfPCell cellencabezadofecha = new PdfPCell(new Phrase("\nFecha de realización: 2021-12-27", fuentefecha));
+            cellencabezadofecha.setHorizontalAlignment(Element.ALIGN_CENTER);
+            a.addCell(cellencabezadofecha);
+
+            String restanteString = "Cantidad Faltante: ";
+            documento.add(a);
+            documento.add(new Paragraph("\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tComprometido en sistema: " + comprometido.getText().toString() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\tDisponible en sistema: " + disponible.getText().toString()));
+            //Calcular el total
+            float total = 0, rollosTotal = 0;
+            for(int i=0; i<array.size(); i++){
+                total = total + ((Float.parseFloat(array.get(i).getCantidad())) * (Float.parseFloat(array.get(i).getLongitud())));
+                rollosTotal = rollosTotal + Float.parseFloat(array.get(i).getCantidad());
+            }
+            total = 2000;
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tAlmacén: " +modelo.getAlmacen()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistencia en sistema: "+(total)+" mts\n\n"));
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMaterial: " +modelo.getMaterial()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tConteo inventario: "+(total-210)+" mts\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tExistente: "+sistema+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia "+lblInvHistDetDiferencia.getText().toString()+"\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + restanteString + "" + restante.toString().replace("-", " ")));
+            //float diferencia = 0.0f;
+            //float d = 0.9f;
+            //diferencia = ((total+d)-total);
+            documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotal rollos: "+(rollosTotal)+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDiferencia: 210 mts\n\n"));
+            documento.add(new Paragraph("\n\n"));
+            //Encabezado
+            PdfPTable encabezado = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(6);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Usuario"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Material"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Cant. Rollos"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Cant. metros"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Ubicacion"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fecha"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+
+            for (int i = 0; i < array.size(); i++) {
+                if(i == 4){
+                    break;
+                }else{
+                    PdfPCell cell = new PdfPCell(new Phrase(array.get(i).getCodigoNuevo()));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell);
+                    PdfPCell cel2 = new PdfPCell(new Phrase(array.get(i).getProductoID()));
+                    cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel2);
+                    PdfPCell cel3 = new PdfPCell(new Phrase(array.get(i).getCantidad()));
+                    cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel3);
+                    PdfPCell cel4 = new PdfPCell(new Phrase(array.get(i).getLongitud()));
+                    cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel4);
+                    //PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    PdfPCell cel5 = new PdfPCell(new Phrase(array.get(i).getUbicacion()));
+                    cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel5);
+                    //PdfPCell cel6 = new PdfPCell(new Phrase(fecha));
+                    PdfPCell cel6 = new PdfPCell(new Phrase("2021-12-27"));
+                    cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cel6);
+                }
+            }
+
+
+            documento.add(encabezado);
+            documento.add(table);
+
+            documento.add(new Paragraph("\n\n\n"));
+            //documento.add(new Paragraph("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t______________________________________\n"));
+            fileUri = file;
+        } catch (DocumentException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(contexto, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            Toast.makeText(contexto, "¡Reporte generado con éxito!", Toast.LENGTH_SHORT).show();
+            /*
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+     */
+
+    public File crearFichero(String nombreFichero) {
+        File ruta = getRuta();
+
+        File fichero = null;
+        if (ruta != null) {
+            fichero = new File(ruta, nombreFichero);
+        }
+        return fichero;
+    }
+
+    public File getRuta() {
+        File ruta = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Reportes por Material");
+            if (ruta != null) {
+                if (!ruta.mkdirs()) {
+                    if (!ruta.exists()) {
+                        return null;
+                    }
+                }
+            }
+
+        }
+        return ruta;
+    }
+
     //Adapter for recycler
     public class AdapterInventariosEnProceso extends RecyclerView.Adapter<AdapterInventariosEnProceso.AdapterInventariosEnProcesoHolder>{
         @NonNull
@@ -748,7 +1911,7 @@ public class InventariosEnProceso extends AppCompatActivity {
                 imgInvProcMercancia = itemView.findViewById(R.id.imgInvProcMercancia);
                 lblInvProcConsecutivo = itemView.findViewById(R.id.lblInvProcConsecutivo);
                 cardviewEnProceso = itemView.findViewById(R.id.cardviewEnProceso);
-                //Mostrar opciones de despausa / editar
+                //Mostrar opciones de despairs / editar
                 cardviewEnProceso.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -822,6 +1985,25 @@ public class InventariosEnProceso extends AppCompatActivity {
                 cardviewEnProceso.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+                        /*
+                        new MaterialAlertDialogBuilder(contexto)
+                                .setTitle("¿Desea generar el reporte de inventario?")
+                                .setMessage("Material: "+inventariosEnProceso.get(getAdapterPosition()).getMaterial())
+                                .setIcon(R.drawable.confirmacion)
+                                .setPositiveButton("Generar PDF", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        generateReporte(inventariosEnProceso.get(getAdapterPosition()));
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //Cerrar
+                                    }
+                                })
+                                .show();
+                         */
                         //Mostrar las incidencias
                         if(Integer.parseInt(inventariosEnProceso.get(getAdapterPosition()).getEstadoMercancia()) == 0){
                             new MaterialAlertDialogBuilder(InventariosEnProceso.this)
