@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -79,7 +80,7 @@ import java.util.Objects;
 
 public class MinutaReunionRegistro extends AppCompatActivity {
     //public int
-    public int loadingRegistrarMinuta = 0;
+    public int loadingRegistrarMinuta = 0, sonido;
     //private int
     private  int hora, minutos;
     //Conexión
@@ -171,6 +172,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
         startVariablesPrincipales();
         getInfoPrincipal();
 
+        sonido = getSonido();
         //Acciones botonos
         btnMinutaRegistroAceptar.setOnClickListener(view -> {
             loadingRegistrarMinuta = 1;
@@ -447,8 +449,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                     //Comprobar si se efectúa la acción en el adapter
                     try {
                         adapterAsistente.notifyDataSetChanged();
-                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                        mp.start();
+                        if(sonido == 1){
+                            MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                            mp.start();
+                        }
                         dialog.dismiss();
                         new MaterialAlertDialogBuilder(contexto)
                                 .setTitle("¡Éxito!")
@@ -606,30 +610,7 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-        /*
-        btnMinutaRelojTema.setOnClickListener(view -> {
-            final Calendar c = Calendar.getInstance();
-            hora = c.get(Calendar.HOUR_OF_DAY);
-            minutos = c.get(Calendar.MINUTE);
 
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                    if(i < 10){
-                        horaS = "0"+i;
-                    }else{
-                        horaS = i+"";
-                    }
-                    if(i1 < 10){
-                        minutosS = "0"+i1;
-                    }else{
-                        minutosS = i1+"";
-                    }
-                    txtMinutaRegistroHora.setText(horaS+":"+minutosS);
-                }
-            },hora, minutos, true);
-            timePickerDialog.show();
-        });*/
         //Agregar tema
         btnMinutaRegistroTemaAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -653,8 +634,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                     arrayTemas.add(tema);
                     try {
                         adapterTema.notifyDataSetChanged();
-                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                        mp.start();
+                        if(sonido == 1){
+                            MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                            mp.start();
+                        }
                         dialog.dismiss();
                         new MaterialAlertDialogBuilder(contexto)
                                 .setTitle("¡Éxito!")
@@ -730,8 +713,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                     arrayTemas.get(posicion).setTiempoEstimado(txtMinutaRegistroTemaEditarTiempoEst.getText().toString());
                     try {
                         adapterTema.notifyDataSetChanged();
-                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                        mp.start();
+                        if(sonido == 1){
+                            MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                            mp.start();
+                        }
                         dialog.dismiss();
                         new MaterialAlertDialogBuilder(contexto)
                                 .setTitle("¡Éxito!")
@@ -937,8 +922,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                     arrayAcuerdos.add(acuerdo);
                     try {
                         adapterAcuerdo.notifyDataSetChanged();
-                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                        mp.start();
+                        if(sonido == 1){
+                            MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                            mp.start();
+                        }
                         dialog.dismiss();
                         new MaterialAlertDialogBuilder(contexto)
                                 .setTitle("¡Éxito!")
@@ -1027,8 +1014,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                 arrayAcuerdos.get(posicion).setPersonaID(asistente.getPersonaID());
                 try {
                     adapterAcuerdo.notifyDataSetChanged();
-                    MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                    mp.start();
+                    if(sonido == 1){
+                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                        mp.start();
+                    }
                     dialog.dismiss();
                     new MaterialAlertDialogBuilder(contexto)
                             .setTitle("¡Éxito!")
@@ -1266,8 +1255,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                     }
 
                     crearPDF();
-                    MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
-                    mp.start();
+                    if(sonido == 1){
+                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                        mp.start();
+                    }
                     //con.conexiondbImplementacion().commit();
                     new MaterialAlertDialogBuilder(contexto)
                             .setTitle("¡Éxito!")
@@ -1289,8 +1280,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                             })
                             .show();
                 }catch (Exception e){
-                    MediaPlayer mp = MediaPlayer.create(contexto, R.raw.gnome_error);
-                    mp.start();
+                    if(sonido == 1){
+                        MediaPlayer mp = MediaPlayer.create(contexto, R.raw.definite);
+                        mp.start();
+                    }
                     new MaterialAlertDialogBuilder(contexto)
                             .setTitle("¡Error fatal!")
                             .setIcon(R.drawable.snakerojo)
@@ -1846,5 +1839,10 @@ public class MinutaReunionRegistro extends AppCompatActivity {
                 //No hace nada
             }
         }
+    }
+    public int getSonido(){
+        SharedPreferences preferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        int sound = preferences.getInt("sonido",1);
+        return sound;
     }
 }

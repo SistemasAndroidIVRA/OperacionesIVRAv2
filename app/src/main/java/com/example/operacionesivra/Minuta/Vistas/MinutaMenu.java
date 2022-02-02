@@ -32,7 +32,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MinutaMenu extends AppCompatActivity {
-    Button btnMinutaNueva, btnMinutaConsultar, btnMinutaRegresar;
+    Button btnMinutaNueva, btnMinutaConsultar, btnMinutaRegresar, btnSilenciar;
     String usuario, usuarioID;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +48,12 @@ public class MinutaMenu extends AppCompatActivity {
         btnMinutaNueva = (Button) findViewById(R.id.btnMinutaNueva);
         btnMinutaConsultar = (Button) findViewById(R.id.btnMinutaConsultar);
         btnMinutaRegresar = (Button) findViewById(R.id.btnMinutaRegresar);
+        btnSilenciar = (Button) findViewById(R.id.btnSilenciar);
+
+        SharedPreferences preferences = getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        getSonido(preferences);
         //Accioens botónes
-        //Generar nueva minuta
+        // Generar nueva minuta
         btnMinutaNueva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +73,12 @@ public class MinutaMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        btnSilenciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                silenciar(preferences);
             }
         });
     }
@@ -235,6 +245,32 @@ public class MinutaMenu extends AppCompatActivity {
         }
         lugares = getLugares();
         return lugares.get(lugares.size()-1);
+    }
+    public void getSonido(SharedPreferences preferences){
+        int sound = preferences.getInt("sonido",-1);
+        if(1 == sound){
+            btnSilenciar.setText("Con sonido");
+        }else if (sound == -1){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("sound", 1);
+            btnSilenciar.setText("Con sonido");
+            editor.apply();
+        }else{
+            btnSilenciar.setText("Sin sonido");
+        }
+    }
+    public void silenciar(SharedPreferences preferences){
+        if(1 == preferences.getInt("sonido",-1)){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("sonido", 0);
+            btnSilenciar.setText("Sin sonido");
+            editor.apply();
+        }else{
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("sonido", 1);
+            btnSilenciar.setText("Con sonido");
+            editor.apply();
+        }
     }
 
 }
