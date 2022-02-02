@@ -375,7 +375,7 @@ public class InventarioAEnHistoricosDetalle extends AppCompatActivity {
             lblInvHistDetSistema.setText(sistema);
             lblInvHistDetDiferencia.setText(""+(Float.parseFloat(lblInvHistDetSistema.getText().toString()) - Float.parseFloat(lblInvHistDetTotal.getText().toString())));
         }catch (Exception e){
-            System.out.println("Hola "+e.getMessage());
+            System.out.println("Error en total registrado: "+e.getMessage());
         }
     }
 

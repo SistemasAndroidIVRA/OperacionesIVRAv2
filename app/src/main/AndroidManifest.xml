@@ -21,6 +21,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Pedidos.Ventas.VentasEditar"
+            android:exported="true" />
+        <activity
+            android:name=".Pedidos.Ventas.VentasRegistrar"
+            android:exported="true" />
+        <activity
+            android:name=".Pedidos.Ventas.Ventas"
+            android:exported="true" />
+        <activity
+            android:name=".Pedidos.Pedidos"
+            android:exported="true" />
+        <activity
+            android:name=".Seguridad.Roles.Roles"
+            android:exported="true" />
+        <activity
+            android:name=".Seguridad.Modulos.Modulos"
+            android:exported="true" />
+        <activity
+            android:name=".Seguridad.Seguridad"
+            android:exported="true" />
+        <activity
             android:name=".Inventarios.Vistas.AjusteInventario.InventarioNuevoAjuste"
             android:exported="true" />
         <activity
