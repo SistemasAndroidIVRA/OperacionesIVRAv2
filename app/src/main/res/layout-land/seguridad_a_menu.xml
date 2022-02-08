@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#98AAEC"
-    tools:context=".Seguridad.Seguridad">
+    tools:context=".Vistas.Seguridad.Seguridad">
 
     <LinearLayout
         android:id="@+id/linearLayout48"

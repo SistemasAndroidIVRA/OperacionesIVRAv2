@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inventario.ConteosPausa.Pausa"
+    tools:context=".Vistas.Inventario.ConteosPausa.Pausa"
     android:minWidth="700dp"
     android:minHeight="450dp">
 

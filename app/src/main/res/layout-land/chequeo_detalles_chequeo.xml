@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondoazul"
     android:focusable="false"
-    tools:context=".Chequeo.Surtir.DetallesChequeo">
+    tools:context=".Vistas.Chequeo.Surtir.DetallesChequeo">
 
     <LinearLayout
         android:layout_width="match_parent"

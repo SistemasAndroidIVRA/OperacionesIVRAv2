@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E3F0FF"
-    tools:context=".Pedidos.Ventas.VentasEditar">
+    tools:context=".Vistas.Pedidos.Ventas.VentasEditar">
 
     <LinearLayout
         android:id="@+id/linearLayout52"
@@ -70,7 +70,7 @@
                 android:layout_height="10sp" />
 
             <TextView
-                android:id="@+id/textView396"
+                android:id="@+id/lblVentaFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fecha"
@@ -135,7 +135,7 @@
                     android:textColor="@android:color/black" />
 
                 <Spinner
-                    android:id="@+id/spinner6"
+                    android:id="@+id/spinnerVentaDocumento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -147,7 +147,7 @@
                     android:textColor="@android:color/black" />
 
                 <Spinner
-                    android:id="@+id/spinner4"
+                    android:id="@+id/pinnerVentaMoneda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -159,7 +159,7 @@
                     android:textColor="@android:color/black" />
 
                 <Spinner
-                    android:id="@+id/spinner5"
+                    android:id="@+id/spinnerVentaFacturas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

@@ -5,7 +5,7 @@
     android:id="@+id/layoutinventario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inventario.Inventario">
+    tools:context=".Vistas.Inventario.Inventario">
 
     <TextView
         android:id="@+id/codigo_sp"

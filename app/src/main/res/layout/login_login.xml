@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".MainActivity.Login">
+    tools:context=".Vistas.MainActivity.Login">
 
     <TextView
         android:id="@+id/textView150"
