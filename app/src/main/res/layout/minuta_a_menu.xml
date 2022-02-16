@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/icono_regresar" />
+                android:drawableLeft="@drawable/icono_regresar"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView174"
@@ -48,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableRight="@android:drawable/ic_lock_silent_mode_off"
-                android:text="Silenciar"
+                android:text="Con sonido"
                 android:textSize="12dp" />
 
         </LinearLayout>
