@@ -10,7 +10,17 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,23 +35,50 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.DetallesHistorico.PdfDocumentAdapter;
+import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.InventariosEnHistorico;
 import com.example.operacionesivra.Minuta.Modelos.ModeloReunion;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.lowagie.text.Cell;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfDocument;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfTable;
+import com.lowagie.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import harmony.java.awt.Color;
+
 public class MinutaConsultarMinutas extends AppCompatActivity {
     public int loadingMinutaConsulta = 0;
     //Objeto de conexión
     Conexion con;
+    //FileUri
+    File fileUri;
     //Contexto
     Context contexto = this;
     //Estados de los expandir
@@ -58,6 +95,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
     ImageButton btnMinutaConsDateRange;
     //Buttons
     Button btnMinutaConsRegresar;
+    Button btnMinutaGenerarReporte;
     //Buttons expandir
     Button btnMinutaConsultarShowFiltros;
     //EditText
@@ -77,6 +115,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         btnMinutaConsDateRange = (ImageButton) findViewById(R.id.btnMinutaConsRangeDate);
         //Buttons
         btnMinutaConsRegresar = (Button) findViewById(R.id.btnMinutaConsRegresar);
+        btnMinutaGenerarReporte = findViewById(R.id.btnMinutaGenerarReporte);
         //Buttons expandir
         btnMinutaConsultarShowFiltros = findViewById(R.id.btnMinutaConsultarShowFiltros);
         //EditText
@@ -100,6 +139,10 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         btnMinutaConsDateRange.setOnClickListener(view -> {
             //Iniciar los dialogos de fechas
             getMinutasDateRange();
+        });
+        btnMinutaGenerarReporte.setOnClickListener(view -> {
+            generateReporte(2);
+
         });
 
         //Acción keyListener txt
@@ -346,6 +389,227 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             }
         });
         mDatePicker.show();
+    }
+
+    public void generateReporte(int status){
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        android.graphics.pdf.PdfDocument pdfDocument = new android.graphics.pdf.PdfDocument();
+        Paint myPaint = new Paint();
+        Paint titlePaint = new Paint();
+
+        android.graphics.pdf.PdfDocument.PageInfo mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(1200,2010,1).create();
+        android.graphics.pdf.PdfDocument.Page myPage = pdfDocument.startPage(mPI);
+        Canvas canvas = myPage.getCanvas();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.shimaco);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 259,100, false);
+
+        canvas.drawBitmap(bitmap,90,100, myPaint);
+
+        titlePaint.setTextAlign(Paint.Align.CENTER);
+        titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        titlePaint.setTextSize(35);
+        canvas.drawText("Reporte de minutas",600, 160,titlePaint);
+        canvas.drawText("Fecha:" + date, 980,160, titlePaint);
+
+        myPaint.setStyle(Paint.Style.STROKE);
+        myPaint.setStrokeWidth(2);
+        canvas.drawRect(30,90,1170,210,myPaint);
+
+        canvas.drawLine(400,90, 400, 210, myPaint);
+        canvas.drawLine(800,90, 800, 210, myPaint);
+
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        myPaint.setStyle(Paint.Style.FILL);
+        myPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        myPaint.setTextSize(22);
+        canvas.drawText("Registros : ", 110, 290, myPaint );
+        myPaint.setColor(Color.RED.getRGB());
+        canvas.drawText(lblMinutaConsRegistros.getText().toString(), 230, 290, myPaint );
+        myPaint.setColor(Color.BLACK.getRGB());
+        canvas.drawText("Filtros por fecha : ",610,290, myPaint);
+        myPaint.setColor(Color.RED.getRGB());
+        canvas.drawText(txtMinutaConsDateRange.getText().toString(), 800, 290, myPaint );
+        myPaint.setColor(Color.BLACK.getRGB());
+        canvas.drawText("Generado por : ",110,350, myPaint);
+        myPaint.setColor(Color.RED.getRGB());
+        SharedPreferences sharedPref = getSharedPreferences("credenciales",Context.MODE_PRIVATE);
+        String name = sharedPref.getString("user","null");
+        canvas.drawText(name, 275, 350, myPaint );
+        myPaint.setColor(Color.BLACK.getRGB());
+        canvas.drawText("Filtros por busqueda : ",610,345, myPaint);
+        myPaint.setColor(Color.RED.getRGB());
+        canvas.drawText(txtMinutaConsFiltrador.getText().toString(), 880, 345, myPaint );
+
+
+
+
+
+        pdfDocument.finishPage(myPage);
+        File file = new File(Environment.getExternalStorageDirectory(),"Reporte de minutas "+date.replace("-", "_")+".pdf");
+        try{
+            pdfDocument.writeTo(new FileOutputStream(file));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        /*
+
+            documento.add(new Phrase("\n\tRegistros: \t", fuenteTexto));
+            documento.add(new Phrase(lblMinutaConsRegistros.getText().toString(),fuenteResaltar));
+            documento.add(new Phrase("Filtro por fecha: \n\n"));
+            //Encabezado
+            /*PdfPTable encabezado = new PdfPTable(11);
+            //Contenido
+            PdfPTable table = new PdfPTable(11);
+            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
+
+            PdfPCell cellt = new PdfPCell(new Phrase("Fecha"));
+            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cellt);
+            PdfPCell cell2t = new PdfPCell(new Phrase("Usuario"));
+            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell2t);
+            PdfPCell cell3t = new PdfPCell(new Phrase("Almacén"));
+            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell3t);
+            PdfPCell cell4t = new PdfPCell(new Phrase("Material"));
+            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell4t);
+            PdfPCell cell5t = new PdfPCell(new Phrase("Entradas"));
+            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell5t);
+            PdfPCell cell6t = new PdfPCell(new Phrase("Fisico"));
+            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell6t);
+            PdfPCell cell7t = new PdfPCell(new Phrase("Sistema"));
+            cell7t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell7t);
+            PdfPCell cell8t = new PdfPCell(new Phrase("Diferencia"));
+            cell8t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell8t);
+            PdfPCell cell9t = new PdfPCell(new Phrase("H.inicio"));
+            cell9t.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell9t);
+            PdfPCell cell10 = new PdfPCell(new Phrase("H.fin"));
+            cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell10);
+            PdfPCell cell11 = new PdfPCell(new Phrase("Incidencias"));
+            cell11.setHorizontalAlignment(Element.ALIGN_CENTER);
+            encabezado.addCell(cell11);
+*//*
+            for (int i = 0; i < inventariosEnHistorico.size(); i++) {
+                PdfPCell cell = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getFecha()));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+                PdfPCell cel2 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getUsuario()));
+                cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel2);
+                PdfPCell cel3 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getAlmacen()));
+                cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel3);
+                PdfPCell cel4 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getMaterial()));
+                cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel4);
+                PdfPCell cel5 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getEntradas()));
+                cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel5);
+                PdfPCell cel6 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getFisico()));
+                cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel6);
+                PdfPCell cel7 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getSistema()));
+                cel7.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel7);
+                PdfPCell cel8 = new PdfPCell(new Phrase(""+((Float.parseFloat(inventariosEnHistorico.get(i).getFisico())) - (Float.parseFloat(inventariosEnHistorico.get(i).getSistema())))));
+                cel8.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel8);
+                PdfPCell cel9 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getHoraInicio()));
+                cel9.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel9);
+                PdfPCell cel10= new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getHoraFin()));
+                cel10.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel10);
+                //Incidencias
+                //Incidencias
+                String cadenaIncidencias = "";
+                try {
+                    Statement stmt = conexion.conexiondbImplementacion().createStatement();
+                    String query = "SELECT Observaciones FROM Movil_Reporte WHERE Folio = '"+inventariosEnHistorico.get(i).getFolio()+"'";
+                    ResultSet r = stmt.executeQuery(query);
+                    while(r.next()){
+                        if(r.getString("Observaciones").equals("")){
+                            //
+                            cadenaIncidencias = "Sin incidencias";
+                        }else{
+                            cadenaIncidencias = cadenaIncidencias+", "+r.getString("Observaciones");
+                        }
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                PdfPCell cel11 = new PdfPCell(new Phrase(cadenaIncidencias));
+                cel11.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cel11);
+            }
+            //documento.add(encabezado);
+            //documento.add(table);
+            fileUri = file;
+            Toast.makeText(MinutaConsultarMinutas.this, "¡Reporte creado exitosamente! ", Toast.LENGTH_SHORT).show();
+        } catch (DocumentException e) {
+            Toast.makeText(MinutaConsultarMinutas.this, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(MinutaConsultarMinutas.this, "Error: " + e, Toast.LENGTH_SHORT).show();
+        } finally {
+            documento.close();
+            if(status == 1){
+
+            }else if(status == 2){
+                printPDF(fileUri);
+                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public void printPDF(File file){
+        PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+        try{
+            PrintDocumentAdapter printDocumentAdapter = new PdfDocumentAdapter(contexto, file.getAbsolutePath());
+            printManager.print("Document", printDocumentAdapter, new PrintAttributes.Builder().build());
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //Crea el fichero para el pedf
+    public File crearFichero(String nombreFichero) {
+        File ruta = getRuta();
+
+        File fichero = null;
+        if (ruta != null) {
+            fichero = new File(ruta, nombreFichero);
+        }
+
+        return fichero;
+    }
+
+    //Obtiene la ruta para guardar el documento el en dispositivo
+    public File getRuta() {
+        File ruta = null;
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Reportes Minutas");
+
+            if (ruta != null) {
+                if (!ruta.mkdirs()) {
+                    if (!ruta.exists()) {
+                        return null;
+                    }
+                }
+            }
+
+        }
+        return ruta;*/
     }
 
     //Adapter minutas
