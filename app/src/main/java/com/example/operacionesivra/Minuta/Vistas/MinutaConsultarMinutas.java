@@ -37,7 +37,10 @@ import android.widget.Toast;
 
 import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.DetallesHistorico.PdfDocumentAdapter;
 import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.InventariosEnHistorico;
+import com.example.operacionesivra.Minuta.Modelos.ModeloAcuerdo;
+import com.example.operacionesivra.Minuta.Modelos.ModeloAsistente;
 import com.example.operacionesivra.Minuta.Modelos.ModeloReunion;
+import com.example.operacionesivra.Minuta.Modelos.ModeloTema;
 import com.example.operacionesivra.PantallasCargando.Loading;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Services.Conexion;
@@ -392,12 +395,13 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
     }
 
     public void generateReporte(int status){
+        int pageWidth = 1200, pageHeight = 2010, pageNumber = 1;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         android.graphics.pdf.PdfDocument pdfDocument = new android.graphics.pdf.PdfDocument();
         Paint myPaint = new Paint();
         Paint titlePaint = new Paint();
 
-        android.graphics.pdf.PdfDocument.PageInfo mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(1200,2010,1).create();
+        android.graphics.pdf.PdfDocument.PageInfo mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
         android.graphics.pdf.PdfDocument.Page myPage = pdfDocument.startPage(mPI);
         Canvas canvas = myPage.getCanvas();
 
@@ -430,22 +434,103 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         canvas.drawText(lblMinutaConsRegistros.getText().toString(), 230, 290, myPaint );
         myPaint.setColor(Color.BLACK.getRGB());
         canvas.drawText("Filtros por fecha : ",610,290, myPaint);
-        myPaint.setColor(Color.RED.getRGB());
         canvas.drawText(txtMinutaConsDateRange.getText().toString(), 800, 290, myPaint );
         myPaint.setColor(Color.BLACK.getRGB());
         canvas.drawText("Generado por : ",110,350, myPaint);
-        myPaint.setColor(Color.RED.getRGB());
         SharedPreferences sharedPref = getSharedPreferences("credenciales",Context.MODE_PRIVATE);
         String name = sharedPref.getString("user","null");
         canvas.drawText(name, 275, 350, myPaint );
-        myPaint.setColor(Color.BLACK.getRGB());
-        canvas.drawText("Filtros por busqueda : ",610,345, myPaint);
-        myPaint.setColor(Color.RED.getRGB());
-        canvas.drawText(txtMinutaConsFiltrador.getText().toString(), 880, 345, myPaint );
+        canvas.drawText("Filtros por busqueda : ",610,350, myPaint);
+        canvas.drawText(txtMinutaConsFiltrador.getText().toString(), 880, 350, myPaint );
 
 
 
+        myPaint.setTextSize(18);
+        int y = 450;
+        for(int i = 0; i < arrayReuniones.size(); i++){
+            canvas.drawText("Num : ",110,y, myPaint);
+            myPaint.setColor(Color.RED.getRGB());
+            canvas.drawText(arrayReuniones.get(i).getReunionID()+"", 160, y, myPaint );
+            myPaint.setColor(Color.BLACK.getRGB());
+            canvas.drawText("Fecha : ",610,y, myPaint);
+            canvas.drawText(arrayReuniones.get(i).getFecha(), 680, y, myPaint );
 
+            if(y>=1850){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
+
+            canvas.drawText("Convocó : ",110,y, myPaint);
+            canvas.drawText(arrayReuniones.get(i).getEmpleado(),210,y, myPaint);
+            canvas.drawText("Hora : ",610,y, myPaint);
+            canvas.drawText(arrayReuniones.get(i).getHoraInicio(),660,y, myPaint);
+
+            if(y>=1850){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
+
+            canvas.drawText("Lugar : ",110,y, myPaint);
+            canvas.drawText(arrayReuniones.get(i).getLugar(),180,y, myPaint);
+
+            if(y>=1850){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
+
+            canvas.drawText("Participantes : ",110,y, myPaint);
+            canvas.drawText("Tema : ",460,y, myPaint);
+            canvas.drawText("Acuerdos : ",810,y, myPaint);
+
+            if(y>=1850){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
+
+            int id = arrayReuniones.get(i).getReunionID();
+            ArrayList<ModeloAsistente> arrayListAsistentes= getAsistentes(id);
+            if(arrayListAsistentes.isEmpty()){
+                canvas.drawText("•No hay asistentes",110,y, myPaint);
+            }else{
+                canvas.drawText("•"+arrayListAsistentes.get(0).getNombre(),110,y, myPaint);
+            }
+
+            if(y>=1850){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
+
+        }
 
         pdfDocument.finishPage(myPage);
         File file = new File(Environment.getExternalStorageDirectory(),"Reporte de minutas "+date.replace("-", "_")+".pdf");
@@ -611,6 +696,63 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         }
         return ruta;*/
     }
+    public ArrayList<ModeloAsistente> getAsistentes(int reunionID){
+        ArrayList<ModeloAsistente> array = new ArrayList<>();
+        con = new Conexion(contexto);
+        try {
+            PreparedStatement var = con.conexiondbImplementacion().prepareCall("PMovil_Minuta_R_AsistentesReunion_SELECT ?");
+            var.setInt(1, reunionID);
+            ResultSet r = var.executeQuery();
+            while(r.next()){
+                //Arreglar lo del tipo
+                int tipo = 1;
+                array.add(new ModeloAsistente(r.getInt("personaID"), r.getString("nombreCompleto"), r.getString("correo"), r.getString("empleadoID"), r.getInt("asistencia"), 0));
+            }
+            return array;
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
+
+    //Método para traer los temas
+    public ArrayList<ModeloTema> getTemas(int reunionID){
+        ArrayList<ModeloTema> array = new ArrayList<>();
+        con = new Conexion(contexto);
+        try {
+            //Preparar enunciado
+            PreparedStatement var = con.conexiondbImplementacion().prepareCall("PMovil_Minuta_R_Temas_SELECT ?");
+            var.setInt(1, reunionID);
+            //ResultSet para recorrer resultados
+            ResultSet r = var.executeQuery();
+            while(r.next()){
+                array.add(new ModeloTema(r.getInt("temaID"), r.getString("tema"), r.getString("tiempoEstimado"), r.getInt("reunionID"), 0));
+            }
+            return array;
+        }catch(Exception e){
+            Toast.makeText(contexto, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
+
+    //Método para traer los acuerdos
+    public ArrayList<ModeloAcuerdo> getAcuerdos(int reunionID){
+        ArrayList<ModeloAcuerdo> array = new ArrayList<>();
+        con = new Conexion(contexto);
+        try {
+            PreparedStatement var = con.conexiondbImplementacion().prepareCall("PMovil_Minuta_R_Acuerdos_SELECT ?");
+            var.setInt(1, reunionID);
+            ResultSet r = var.executeQuery();
+            while(r.next()){
+                array.add(new ModeloAcuerdo(r.getInt("acuerdoID"), r.getString("acuerdo"), r.getString("nombreCompleto"), r.getInt("personaID"), r.getString("fechaCompromiso"), r.getInt("reunionID"), 0));
+            }
+            return array;
+        }catch (Exception e){
+            Toast.makeText(contexto, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
+
 
     //Adapter minutas
     public class AdapterReunion extends RecyclerView.Adapter<AdapterReunion.AdapterReunionHolder>{
