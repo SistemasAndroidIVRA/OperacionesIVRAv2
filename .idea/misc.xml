@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/drawable/snakerojo.xml" value="0.2203125" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_materiales.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_materiales_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_nuevo_item.xml" value="0.20416666666666666" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos_editar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_asistentes.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_spinner.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/pedidos_a_ventas_items.xml" value="0.22" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout-land/activity_main.xml" value="0.23828125" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_administrador.xml" value="0.1" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_main.xml" value="0.18507281553398058" />

@@ -249,13 +249,17 @@ public class MinutaMenu extends AppCompatActivity {
         int sound = preferences.getInt("sonido",-1);
         if(1 == sound){
             btnSilenciar.setText("Con sonido");
+            btnSilenciar.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.ic_lock_silent_mode_off,0);
+
         }else if (sound == -1){
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt("sound", 1);
+            editor.putInt("sonido", 1);
             btnSilenciar.setText("Con sonido");
+            btnSilenciar.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.ic_lock_silent_mode_off,0);
             editor.apply();
         }else{
             btnSilenciar.setText("Sin sonido");
+            btnSilenciar.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.ic_lock_silent_mode,0);
         }
     }
     public void silenciar(SharedPreferences preferences){
@@ -263,12 +267,14 @@ public class MinutaMenu extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("sonido", 0);
             btnSilenciar.setText("Sin sonido");
+            btnSilenciar.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.ic_lock_silent_mode,0);
             editor.apply();
         }else{
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("sonido", 1);
             btnSilenciar.setText("Con sonido");
             editor.apply();
+            btnSilenciar.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.ic_lock_silent_mode_off,0);
         }
     }
 
