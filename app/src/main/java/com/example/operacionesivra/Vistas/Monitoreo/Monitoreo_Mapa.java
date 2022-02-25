@@ -176,7 +176,7 @@ public class Monitoreo_Mapa extends FragmentActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng shimaco = new LatLng(21.088395, -101.621771);
-        mMap.addMarker(new MarkerOptions().position(shimaco).title("Shimaco Group")
+        mMap.addMarker(new MarkerOptions().position(shimaco).title("Shimaco Group punto")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ubicacion_empresa)));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(shimaco));

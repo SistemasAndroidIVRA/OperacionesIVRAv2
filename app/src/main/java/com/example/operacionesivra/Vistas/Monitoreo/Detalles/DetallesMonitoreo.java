@@ -130,8 +130,8 @@ public class DetallesMonitoreo extends FragmentActivity implements OnMapReadyCal
     //Cuando el mapa está listo carga los marcadores y opciones que hayas elegido darle al mapa
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng mOrigin = new LatLng(41.3949, 2.0086);
-        LatLng mDestination = new LatLng(41.1258, 1.2035);
+        LatLng mOrigin = new LatLng(21.087945, -101.619635);
+        LatLng mDestination = new LatLng(21.087049, -101.620475);
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);

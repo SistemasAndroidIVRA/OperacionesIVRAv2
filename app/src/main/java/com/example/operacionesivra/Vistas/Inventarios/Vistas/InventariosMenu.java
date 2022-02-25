@@ -220,7 +220,7 @@ public class InventariosMenu extends AppCompatActivity{
     }
 
     public void fullSpinnerAlmacenes(Spinner spinner, Context contexto){
-        String[] opciones = {"00 ALMACEN GAMMA", "07 KAPPA","14 DELTA","17 CORTES", "02 GAMMA", "03 GAMMA", "04 ALMACEN ALPHA", "05 GAMMA MUESTRAS", "06 GAMMA SURTIDO",  "08 GAMMA ARETINA", "09 GAMMA BLOQUEADO", "10 GAMMA OP",  "18 DELTA OP"};
+        String[] opciones = {"00 ALMACEN GAMMA", "07 KAPPA","14 DELTA","17 CORTES", "02 GAMMA", "03 GAMMA", "04 ALMACEN ALPHA", "05 GAMMA MUESTRAS", "06 GAMMA SURTIDO",  "08 GAMMA ARETINA", "09 GAMMA BLOQUEADO", "10 GAMMA OP", "12 MONJARAZ", "18 DELTA OP"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(contexto, R.layout.inventario_a_spinner, opciones);
         spinner.setAdapter(adapter);
     }
@@ -285,7 +285,6 @@ public class InventariosMenu extends AppCompatActivity{
         }catch (Exception e){
             Toast.makeText(context, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        //
     }
 
 }

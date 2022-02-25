@@ -1,5 +1,7 @@
 package com.example.operacionesivra.Vistas.Inventario;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -15,10 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.operacionesivra.R;
 import com.example.operacionesivra.Vistas.Inventario.ConteosPausa.Pausa;
 import com.example.operacionesivra.Vistas.Inventario.InventariosCerrados.Inventarioscerrados;
 import com.example.operacionesivra.Vistas.Inventarios.Vistas.InventariosMenu;
-import com.example.operacionesivra.R;
 import com.example.operacionesivra.Vistas.Services.Conexion;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,8 +30,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import devliving.online.mvbarcodereader.MVBarcodeScanner;
-
-import static android.app.Activity.RESULT_OK;
 
 public class DialogIniciarInventario extends DialogFragment {
     CustomDialogInterface customDialogInterface;
@@ -55,7 +55,7 @@ public class DialogIniciarInventario extends DialogFragment {
         material = view.findViewById(R.id.codigomaterial);
         spinner = view.findViewById(R.id.spinner);
         scanner = view.findViewById(R.id.escogermaterialscanner);
-        String[] opciones = {"00 ALMACEN GAMMA", "07 KAPPA","14 DELTA","17 CORTES", "02 GAMMA", "03 GAMMA", "04 ALMACEN ALPHA", "05 GAMMA MUESTRAS", "06 GAMMA SURTIDO",  "08 GAMMA ARETINA", "09 GAMMA BLOQUEADO", "10 GAMMA OP",  "18 DELTA OP"};
+        String[] opciones = {"00 ALMACEN GAMMA", "07 KAPPA","14 DELTA","17 CORTES", "02 GAMMA", "03 GAMMA", "04 ALMACEN ALPHA", "05 GAMMA MUESTRAS", "06 GAMMA SURTIDO",  "08 GAMMA ARETINA", "09 GAMMA BLOQUEADO", "10 GAMMA OP", "12 MONJARAZ",  "18 DELTA OP"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), R.layout.ajuste_inventario_spinnervisual, opciones);
         spinner.setAdapter(adapter);
         view.findViewById(R.id.aceptar_CD).setOnClickListener(new View.OnClickListener() {

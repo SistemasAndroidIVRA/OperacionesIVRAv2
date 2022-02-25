@@ -304,7 +304,7 @@ public class CustomDialogFragmentTag extends DialogFragment {
         try {
             Conexion con = new Conexion(getContext());
             Statement statement = con.conexiondbImplementacion().createStatement();
-            String query = "SELECT UbicacionID, Nombre FROM Ubicacion WHERE status = 1";
+            String query = "SELECT UbicacionID, Nombre FROM Ubicacion WHERE status = 1 ORDER BY Nombre DESC";
             ResultSet r = statement.executeQuery(query);
             while(r.next()){
                 ubicaciones.add(new ModeloUbicacion(r.getString("UbicacionID"), r.getString("Nombre")));

@@ -239,6 +239,7 @@ public class InventariosRegistro extends AppCompatActivity {
             }
         });
         //TxtOnListener
+
         txtInvCodEscanear.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -1018,18 +1019,22 @@ public class InventariosRegistro extends AppCompatActivity {
     }
 
     public ArrayList<Ubicacion> fullArrayUbicaciones(){
-        ArrayList<Ubicacion> arrayUbicaciones = new ArrayList<Ubicacion>();
-        con = new Conexion(InventariosRegistro.this);
+        ArrayList<Ubicacion> arrayUbicaciones = new ArrayList<>();
+        con = new Conexion(contexto);
         try {
             Statement stmt = con.conexiondbImplementacion().createStatement();
-            String query = "SELECT UbicacionID, Nombre FROM Ubicacion WHERE status = 1;";
+            String query = "SELECT UbicacionID, Nombre FROM Ubicacion WHERE status = 1 ORDER BY Nombre DESC;";
             ResultSet r = stmt.executeQuery(query);
             while(r.next()){
                 arrayUbicaciones.add(new Ubicacion(r.getString("UbicacionID"), r.getString("Nombre")));
             }
         }catch (Exception e){
-
+            new MaterialAlertDialogBuilder(contexto)
+                    .setTitle("Error al llenar spinner")
+                    .setMessage("Error: "+e.getMessage())
+                    .show();
         }
+        Toast.makeText(contexto, "Ubicaciones: ", Toast.LENGTH_SHORT).show();
         return arrayUbicaciones;
     }
 
