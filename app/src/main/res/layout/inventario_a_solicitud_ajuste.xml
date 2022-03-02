@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inventarios.Vistas.AjusteInventario.SolicitudAjuste">
+    tools:context=".Vistas.Inventarios.Vistas.AjusteInventario.SolicitudAjuste">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

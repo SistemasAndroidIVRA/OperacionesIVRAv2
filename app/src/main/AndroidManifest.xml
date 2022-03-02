@@ -6,6 +6,8 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,59 +23,59 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Pedidos.Ventas.VentasEditar"
+            android:name=".Vistas.Pedidos.Ventas.VentasEditar"
             android:exported="true" />
         <activity
-            android:name=".Pedidos.Ventas.VentasRegistrar"
+            android:name=".Vistas.Pedidos.Ventas.VentasRegistrar"
             android:exported="true" />
         <activity
-            android:name=".Pedidos.Ventas.Ventas"
+            android:name=".Vistas.Pedidos.Ventas.Ventas"
             android:exported="true" />
         <activity
-            android:name=".Pedidos.Pedidos"
+            android:name=".Vistas.Pedidos.Pedidos"
             android:exported="true" />
         <activity
-            android:name=".Seguridad.Roles.Roles"
+            android:name=".Vistas.Seguridad.Roles.Roles"
             android:exported="true" />
         <activity
-            android:name=".Seguridad.Modulos.Modulos"
+            android:name=".Vistas.Seguridad.Modulos.Modulos"
             android:exported="true" />
         <activity
-            android:name=".Seguridad.Seguridad"
+            android:name=".Vistas.Seguridad.Seguridad"
             android:exported="true" />
         <activity
-            android:name=".Inventarios.Vistas.AjusteInventario.InventarioNuevoAjuste"
+            android:name=".Vistas.Inventarios.Vistas.AjusteInventario.InventarioNuevoAjuste"
             android:exported="true" />
         <activity
-            android:name=".Inventarios.Vistas.AjusteInventario.AjusteMateriales"
+            android:name=".Vistas.Inventarios.Vistas.AjusteInventario.AjusteMateriales"
             android:exported="true" />
         <activity
-            android:name=".Inventarios.Vistas.AjusteInventario.SolicitudAjuste"
+            android:name=".Vistas.Inventarios.Vistas.AjusteInventario.SolicitudAjuste"
             android:exported="true" />
         <activity
-            android:name=".Inventarios.Vistas.AjusteInventario.InventarioAjuste"
+            android:name=".Vistas.Inventarios.Vistas.AjusteInventario.InventarioAjuste"
             android:exported="true" />
         <activity
-            android:name=".PantallaRecepcion.administrar.RecepcionAdministrarVideos"
+            android:name=".Vistas.PantallaRecepcion.administrar.RecepcionAdministrarVideos"
             android:exported="true" />
         <activity
-            android:name=".Minuta.Vistas.MinutaReunionRegistro"
+            android:name=".Vistas.Minuta.Vistas.MinutaReunionRegistro"
             android:exported="true" />
         <activity
-            android:name=".Minuta.Vistas.MinutaReunionDetalle"
+            android:name=".Vistas.Minuta.Vistas.MinutaReunionDetalle"
             android:exported="true" />
         <activity
-            android:name=".Minuta.Vistas.MinutaConsultarMinutas"
+            android:name=".Vistas.Minuta.Vistas.MinutaConsultarMinutas"
             android:exported="true" />
         <activity
-            android:name=".Inventarios.Vistas.EnProceso.DetallesProceso.InventarioAEnProcesosDetalle"
+            android:name=".Vistas.Inventarios.Vistas.EnProceso.DetallesProceso.InventarioAEnProcesosDetalle"
             android:exported="true" />
-        <activity android:name=".Inventarios.Vistas.EnHistorico.DetallesHistorico.InventarioAEnHistoricosDetalle" />
-        <activity android:name=".Inventarios.Vistas.EnHistorico.InventariosEnHistorico" />
-        <activity android:name=".Inventarios.Vistas.EnProceso.InventariosEnProceso" />
-        <activity android:name=".Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones" />
-        <activity android:name=".Inventarios.Vistas.InventariosRegistro" /> <!-- Minuta -->
-        <activity android:name=".Minuta.Vistas.MinutaMenu" />
+        <activity android:name=".Vistas.Inventarios.Vistas.EnHistorico.DetallesHistorico.InventarioAEnHistoricosDetalle" />
+        <activity android:name=".Vistas.Inventarios.Vistas.EnHistorico.InventariosEnHistorico" />
+        <activity android:name=".Vistas.Inventarios.Vistas.EnProceso.InventariosEnProceso" />
+        <activity android:name=".Vistas.Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones" />
+        <activity android:name=".Vistas.Inventarios.Vistas.InventariosRegistro" /> <!-- Minuta -->
+        <activity android:name=".Vistas.Minuta.Vistas.MinutaMenu" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -85,41 +87,41 @@
                 android:resource="@xml/provider_path" />
         </provider>
 
-        <activity android:name=".Minuta.Principal.MinutaPrincipal" />
-        <activity android:name=".Inventarios.Vistas.InventariosMenu" />
-        <activity android:name=".Ubicaciones.Ubicacaiones" />
+        <activity android:name=".Vistas.Minuta.Principal.MinutaPrincipal" />
+        <activity android:name=".Vistas.Inventarios.Vistas.InventariosMenu" />
+        <activity android:name=".Vistas.Ubicaciones.Ubicacaiones" />
         <activity
-            android:name=".Monitoreo.Detalles.DetallesMonitoreo"
+            android:name=".Vistas.Monitoreo.Detalles.DetallesMonitoreo"
             android:label="@string/title_activity_detalles_monitoreo" />
-        <activity android:name=".Administrador.Permisos.DetallesUsuario" />
-        <activity android:name=".Administrador.Administrador" />
-        <activity android:name=".MainActivity.Login" />
+        <activity android:name=".Vistas.Administrador.Permisos.DetallesUsuario" />
+        <activity android:name=".Vistas.Administrador.Administrador" />
+        <activity android:name=".Vistas.MainActivity.Login" />
         <activity
-            android:name=".Monitoreo.Monitoreo_Mapa"
+            android:name=".Vistas.Monitoreo.Monitoreo_Mapa"
             android:label="@string/title_activity_monitoreo__mapa" />
-        <activity android:name=".Reportes.AuxiliarPorProducto.AuxiliarPorProducto" />
-        <activity android:name=".Reportes.Inventario.InventarioActual.InventarioActual" />
-        <activity android:name=".Reportes.Inventario.InventariosCerrados.ReporteInventariosCerrados" />
-        <activity android:name=".Reportes.Inventario.ReportesInventarioGeneral" />
-        <activity android:name=".Reportes.Encuesta.EncuestadeSatisfacionReporte" />
-        <activity android:name=".Reportes.Inventario.ReporteInventarioTerminado" />
-        <activity android:name=".Reportes.SelectordeReportes" />
-        <activity android:name=".Reportes.Chequeo.TerminadosListaPedido.CrearReporte" />
-        <activity android:name=".Reportes.Chequeo.ListaChequeoTerminado" />
-        <activity android:name=".Chequeo.Surtir.DetallesChequeo" />
-        <activity android:name=".Chequeo.ListadePedidos.ListadeChequeo" />
-        <activity android:name=".PantallaRecepcion.PantallaDeRecepcion" />
-        <activity android:name=".PantallaDePrioridades.PantalladePrioridades" />
-        <activity android:name=".Inventario.InventariosCerrados.Inventarioscerrados" />
-        <activity android:name=".Inventario.InventariosHistoricos.Inventario_InventariosHistoricos" />
-        <activity android:name=".Inventario.InventariosHistoricos.DetallesHistoricos.Detalles_Historicos" />
-        <activity android:name=".Inventario.ConteosPausa.Pausa" />
-        <activity android:name=".Inventario.Inventario" />
+        <activity android:name=".Vistas.Reportes.AuxiliarPorProducto.AuxiliarPorProducto" />
+        <activity android:name=".Vistas.Reportes.Inventario.InventarioActual.InventarioActual" />
+        <activity android:name=".Vistas.Reportes.Inventario.InventariosCerrados.ReporteInventariosCerrados" />
+        <activity android:name=".Vistas.Reportes.Inventario.ReportesInventarioGeneral" />
+        <activity android:name=".Vistas.Reportes.Encuesta.EncuestadeSatisfacionReporte" />
+        <activity android:name=".Vistas.Reportes.Inventario.ReporteInventarioTerminado" />
+        <activity android:name=".Vistas.Reportes.SelectordeReportes" />
+        <activity android:name=".Vistas.Reportes.Chequeo.TerminadosListaPedido.CrearReporte" />
+        <activity android:name=".Vistas.Reportes.Chequeo.ListaChequeoTerminado" />
+        <activity android:name=".Vistas.Chequeo.Surtir.DetallesChequeo" />
+        <activity android:name=".Vistas.Chequeo.ListadePedidos.ListadeChequeo" />
+        <activity android:name=".Vistas.PantallaRecepcion.PantallaDeRecepcion" />
+        <activity android:name=".Vistas.PantallaDePrioridades.PantalladePrioridades" />
+        <activity android:name=".Vistas.Inventario.InventariosCerrados.Inventarioscerrados" />
+        <activity android:name=".Vistas.Inventario.InventariosHistoricos.Inventario_InventariosHistoricos" />
+        <activity android:name=".Vistas.Inventario.InventariosHistoricos.DetallesHistoricos.Detalles_Historicos" />
+        <activity android:name=".Vistas.Inventario.ConteosPausa.Pausa" />
+        <activity android:name=".Vistas.Inventario.Inventario" />
         <activity
-            android:name=".Picking.SuirtirPicking.SurtirPicking"
+            android:name=".Vistas.Picking.SuirtirPicking.SurtirPicking"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Picking.ListapedidosPicking.ListaPicking" />
-        <activity android:name=".MainActivity.MainActivity">
+        <activity android:name=".Vistas.Picking.ListapedidosPicking.ListaPicking" />
+        <activity android:name=".Vistas.MainActivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

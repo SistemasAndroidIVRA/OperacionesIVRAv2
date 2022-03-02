@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#98AAEC"
-    tools:context=".Pedidos.Pedidos">
+    tools:context=".Vistas.Pedidos.Pedidos">
 
     <LinearLayout
         android:id="@+id/linearLayout50"

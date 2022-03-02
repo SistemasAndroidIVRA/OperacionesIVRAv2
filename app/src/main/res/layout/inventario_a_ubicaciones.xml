@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones">
+    tools:context=".Vistas.Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E3F0FF"
-    tools:context=".Pedidos.Ventas.VentasRegistrar">
+    tools:context=".Vistas.Pedidos.Ventas.VentasRegistrar">
 
     <LinearLayout
         android:id="@+id/linearLayout52"
@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Nueva venta"
+                android:text="Captura de pedidos"
                 android:textColor="@color/Recepcion"
                 android:textStyle="bold" />
 
@@ -70,12 +70,13 @@
                 android:layout_height="10sp" />
 
             <TextView
-                android:id="@+id/textView396"
+                android:id="@+id/lblVentaFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha"
+                android:text="lblVentaFecha"
                 android:textAlignment="viewEnd"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView393"
@@ -84,6 +85,7 @@
                 android:text="Captura de información"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <Space
@@ -95,75 +97,162 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView394"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Información general"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/textView395"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Serie:"
-                    android:textColor="@android:color/black" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/textView397"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cliente:"
-                    android:textColor="@android:color/black" />
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner3"
+                    <TextView
+                        android:id="@+id/textView395"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Serie: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lblVentaCaja"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="K"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/textView400"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Entregar a:"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner6"
+                    <TextView
+                        android:id="@+id/textView397"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cliente:"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtVentaCliente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/textView398"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Moneda:"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner4"
+                    <TextView
+                        android:id="@+id/textView396"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Entregar: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerVentaReferencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/textView399"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Facturas menores a:"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner5"
+                    <TextView
+                        android:id="@+id/textView400"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo documento: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerVentaDocumento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView398"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Moneda: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/pinnerVentaMoneda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView399"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Facturas menores a: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerVentaFacturas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
+
+            <LinearLayout
+                android:id="@+id/separador"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/divider"
+                android:orientation="vertical"></LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -181,19 +270,28 @@
                     android:text="Agregar productos"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView402"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Producto:"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/textView402"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Producto: "
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtVentaProductos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -206,7 +304,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Tipo unidad:"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView404"
@@ -228,7 +327,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Cantidad: "
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/editTextTextPersonName"
@@ -246,6 +346,17 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/separador2"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/divider"
+                android:orientation="vertical"></LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

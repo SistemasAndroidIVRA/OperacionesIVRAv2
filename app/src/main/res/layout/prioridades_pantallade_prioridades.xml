@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_azul_arriba"
-    tools:context=".PantallaDePrioridades.PantalladePrioridades">
+    tools:context=".Vistas.PantallaDePrioridades.PantalladePrioridades">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

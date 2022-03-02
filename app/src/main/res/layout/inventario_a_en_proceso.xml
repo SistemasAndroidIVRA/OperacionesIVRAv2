@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inventarios.Vistas.EnProceso.InventariosEnProceso">
+    tools:context=".Vistas.Inventarios.Vistas.EnProceso.InventariosEnProceso">
 
     <LinearLayout
         android:id="@+id/linearLayout28"
