@@ -1,4 +1,4 @@
-package com.example.operacionesivra.Minuta.Vistas;
+package com.example.operacionesivra.Vistas.Minuta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,15 +35,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.DetallesHistorico.PdfDocumentAdapter;
-import com.example.operacionesivra.Inventarios.Vistas.EnHistorico.InventariosEnHistorico;
-import com.example.operacionesivra.Minuta.Modelos.ModeloAcuerdo;
-import com.example.operacionesivra.Minuta.Modelos.ModeloAsistente;
-import com.example.operacionesivra.Minuta.Modelos.ModeloReunion;
-import com.example.operacionesivra.Minuta.Modelos.ModeloTema;
-import com.example.operacionesivra.PantallasCargando.Loading;
+
+import com.example.operacionesivra.Modelos.ModeloAcuerdo;
+import com.example.operacionesivra.Modelos.ModeloAsistente;
+import com.example.operacionesivra.Modelos.ModeloReunion;
+import com.example.operacionesivra.Modelos.ModeloTema;
 import com.example.operacionesivra.R;
-import com.example.operacionesivra.Services.Conexion;
+import com.example.operacionesivra.Vistas.Minuta.MinutaReunionDetalle;
+import com.example.operacionesivra.Vistas.PantallasCargando.Loading;
+import com.example.operacionesivra.Vistas.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;

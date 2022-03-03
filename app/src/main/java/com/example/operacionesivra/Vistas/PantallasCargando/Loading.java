@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.operacionesivra.Vistas.Minuta.MinutaConsultarMinutas;
 import com.example.operacionesivra.Vistas.Administrador.Administrador;
 import com.example.operacionesivra.Vistas.Administrador.Permisos.DetallesUsuario;
 import com.example.operacionesivra.Vistas.Chequeo.ListadePedidos.ListadeChequeo;
@@ -19,10 +20,10 @@ import com.example.operacionesivra.Vistas.Inventarios.Vistas.EnProceso.Inventari
 import com.example.operacionesivra.Vistas.Inventarios.Vistas.InventariosMenu;
 import com.example.operacionesivra.Vistas.Inventarios.Vistas.InventariosRegistro;
 import com.example.operacionesivra.Vistas.MainActivity.MainActivity;
-import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaConsultarMinutas;
-import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaMenu;
-import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaReunionDetalle;
-import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaReunionRegistro;
+//import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaConsultarMinutas;
+import com.example.operacionesivra.Vistas.Minuta.MinutaMenu;
+import com.example.operacionesivra.Vistas.Minuta.MinutaReunionDetalle;
+import com.example.operacionesivra.Vistas.Minuta.MinutaReunionRegistro;
 import com.example.operacionesivra.Vistas.PantallaDePrioridades.PantalladePrioridades;
 import com.example.operacionesivra.Vistas.PantallaRecepcion.PantallaDeRecepcion;
 import com.example.operacionesivra.Vistas.Picking.ListapedidosPicking.ListaPicking;

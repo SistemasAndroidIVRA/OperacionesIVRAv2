@@ -19,7 +19,7 @@ import androidx.cardview.widget.CardView;
 import com.example.operacionesivra.Vistas.Administrador.Administrador;
 import com.example.operacionesivra.Vistas.Chequeo.ListadePedidos.ListadeChequeo;
 import com.example.operacionesivra.Vistas.Inventarios.Vistas.InventariosMenu;
-import com.example.operacionesivra.Vistas.Minuta.Vistas.MinutaMenu;
+import com.example.operacionesivra.Vistas.Minuta.MinutaMenu;
 import com.example.operacionesivra.Vistas.Monitoreo.Monitoreo_Mapa;
 import com.example.operacionesivra.Vistas.PantallaDePrioridades.PantalladePrioridades;
 import com.example.operacionesivra.Vistas.PantallaRecepcion.PantallaDeRecepcion;

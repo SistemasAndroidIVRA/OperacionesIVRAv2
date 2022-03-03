@@ -2,35 +2,11 @@
     <string name="app_name">Operaciones IVRA</string>
 
     //Ayuda 2
-    <string name="titulo_A2">Ayuda</string>
-    <string name="actualizar_A2">Actualizar</string>
-    <string name="subtitulo_A2">¿Qué hace este botón?</string>
-    <string name="regresar_A2">Regresar</string>
     //Menu
-    <string name="Bienvenida">Módulos disponibles</string>
-    <string name="picking">Pincking</string>
-    <string name="materiales">Inventario</string>
-    <string name="lista">Lista de Prioridades</string>
-    <string name="Usuarrio">Cambiar usuario</string>
     //Dialog inicio de sesion
     <string name="iniciar_IS">Iniciar Sesión</string>
     //ProgressBar
-    <string name="cargando_PB">Cargando...</string>
     //Ajuste de inventario
-    <string name="fecha_AI">Fecha</string>
-    <string name="almacen_AI">Almacén</string>
-    <string name="material_AI">Material</string>
-    <string name="faltatotal_AI">Faltante</string>
-    <string name="codigosdisponible_AI">TAGS disponibles</string>
-    <string name="codigo_AI">Código</string>
-    <string name="contenido_AI">Contenido</string>
-    <string name="ubicacion_AI">Ubicación</string>
-    <string name="nuevaubicacion_AI">Nueva ubicación</string>
-    <string name="match_AI">Match</string>
-    <string name="tag_AI">TAG</string>
-    <string name="botonterminar_I">Terminar</string>
-    <string name="estado_I">Estado</string>
-    <string name="accion">Acción</string>
 
     //Dialog de pausa
     <string name="titulo_DP">Conteos en pausa</string>
@@ -52,18 +28,12 @@
     <string name="longitud_M">Contenido</string>
     <string name="ubicacion_M">Ubicación</string>
     <string name="estado_M">Estado</string>
-    <string name="total_M">Stock total (Almacén)</string>
     <string name="almacen_M">Almacén</string>
     <string name="listo_M">Completado</string>
     <string name="escaneos_M">Cantidad registrada (Metros)</string>
-    <string name="cantidad_M">Entradas realizadas</string>
     <string name="obserbaciones_M">Contenido total</string>
     <string name="fecha_M">Fecha</string>
-    <string name="editar_M">Editar</string>
     <string name="nuevatag_M">Nuevo registro</string>
-    <string name="incidencia_M">Incidencia</string>
-    <string name="verificartag_M">Match</string>
-    <string name="agregarincidencia_M">Incidencia</string>
     //dialog fragment
     <string name="aceptarB_DF">Aceptar</string>
     <string name="elegir_DF">Elegir material</string>
@@ -71,36 +41,14 @@
     <string name="cerrados_DF">Inventarios terminados</string>
     <string name="atras_DF">Atrás</string>
     //dialog fragment Tag
-    <string name="cantidadt_DFT">Cantidad total</string>
     <string name="cancelar_DFT">Cancelar</string>
-    <string name="agregartag_DFT">Agregar nuevo Registro</string>
     //Pagina principal
-    <string name="ListaDePedidos">Lista de pedidos</string>
     <string name="Fecha">Fecha</string>
-    <string name="Cliente">Cliente</string>
-    <string name="Tipodepedido">Referencia</string>
-    <string name="numerodepedido">Pedido</string>
-    <string name="Cantidad">Total</string>
-    <string name="Hora">Hora</string>
-    <string name="ayuda">Ayuda</string>
-    <string name="detalles">Detalles del Pedido</string>
-    <string name="actualizarmanual">Actualizar</string>
-    <string name="cantidaddetalle">Cantidad:</string>
-    <string name="clientedetalle">Cliente:</string>
-    <string name="tipodetalle">Referencia:</string>
-    <string name="botonsurtir">Surtir este Pedido</string>
-    <string name="indicacionti">Instrucciones</string>
-    <string name="indicacion">1.-Seleccione el pedido que se va a preparar \n2.-Verifique que ha seleccionado el pedido correcto \n3.-Si el pedido es correcto presione continuar \n \nNota: Si no aparece el pedido que busca es posible que la lista esté desactualizada, en ese caso presione actualizar </string>
     //Surtir pedido
-    <string name="contenidodelpedido">Contenido del Pedido</string>
-    <string name="codigo_SP">Códigos escaneados</string>
     <string name="cantidad_SP">A surtir</string>
     <string name="nombreitem_SP">Nombre del material</string>
-    <string name="manual_SP">Manual</string>
     <string name="estado_SP">Estado</string>
     <string name="cantidadescaneada_SP">Surtido</string>
-    <string name="escanearBT_SP">Escanear</string>
-    <string name="ListoBT_SP">Listo</string>
     <string name="cliente_SP">Cliente</string>
     <string name="codigopedido_SP">Pedido</string>
     <string name="itemscontador_SP">Items en el pedido</string>
@@ -110,71 +58,27 @@
     <string name="titulo_ERP">Editar Registro</string>
 
     //Scanner
-    <string name="automaticoBT_S">Scanner</string>
-    <string name="multiplesBT_S">Múltiples etiquetas</string>
-    <string name="ultimoescaneado_S">Último escaneado</string>
-    <string name="tiposdescanner_S">Tipos de Escaneo</string>
     <string name="aceptarBT_S">Aceptar</string>
-    <string name="eliminarBT_S">Eliminar</string>
 
     //Ayuda
-    <string name="Bienvenido_A">Ayuda</string>
-    <string name="subtitulo_A">¿Qué modo de escaneo necesito?</string>
-    <string name="etiquetaunica_A">Etiqueta Única</string>
-    <string name="instruccionunica">Apunte la cámara del dispositivo al código de barras y espera a
-        que \néste lo detecte\nEl código se guardará automaticamente.</string>
-    <string name="cuandousar_A">¿Cuando usar este modo?</string>
-    <string name="indicacion1_A">-Sólo tienes un código que escanear\n-Los códigos se encuantran muy separados\n-El modo automático tiene problemas al leer un código en específico</string>
-    <string name="etiquetamultiple_A">Etiquetas Multiples</string>
-    <string name="instruccionmultiple">Cuando tenga más de un código de barras apunte a ellos con
-        la cámara \ndel dispositivo. Cuando estos sean detectados saldrá una linea\nde algún color,
-    esto significa que el código ha sido reconocido, una vez reconozca todos los codigos que necesite
-    toca la pantalla para guardar los códigos.</string>
-    <string name="indicacion2_A">-Tienes mas de un material a escanear cerca de otro\n-Los códigos de barras se encuentras cerca (Dentro del alcance de la cámara)\n
-        </string>
-    <string name="entendidoBT_A">¡Entiendo!</string>
-    <string name="title_activity_inventarios">Inventarios</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="title_activity_qwe">qwe</string>
-    <string name="tab_text_3" />
 
     //Item especial
     <string name="bienvenida_IE"> Agregar Incidencia en inventario</string>
-    <string name="aceptar_IE">Guardar Registro</string>
 
     //Inventarios cerrados
     <string name="bienvenido_IC">Inventarios Cerrados</string>
-    <string name="instrucciones_IC">La lista muestra los inventarios que se han realizado con un lapso de 5 dias, a continuación podrás consultar la información proporcionada y reimprimir el reporte o bien modificar la información que se capturó agregando campos nuevos y/o editando las incidencias</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     //PantalladePrioridades
     <string name="bienvenida_pp">Pedidos actuales:</string>
-    <string name="cliente_pp">Cliente</string>
-    <string name="pedido_pp">Pedido</string>
-    <string name="entrega_pp">Entrega</string>
-    <string name="referencia_pp">Referencia</string>
-    <string name="cumplido_pp">Cumplido</string>
 
     //PantalladeRecepcion
     <string name="bienvenida_pr">Bienvenido</string>
-    <string name="subtitulo_pr">Estado de pedidos</string>
-    <string name="title_activity_prioridades_tab">PrioridadesTab</string>
     <string name="lel">lel</string>
-    <string name="hola">hola</string>
     <string name="title_activity_monitoreo__mapa">Map</string>
     <string name="title_activity_detalles_monitoreo">Map</string>
-    <string name="title_activity_inventario_amenu_ajuste">inventario_a_menu_ajuste</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>
 

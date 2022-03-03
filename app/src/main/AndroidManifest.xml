@@ -59,13 +59,13 @@
             android:name=".Vistas.PantallaRecepcion.administrar.RecepcionAdministrarVideos"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Minuta.Vistas.MinutaReunionRegistro"
+            android:name=".Vistas.Minuta.MinutaReunionRegistro"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Minuta.Vistas.MinutaReunionDetalle"
+            android:name=".Vistas.Minuta.MinutaReunionDetalle"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Minuta.Vistas.MinutaConsultarMinutas"
+            android:name=".Vistas.Minuta.MinutaConsultarMinutas"
             android:exported="true" />
         <activity
             android:name=".Vistas.Inventarios.Vistas.EnProceso.DetallesProceso.InventarioAEnProcesosDetalle"
@@ -73,9 +73,8 @@
         <activity android:name=".Vistas.Inventarios.Vistas.EnHistorico.DetallesHistorico.InventarioAEnHistoricosDetalle" />
         <activity android:name=".Vistas.Inventarios.Vistas.EnHistorico.InventariosEnHistorico" />
         <activity android:name=".Vistas.Inventarios.Vistas.EnProceso.InventariosEnProceso" />
-        <activity android:name=".Vistas.Inventarios.Vistas.Ubicaciones.Inventario_Ubicaciones" />
         <activity android:name=".Vistas.Inventarios.Vistas.InventariosRegistro" /> <!-- Minuta -->
-        <activity android:name=".Vistas.Minuta.Vistas.MinutaMenu" />
+        <activity android:name=".Vistas.Minuta.MinutaMenu" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -87,7 +86,6 @@
                 android:resource="@xml/provider_path" />
         </provider>
 
-        <activity android:name=".Vistas.Minuta.Principal.MinutaPrincipal" />
         <activity android:name=".Vistas.Inventarios.Vistas.InventariosMenu" />
         <activity android:name=".Vistas.Ubicaciones.Ubicacaiones" />
         <activity
