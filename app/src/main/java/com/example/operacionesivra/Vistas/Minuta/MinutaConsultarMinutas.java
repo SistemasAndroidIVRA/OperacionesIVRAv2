@@ -41,6 +41,7 @@ import com.example.operacionesivra.Modelos.ModeloAsistente;
 import com.example.operacionesivra.Modelos.ModeloReunion;
 import com.example.operacionesivra.Modelos.ModeloTema;
 import com.example.operacionesivra.R;
+import com.example.operacionesivra.Vistas.Inventarios.Vistas.EnHistorico.DetallesHistorico.PdfDocumentAdapter;
 import com.example.operacionesivra.Vistas.Minuta.MinutaReunionDetalle;
 import com.example.operacionesivra.Vistas.PantallasCargando.Loading;
 import com.example.operacionesivra.Vistas.Services.Conexion;
@@ -395,7 +396,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
     }
 
     public void generateReporte(int status){
-        int pageWidth = 1200, pageHeight = 2010, pageNumber = 1;
+        int pageWidth = 1200, pageHeight = 2010, pageNumber = 1, max = 0;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         android.graphics.pdf.PdfDocument pdfDocument = new android.graphics.pdf.PdfDocument();
         Paint myPaint = new Paint();
@@ -439,9 +440,15 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         canvas.drawText("Generado por : ",110,350, myPaint);
         SharedPreferences sharedPref = getSharedPreferences("credenciales",Context.MODE_PRIVATE);
         String name = sharedPref.getString("user","null");
-        canvas.drawText(name, 275, 350, myPaint );
+        ArrayList<String> nameSplit = stringSplit(name,29);
+        for (int i = 0; i < nameSplit.size();i++){
+            canvas.drawText(nameSplit.get(i), 275, 350+(20*i), myPaint );
+        }
         canvas.drawText("Filtros por busqueda : ",610,350, myPaint);
-        canvas.drawText(txtMinutaConsFiltrador.getText().toString(), 880, 350, myPaint );
+        ArrayList<String> filtroBusquedasSplit = stringSplit(txtMinutaConsFiltrador.getText().toString(),29);
+        for (int i = 0; i < filtroBusquedasSplit.size();i++){
+            canvas.drawText(filtroBusquedasSplit.get(i), 840, 350+(20*i), myPaint );
+        }
 
 
 
@@ -496,9 +503,14 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
                 y=y+40;
             }
 
+            canvas.drawLine(100,y-20, 1100, y-20, myPaint);
+            canvas.drawLine(100,y-20, 100, y+20, myPaint);
             canvas.drawText("Participantes : ",110,y, myPaint);
+            canvas.drawLine(450,y-20, 450, y+20, myPaint);
             canvas.drawText("Tema : ",460,y, myPaint);
+            canvas.drawLine(800,y-20, 800, y+20, myPaint);
             canvas.drawText("Acuerdos : ",810,y, myPaint);
+            canvas.drawLine(1100,y-20, 1100, y+20, myPaint);
 
             if(y>=1850){
                 pageNumber++;
@@ -513,11 +525,69 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
 
             int id = arrayReuniones.get(i).getReunionID();
             ArrayList<ModeloAsistente> arrayListAsistentes= getAsistentes(id);
+            ArrayList<String> arrayListAsistentesNombres = new ArrayList<>();
+            ArrayList<ModeloAcuerdo> arrayListAcuerdos = getAcuerdos(id);
+            ArrayList<String> arrayListAcuerdosTexto = new ArrayList<>();
+            ArrayList<ModeloTema> arrayListTema = getTemas(id);
+            ArrayList<String> arrayListTemas = new ArrayList<>();
+            max = 0;
             if(arrayListAsistentes.isEmpty()){
                 canvas.drawText("•No hay asistentes",110,y, myPaint);
             }else{
-                canvas.drawText("•"+arrayListAsistentes.get(0).getNombre(),110,y, myPaint);
+                for (int j = 0; j < arrayListAsistentes.size(); j++){
+                    arrayListAsistentesNombres.add(arrayListAsistentes.get(j).getNombre());
+                }
+                arrayListAsistentesNombres = stringSplit(arrayListAsistentesNombres,27);
+                max = arrayListAsistentesNombres.size();
             }
+            if(arrayListTema.isEmpty()){
+                canvas.drawText("•No hay Temas",460,y, myPaint);
+            }else{
+                for (int j = 0; j < arrayListTema.size(); j++){
+                    arrayListTemas.add(arrayListTema.get(j).getTema());
+                }
+                arrayListTemas = stringSplit(arrayListTemas,27);
+                if(arrayListTemas.size() > max){
+                    max = arrayListTemas.size();
+                }
+            }
+            if(arrayListAcuerdos.isEmpty()){
+                canvas.drawText("•No hay Acuerdos",810,y, myPaint);
+            }else{
+                for (int j = 0; j < arrayListAcuerdos.size(); j++){
+                    arrayListAcuerdosTexto.add(arrayListAcuerdos.get(j).getAcuerdo());
+                }
+                arrayListAcuerdosTexto = stringSplit(arrayListAcuerdosTexto,27);
+                if(arrayListAcuerdosTexto.size() > max){
+                    max = arrayListAcuerdosTexto.size();
+                }
+            }
+            for(int m = 0; m < max; m++){
+                if(m< arrayListAsistentesNombres.size()){
+                    canvas.drawText(arrayListAsistentesNombres.get(m),110,y, myPaint);
+                }
+                if (m<arrayListTemas.size()){
+                    canvas.drawText(arrayListTemas.get(m),460,y, myPaint);
+                }
+                if (m<arrayListAcuerdosTexto.size()){
+                    canvas.drawText(arrayListAcuerdosTexto.get(m),810,y, myPaint);
+                }
+                canvas.drawLine(100,y-20, 100, y+20, myPaint);
+                canvas.drawLine(450,y-20, 450, y+20, myPaint);
+                canvas.drawLine(800,y-20, 800, y+20, myPaint);
+                canvas.drawLine(1100,y-20, 1100, y+20, myPaint);
+                if(y>=1850){
+                    pageNumber++;
+                    pdfDocument.finishPage(myPage);
+                    mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                    myPage = pdfDocument.startPage(mPI);
+                    canvas = myPage.getCanvas();
+                    y = 150;
+                }else{
+                    y=y+40;
+                }
+            }
+            canvas.drawLine(100,y-20, 1100, y-20, myPaint);
 
             if(y>=1850){
                 pageNumber++;
@@ -527,134 +597,20 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
                 canvas = myPage.getCanvas();
                 y = 150;
             }else{
-                y=y+40;
+                y=y+60;
             }
 
         }
-
         pdfDocument.finishPage(myPage);
-        File file = new File(Environment.getExternalStorageDirectory(),"Reporte de minutas "+date.replace("-", "_")+".pdf");
+        File file = crearFichero("Reporte de Minutas"+date.replace("-", "_")+".pdf");
+        Toast.makeText(contexto,"Se guardo el reporte en "+getRuta().toString(),Toast.LENGTH_LONG).show();
+        printPDF(file);
         try{
             pdfDocument.writeTo(new FileOutputStream(file));
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        /*
-
-            documento.add(new Phrase("\n\tRegistros: \t", fuenteTexto));
-            documento.add(new Phrase(lblMinutaConsRegistros.getText().toString(),fuenteResaltar));
-            documento.add(new Phrase("Filtro por fecha: \n\n"));
-            //Encabezado
-            /*PdfPTable encabezado = new PdfPTable(11);
-            //Contenido
-            PdfPTable table = new PdfPTable(11);
-            table.setHorizontalAlignment(Cell.ALIGN_CENTER);
-
-            PdfPCell cellt = new PdfPCell(new Phrase("Fecha"));
-            cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cellt);
-            PdfPCell cell2t = new PdfPCell(new Phrase("Usuario"));
-            cell2t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell2t);
-            PdfPCell cell3t = new PdfPCell(new Phrase("Almacén"));
-            cell3t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell3t);
-            PdfPCell cell4t = new PdfPCell(new Phrase("Material"));
-            cell4t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell4t);
-            PdfPCell cell5t = new PdfPCell(new Phrase("Entradas"));
-            cell5t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell5t);
-            PdfPCell cell6t = new PdfPCell(new Phrase("Fisico"));
-            cell6t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell6t);
-            PdfPCell cell7t = new PdfPCell(new Phrase("Sistema"));
-            cell7t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell7t);
-            PdfPCell cell8t = new PdfPCell(new Phrase("Diferencia"));
-            cell8t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell8t);
-            PdfPCell cell9t = new PdfPCell(new Phrase("H.inicio"));
-            cell9t.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell9t);
-            PdfPCell cell10 = new PdfPCell(new Phrase("H.fin"));
-            cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell10);
-            PdfPCell cell11 = new PdfPCell(new Phrase("Incidencias"));
-            cell11.setHorizontalAlignment(Element.ALIGN_CENTER);
-            encabezado.addCell(cell11);
-*//*
-            for (int i = 0; i < inventariosEnHistorico.size(); i++) {
-                PdfPCell cell = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getFecha()));
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cell);
-                PdfPCell cel2 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getUsuario()));
-                cel2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel2);
-                PdfPCell cel3 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getAlmacen()));
-                cel3.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel3);
-                PdfPCell cel4 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getMaterial()));
-                cel4.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel4);
-                PdfPCell cel5 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getEntradas()));
-                cel5.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel5);
-                PdfPCell cel6 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getFisico()));
-                cel6.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel6);
-                PdfPCell cel7 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getSistema()));
-                cel7.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel7);
-                PdfPCell cel8 = new PdfPCell(new Phrase(""+((Float.parseFloat(inventariosEnHistorico.get(i).getFisico())) - (Float.parseFloat(inventariosEnHistorico.get(i).getSistema())))));
-                cel8.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel8);
-                PdfPCell cel9 = new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getHoraInicio()));
-                cel9.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel9);
-                PdfPCell cel10= new PdfPCell(new Phrase(inventariosEnHistorico.get(i).getHoraFin()));
-                cel10.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel10);
-                //Incidencias
-                //Incidencias
-                String cadenaIncidencias = "";
-                try {
-                    Statement stmt = conexion.conexiondbImplementacion().createStatement();
-                    String query = "SELECT Observaciones FROM Movil_Reporte WHERE Folio = '"+inventariosEnHistorico.get(i).getFolio()+"'";
-                    ResultSet r = stmt.executeQuery(query);
-                    while(r.next()){
-                        if(r.getString("Observaciones").equals("")){
-                            //
-                            cadenaIncidencias = "Sin incidencias";
-                        }else{
-                            cadenaIncidencias = cadenaIncidencias+", "+r.getString("Observaciones");
-                        }
-                    }
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                PdfPCell cel11 = new PdfPCell(new Phrase(cadenaIncidencias));
-                cel11.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table.addCell(cel11);
-            }
-            //documento.add(encabezado);
-            //documento.add(table);
-            fileUri = file;
-            Toast.makeText(MinutaConsultarMinutas.this, "¡Reporte creado exitosamente! ", Toast.LENGTH_SHORT).show();
-        } catch (DocumentException e) {
-            Toast.makeText(MinutaConsultarMinutas.this, "Error: " + e, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(MinutaConsultarMinutas.this, "Error: " + e, Toast.LENGTH_SHORT).show();
-        } finally {
-            documento.close();
-            if(status == 1){
-
-            }else if(status == 2){
-                printPDF(fileUri);
-                Toast.makeText(contexto, "Abriendo vista previa del archivo...", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
     public void printPDF(File file){
         PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
@@ -694,7 +650,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             }
 
         }
-        return ruta;*/
+        return ruta;
     }
     public ArrayList<ModeloAsistente> getAsistentes(int reunionID){
         ArrayList<ModeloAsistente> array = new ArrayList<>();
@@ -735,6 +691,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         }
     }
 
+
     //Método para traer los acuerdos
     public ArrayList<ModeloAcuerdo> getAcuerdos(int reunionID){
         ArrayList<ModeloAcuerdo> array = new ArrayList<>();
@@ -751,6 +708,52 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             Toast.makeText(contexto, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
+    }
+    public ArrayList<String> stringSplit(ArrayList<String> a, int xn){
+        int n = 0, w=0, z=xn;
+        ArrayList<String> partes = new ArrayList<>();
+        for(int k = 0; k<a.size();k++){
+            n = a.get(k).length();
+            if(n>=xn){
+                while ( n>0){
+                    partes.add(a.get(k).substring(w,z)+"-");
+                    w = w+xn;
+                    n = n-xn;
+                    if (xn>n){
+                        z=z+n;
+                        partes.add(a.get(k).substring(w,z)+".");
+                        break;
+                    }else{
+                        z = z+xn;
+                    }
+                }
+            }else{
+                partes.add(a.get(k));
+            }
+        }
+        return partes;
+    }
+    public ArrayList<String> stringSplit(String a, int xn){
+        int n = 0, w=0, z=xn;
+        ArrayList<String> partes = new ArrayList<>();
+            n = a.length();
+            if(n>xn){
+                while ( n>0){
+                    partes.add(a.substring(w,z)+"-");
+                    w = w+xn;
+                    n = n-xn;
+                    if (xn>n){
+                        z=z+n;
+                        partes.add(a.substring(w,z)+".");
+                        break;
+                    }else{
+                        z = z+xn;
+                    }
+                }
+            }else{
+                partes.add(a);
+            }
+        return partes;
     }
 
 
@@ -837,6 +840,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             @Override
             public void onClick(View view){
             }
+
         }
     }
 }
