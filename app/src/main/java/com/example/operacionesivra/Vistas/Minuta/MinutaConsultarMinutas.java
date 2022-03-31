@@ -450,8 +450,6 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             canvas.drawText(filtroBusquedasSplit.get(i), 840, 350+(20*i), myPaint );
         }
 
-
-
         myPaint.setTextSize(18);
         int y = 450;
         for(int i = 0; i < arrayReuniones.size(); i++){

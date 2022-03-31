@@ -75,7 +75,8 @@
             android:id="@+id/recyclerReproductor"
             android:layout_width="match_parent"
             android:layout_height="300sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:listitem="@layout/recepcion_reproductor_item" />
 
         <Space
             android:layout_width="10sp"

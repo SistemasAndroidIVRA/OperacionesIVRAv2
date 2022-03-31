@@ -2,16 +2,23 @@ package com.example.operacionesivra.Vistas.PantallaRecepcion;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.InputType;
+import android.text.Layout;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +39,7 @@ import com.example.operacionesivra.Vistas.MainActivity.MainActivity;
 import com.example.operacionesivra.Vistas.PantallaRecepcion.administrar.RecepcionAdministrarVideos;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Vistas.Services.Conexion;
+import com.google.android.gms.vision.text.Line;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -47,7 +55,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,
+        YouTubePlayer.PlaybackEventListener, YouTubePlayer.PlayerStateChangeListener {
     public static final String APY_KEY = "AIzaSyBz6_qZa1BXC7xl8Rn8NnOipqxrpMwunBM";
     Conexion conexionService = new Conexion(this);
     Context context;
@@ -56,23 +65,31 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
     List<ModeloRecepcion> pedidos = new ArrayList<>();
     private final DBListenerRecepcion duckFactory = new DBListenerRecepcion(this);
     TextToSpeech tts;
-    YouTubePlayerView youTubePlayerView;
     public int loadingRecepcion = 0;
     int listener2 = 0;
     DigitalClock recepcion;
-    ImageView logoShimaco, surtiendo, revisado, liberado, generandonota, registrado;
+    ImageView logoShimaco;
     String videoSeleccionado;
     int posicionSeleccionado = -1;
     String liga;
     PantallaDeRecepcion pantallaDeRecepcion;
     String[] opciones;
     Button btnReproductor;
-    ImageButton imgButtonNext, imgButtonAtras;
+    ImageButton imgButtonNext, imgButtonAtras, imageButtonAcercar, imageButtonAlejar;
     ArrayList<ModeloVideos> arrayVideos = new ArrayList();
+    //Reproductor de youtube
+    YouTubePlayer mPlayer;
+    //Vista de reproductor de youtube
+    YouTubePlayerView youTubePlayerView;
+
+    float scale = 1;
+    float dimension = 1.63f;
+    LinearLayout linearLayoutVideo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recepcion_pantalla_de_recepcion);
+
         pantallaDeRecepcion = this;
         context = this;
         recycerpedidos = findViewById(R.id.recyclerRecepcion);
@@ -83,18 +100,17 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         duckFactory.start();
         logoShimaco = findViewById(R.id.shimacologo);
         logoShimaco.setImageResource(R.drawable.logoshimaco);
-        surtiendo = findViewById(R.id.psurtido);
-        surtiendo.setImageResource(R.drawable.surtiendo);
-        revisado = findViewById(R.id.previsado);
-        revisado.setImageResource(R.drawable.pedidorevisado);
-        liberado = findViewById(R.id.pliberado);
-        liberado.setImageResource(R.drawable.pedidoaprobado);
-        generandonota = findViewById(R.id.pnota);
-        generandonota.setImageResource(R.drawable.generarnota);
-        registrado = findViewById(R.id.pregistrado);
-        registrado.setImageResource(R.drawable.nuevopedido);
+        //se asigna la vista
+        youTubePlayerView = findViewById(R.id.video);
+
         arrayVideos = getVideos();
+
         btnReproductor = findViewById(R.id.btnReproductor);
+
+        imageButtonAcercar = findViewById(R.id.imageButtonAcercar);
+        imageButtonAlejar = findViewById(R.id.imageButtonAlejar);
+        linearLayoutVideo = findViewById(R.id.layoutVideo);
+
         seleccionarCancion();
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -105,11 +121,36 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
             }
         });
 
-        btnReproductor.setOnClickListener(view -> {
-            reiniciarActivity(pantallaDeRecepcion);
-        });
-    }
+        btnReproductor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seleccionarCancion();
 
+            }
+        });
+        imageButtonAcercar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                maximize();
+            }
+        });
+        imageButtonAlejar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                minimize();
+            }
+        });
+        /*btnReproductor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(null, shadowBuilder, view, 0);
+                return true;
+            }
+        });*/
+
+    }
     //Método para seleccionar la canción
     public void seleccionarCancion(){
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
@@ -149,8 +190,8 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         });
         btnAceptarReporductor.setOnClickListener(view1 -> {
             videoSeleccionado = arrayVideos.get(0).getNombre();
-            youTubePlayerView = findViewById(R.id.video);
             youTubePlayerView.initialize(APY_KEY, this);
+            playVideo(videoSeleccionado);
             dialog.dismiss();
         });
         btnAdministrar.setOnClickListener(view -> {
@@ -302,6 +343,10 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                     .show();
         }
     }
+    public void resetRecycler(RecyclerView recyclerView){
+        recyclerView.clearAnimation();
+
+    }
 
     //Elimina el elemto al estar completado o bien es eliminado
     public int elimarlista() {
@@ -322,12 +367,13 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                     listaner = 1;
                     final String cliente = pedidos.get(i).getCliente();
                     pedidos.remove(i);
-                    final int finalI = i;
+                    //final int finalI = i;
                     runOnUiThread(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
-                            Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemRemoved(finalI);
+                            //Objects.requireNonNull(recycerpedidos.getAdapter()).notifyItemRemoved(finalI);
+                            Objects.requireNonNull(recycerpedidos.getAdapter()).notifyDataSetChanged();
                             speech(cliente + ", su nota está lista");
                         }
                     });
@@ -362,7 +408,8 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         }
     }
 
-    //Util pero no lo uso ahora
+    //Se utilizaba para cambiar la cancion
+    /*
     public static void reiniciarActivity(Activity actividad) {
         Intent intent = new Intent();
         intent.setClass(actividad, actividad.getClass());
@@ -371,7 +418,7 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         //finalizamos la actividad actual
         actividad.finish();
     }
-
+*/
     @Override
     public void onBackPressed() {
         finish();
@@ -382,17 +429,20 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        if (null == youTubePlayer) return;
+        youTubePlayer.setPlaybackEventListener(this);
+        youTubePlayer.setPlaybackEventListener(this);
         if (!b) {
+            //Se asigna el reproductor de youtube
+            mPlayer = youTubePlayer;
             for (int i = 0; i < arrayVideos.size(); i++) {
-                if (arrayVideos.get(i).getNombre().equals(videoSeleccionado)) {
-                    if(youTubePlayer.isPlaying()){
-                        youTubePlayer.release();
-                        youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
-                        youTubePlayer.play();
-                    }else{
-                        youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
-                        youTubePlayer.play();
+                            if (arrayVideos.get(i).getNombre().equals(videoSeleccionado)) {
+                                if(youTubePlayer.isPlaying()){
+                                    youTubePlayer.release();
+                                    youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
+                                    youTubePlayer.play();
+                                }else{
+                                    youTubePlayer.cuePlaylist(arrayVideos.get(i).getUrl());
+                                    youTubePlayer.play();
                     }
                 }
             }
@@ -417,6 +467,94 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void onPlaying() {
+
+    }
+
+    @Override
+    public void onPaused() {
+
+    }
+
+    @Override
+    public void onStopped() {
+
+    }
+
+    @Override
+    public void onBuffering(boolean b) {
+
+    }
+
+    @Override
+    public void onSeekTo(int i) {
+
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoaded(String s) {
+
+    }
+
+    @Override
+    public void onAdStarted() {
+
+    }
+
+    @Override
+    public void onVideoStarted() {
+
+    }
+
+    @Override
+    public void onVideoEnded() {
+
+    }
+
+    @Override
+    public void onError(YouTubePlayer.ErrorReason errorReason) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+    public void minimize() {
+
+       // linearLayoutVideo.setScaleX(scale);
+       // linearLayoutVideo.setScaleY(scale);
+        ViewGroup.LayoutParams params = linearLayoutVideo.getLayoutParams();
+        params.width = (int) (linearLayoutVideo.getWidth()-(10*dimension));
+        params.height = linearLayoutVideo.getHeight()-10;
+        linearLayoutVideo.setLayoutParams(params);
+
+    }
+    public void maximize(){
+
+        ViewGroup.LayoutParams params = linearLayoutVideo.getLayoutParams();
+        params.width = (int) (linearLayoutVideo.getWidth()+(10*dimension));
+        params.height = linearLayoutVideo.getHeight()+10;
+        linearLayoutVideo.setLayoutParams(params);
+
+    }
+//Se utiliza para cambiar la cancion que se seleccione
+    public void playVideo(String url){
+        if(mPlayer != null){
+            for (int i = 0; i < arrayVideos.size(); i++) {
+                if (arrayVideos.get(i).getNombre().equals(videoSeleccionado)) {
+                    mPlayer.cuePlaylist(arrayVideos.get(i).getUrl());
+                }
+            }
+        }
     }
 
     //Adapter videos

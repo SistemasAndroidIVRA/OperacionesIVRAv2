@@ -95,6 +95,7 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
                     f4.setImageResource(R.drawable.surtiendo_pedido);
                     p4.setProgress(0, true);
                     f5.setImageResource(R.drawable.generando_nota);
+
                     break;
                 case "2":
                     f1.setImageResource(R.drawable.clienteverde);
@@ -158,6 +159,7 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
                             }
                         }
                     });
+
                     hilo3.start();
                     f4.setImageResource(R.drawable.play);
                     p4.setProgress(0, true);
@@ -196,6 +198,7 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
                         }
                     });
                     hilo4.start();
+
                     f5.setImageResource(R.drawable.play);
                     break;
             }
@@ -220,6 +223,12 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
     }
 
     @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        holder.itemView.clearAnimation();
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.estado = listaPedidos.get(position).getEstado();
         holder.pedido = listaPedidos.get(position).getPedido();
@@ -230,4 +239,6 @@ public class AdapterRecepcion extends RecyclerView.Adapter<AdapterRecepcion.View
     public int getItemCount() {
         return listaPedidos.size();
     }
+
 }
+
