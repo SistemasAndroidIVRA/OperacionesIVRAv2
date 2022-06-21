@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Inventario"
+        android:gravity="center"
+        android:text="¿Qué desea hacer?"
+        android:textColor="@color/Recepcion"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="202dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonMinutasGenerarPDF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/color3"
+            android:drawableRight="@drawable/pdf"
+            android:text="Generar reporte en PDF" />
+
+        <Button
+            android:id="@+id/buttonMinutasGenerarExcel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#3F7A2A"
+            android:drawableRight="@drawable/excel"
+            android:text="Generar reporte en Excel" />
+    </LinearLayout>
+</LinearLayout>

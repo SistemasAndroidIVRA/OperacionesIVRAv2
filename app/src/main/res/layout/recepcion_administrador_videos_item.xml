@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:backgroundTint="#DCDCDC">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
 
             <LinearLayout
                 android:id="@+id/layouVideo"
@@ -32,43 +36,80 @@
 
                     <TextView
                         android:id="@+id/lblAVConsItem"
-                        android:layout_width="150sp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1.2"
                         android:gravity="center"
                         android:text="TextView"
                         android:textAlignment="center" />
 
-                    <TextView
-                        android:id="@+id/lblAVNombreItem"
-                        android:layout_width="150sp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="250sp"
-                        android:textAlignment="center" />
+                    <com.google.android.youtube.player.YouTubeThumbnailView
+                        android:id="@+id/youtubethumbnailviewAdmin"
+                        android:layout_width="100sp"
+                        android:layout_height="50sp"
+                        android:padding="5dp" />
 
-                    <TextView
-                        android:id="@+id/lblAVURLItem"
-                        android:layout_width="150sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="250sp"
-                        android:textAlignment="center" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center|left"
+                            android:text="Nombre"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblAVNombreItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center|left"
+                            android:text="250sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView40"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center|left"
+                            android:text="URL"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblAVURLItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center|left"
+                            android:text="250sp" />
+                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/cbAVEliminar"
-                        android:layout_width="150sp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:drawableRight="@drawable/icono_eliminar_rojo"
                         android:textAlignment="center" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@color/button_color_text"
-                    android:orientation="vertical"></LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

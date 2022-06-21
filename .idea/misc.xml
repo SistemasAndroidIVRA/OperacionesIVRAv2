@@ -3,18 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/drawable/bordes_redondos.xml" value="0.1985" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/drawable/boton_redondo.xml" value="0.165234375" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/drawable/calendario.xml" value="0.1985" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/drawable/snakerojo.xml" value="0.2203125" />
-        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout-large/recepcion_pantalla_de_recepcion.xml" value="0.5" />
-        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout-normal/recepcion_pantalla_de_recepcion.xml" value="0.2" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout-large/recepcion_pantalla_de_recepcion.xml" value="0.33" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout-normal/recepcion_pantalla_de_recepcion.xml" value="0.25" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_materiales.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_materiales_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_ajuste_nuevo_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_en_historico.xml" value="0.18" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_en_proceso.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_en_proceso_reporte_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_solicitud_ajuste.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_a_spinner.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventario_inventarioshistoricos.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/inventarios_historicos_detalles_items.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/login_login.xml" value="0.33" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_principal.xml" value="0.25" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_acuerdo_item.xml" value="0.20416666666666666" />
@@ -26,15 +32,22 @@
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_acuerdos_editar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_asistentes.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_registro_temas_editar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_reunion_tema_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_a_spinner.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_generar_reporte_contrasena.xml" value="0.22" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minuta_ver_invoice.xml" value="0.25" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minutas_reportes_opciones.xml" value="0.25" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/minutas_reportes_opciones_guardar.xml" value="0.33" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/pedidos_a_ventas_items.xml" value="0.22" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_administrador_videos_item.xml" value="0.33" />
-        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_administrador_videos_nuevo.xml" value="0.153125" />
-        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_administrar_videos.xml" value="0.22" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_administrador_videos_nuevo.xml" value="0.22" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_administrar_videos.xml" value="0.25" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_item.xml" value="0.25" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_pantalla_de_recepcion.xml" value="0.75" />
-        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_reproductor.xml" value="0.22" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_reproductor.xml" value="0.25" />
         <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/layout/recepcion_reproductor_item.xml" value="0.15" />
+        <entry key="..\:/Users/Fabrizio/AndroidStudioProjects/OperacionesIVRAv2/app/src/main/res/xml/filepaths.xml" value="0.10260416666666666" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout-land/activity_main.xml" value="0.23828125" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_administrador.xml" value="0.1" />
         <entry key="..\:/Users/Sistemas 03/AndroidStudioProjects/OperacionesIVRA - v4/app/src/main/res/layout/activity_main.xml" value="0.18507281553398058" />

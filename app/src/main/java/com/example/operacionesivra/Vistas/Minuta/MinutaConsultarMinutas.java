@@ -6,7 +6,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.print.PrintAttributes;
@@ -23,6 +26,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -31,7 +35,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,40 +45,45 @@ import com.example.operacionesivra.Modelos.ModeloReunion;
 import com.example.operacionesivra.Modelos.ModeloTema;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Vistas.Inventarios.Vistas.EnHistorico.DetallesHistorico.PdfDocumentAdapter;
-import com.example.operacionesivra.Vistas.Minuta.MinutaReunionDetalle;
 import com.example.operacionesivra.Vistas.PantallasCargando.Loading;
 import com.example.operacionesivra.Vistas.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.lowagie.text.Cell;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfDocument;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTable;
-import com.lowagie.text.pdf.PdfWriter;
+
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Picture;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import harmony.java.awt.Color;
+
 
 public class MinutaConsultarMinutas extends AppCompatActivity {
     public int loadingMinutaConsulta = 0;
@@ -93,6 +101,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
     AdapterReunion adapterReunion = new AdapterReunion();
     //RecyclerView
     RecyclerView recyclerMinutasItem;
+
     //Linear layous expandir
     LinearLayout linearMinutaConsultarShowFiltros;
     //ImageButton
@@ -145,8 +154,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             getMinutasDateRange();
         });
         btnMinutaGenerarReporte.setOnClickListener(view -> {
-            generateReporte(2);
-
+            mostrarOpcionesGenerarReporte();
         });
 
         //Acción keyListener txt
@@ -394,8 +402,40 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         });
         mDatePicker.show();
     }
+    //Metodo para desplegar paneles para eleccion de reporte de minutas
+    public void mostrarOpcionesGenerarReporte(){
 
-    public void generateReporte(int status){
+        AlertDialog.Builder alert1 = new AlertDialog.Builder(contexto);
+        LayoutInflater inflater1 = getLayoutInflater();
+        View view1 = inflater1.inflate(R.layout.minutas_reportes_opciones, null);
+        alert1.setView(view1);
+        AlertDialog dialog1 = alert1.create();
+        dialog1.show();
+
+        Button buttonPDF, buttonExcel;
+
+        buttonPDF = view1.findViewById(R.id.buttonMinutasGenerarPDF);
+        buttonExcel = view1.findViewById(R.id.buttonMinutasGenerarExcel);
+
+        buttonPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingMinutaConsulta = 4;
+                loadinglauncher();
+                dialog1.cancel();
+            }
+        });
+        buttonExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingMinutaConsulta = 5;
+                loadinglauncher();
+                dialog1.cancel();
+               }
+        });
+    }
+    //Metodo para generar el reporte de minutas en PDF
+    public void generateReporte(int status) throws IOException {
         int pageWidth = 1200, pageHeight = 2010, pageNumber = 1, max = 0;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         android.graphics.pdf.PdfDocument pdfDocument = new android.graphics.pdf.PdfDocument();
@@ -440,11 +480,13 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         canvas.drawText("Generado por : ",110,350, myPaint);
         SharedPreferences sharedPref = getSharedPreferences("credenciales",Context.MODE_PRIVATE);
         String name = sharedPref.getString("user","null");
+                                    //Proceso para separar los renglones
         ArrayList<String> nameSplit = stringSplit(name,29);
         for (int i = 0; i < nameSplit.size();i++){
             canvas.drawText(nameSplit.get(i), 275, 350+(20*i), myPaint );
         }
         canvas.drawText("Filtros por busqueda : ",610,350, myPaint);
+                                                //Proceso para separar los renglones
         ArrayList<String> filtroBusquedasSplit = stringSplit(txtMinutaConsFiltrador.getText().toString(),29);
         for (int i = 0; i < filtroBusquedasSplit.size();i++){
             canvas.drawText(filtroBusquedasSplit.get(i), 840, 350+(20*i), myPaint );
@@ -452,7 +494,20 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
 
         myPaint.setTextSize(18);
         int y = 450;
+
+        //Loop para realizar formato de cada minuta
         for(int i = 0; i < arrayReuniones.size(); i++){
+            //Validación para salto de pagina
+            if(y>=1700){
+                pageNumber++;
+                pdfDocument.finishPage(myPage);
+                mPI = new android.graphics.pdf.PdfDocument.PageInfo.Builder(pageWidth,pageHeight,pageNumber).create();
+                myPage = pdfDocument.startPage(mPI);
+                canvas = myPage.getCanvas();
+                y = 150;
+            }else{
+                y=y+40;
+            }
             canvas.drawText("Num : ",110,y, myPaint);
             myPaint.setColor(Color.RED.getRGB());
             canvas.drawText(arrayReuniones.get(i).getReunionID()+"", 160, y, myPaint );
@@ -460,6 +515,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             canvas.drawText("Fecha : ",610,y, myPaint);
             canvas.drawText(arrayReuniones.get(i).getFecha(), 680, y, myPaint );
 
+            //Validación para salto de pagina
             if(y>=1850){
                 pageNumber++;
                 pdfDocument.finishPage(myPage);
@@ -476,6 +532,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             canvas.drawText("Hora : ",610,y, myPaint);
             canvas.drawText(arrayReuniones.get(i).getHoraInicio(),660,y, myPaint);
 
+            //Validación para salto de pagina
             if(y>=1850){
                 pageNumber++;
                 pdfDocument.finishPage(myPage);
@@ -490,6 +547,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             canvas.drawText("Lugar : ",110,y, myPaint);
             canvas.drawText(arrayReuniones.get(i).getLugar(),180,y, myPaint);
 
+            //Validación para salto de pagina
             if(y>=1850){
                 pageNumber++;
                 pdfDocument.finishPage(myPage);
@@ -510,6 +568,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             canvas.drawText("Acuerdos : ",810,y, myPaint);
             canvas.drawLine(1100,y-20, 1100, y+20, myPaint);
 
+            //Validación para salto de pagina
             if(y>=1850){
                 pageNumber++;
                 pdfDocument.finishPage(myPage);
@@ -528,13 +587,14 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             ArrayList<String> arrayListAcuerdosTexto = new ArrayList<>();
             ArrayList<ModeloTema> arrayListTema = getTemas(id);
             ArrayList<String> arrayListTemas = new ArrayList<>();
+            //Variable para conocer cual columna sera mas grande, para determinar el final de la tabla
             max = 0;
             if(arrayListAsistentes.isEmpty()){
                 canvas.drawText("•No hay asistentes",110,y, myPaint);
             }else{
                 for (int j = 0; j < arrayListAsistentes.size(); j++){
                     arrayListAsistentesNombres.add(arrayListAsistentes.get(j).getNombre());
-                }
+                }                               //Proceso para separar los renglones
                 arrayListAsistentesNombres = stringSplit(arrayListAsistentesNombres,27);
                 max = arrayListAsistentesNombres.size();
             }
@@ -543,7 +603,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             }else{
                 for (int j = 0; j < arrayListTema.size(); j++){
                     arrayListTemas.add(arrayListTema.get(j).getTema());
-                }
+                }                   //Proceso para separar los renglones
                 arrayListTemas = stringSplit(arrayListTemas,27);
                 if(arrayListTemas.size() > max){
                     max = arrayListTemas.size();
@@ -554,7 +614,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             }else{
                 for (int j = 0; j < arrayListAcuerdos.size(); j++){
                     arrayListAcuerdosTexto.add(arrayListAcuerdos.get(j).getAcuerdo());
-                }
+                }                           //Proceso para separar los renglones
                 arrayListAcuerdosTexto = stringSplit(arrayListAcuerdosTexto,27);
                 if(arrayListAcuerdosTexto.size() > max){
                     max = arrayListAcuerdosTexto.size();
@@ -574,6 +634,8 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
                 canvas.drawLine(450,y-20, 450, y+20, myPaint);
                 canvas.drawLine(800,y-20, 800, y+20, myPaint);
                 canvas.drawLine(1100,y-20, 1100, y+20, myPaint);
+
+                //Validación para salto de pagina
                 if(y>=1850){
                     pageNumber++;
                     pdfDocument.finishPage(myPage);
@@ -587,6 +649,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
             }
             canvas.drawLine(100,y-20, 1100, y-20, myPaint);
 
+            //Validación para salto de pagina
             if(y>=1850){
                 pageNumber++;
                 pdfDocument.finishPage(myPage);
@@ -600,27 +663,193 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
 
         }
         pdfDocument.finishPage(myPage);
-        File file = crearFichero("Reporte de Minutas"+date.replace("-", "_")+".pdf");
-        Toast.makeText(contexto,"Se guardo el reporte en "+getRuta().toString(),Toast.LENGTH_LONG).show();
-        printPDF(file);
+        //Se crea el archivo en la carpeta documents de manera temporal
+        File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Reporte de Minutas"+date.replace("-", "_")+".pdf");
         try{
-            pdfDocument.writeTo(new FileOutputStream(file));
+            pdfDocument.writeTo(new FileOutputStream(file1));
         }catch (IOException e){
             e.printStackTrace();
         }
-
+        //Generar la vista previa
+        Intent intent = new Intent(contexto,VerInvoiceActivity.class);
+        intent.putExtra("pdf", "Reporte de Minutas"+date.replace("-", "_")+".pdf");
+        startActivity(intent);
     }
-    public void printPDF(File file){
-        PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
-        try{
-            PrintDocumentAdapter printDocumentAdapter = new PdfDocumentAdapter(contexto, file.getAbsolutePath());
-            printManager.print("Document", printDocumentAdapter, new PrintAttributes.Builder().build());
-        }catch (Exception e){
-            Toast.makeText(contexto, "Error "+e.getMessage(), Toast.LENGTH_SHORT).show();
+    //Metodo para generar el reporte de minutas en Excel
+    public void generateReporteExcel(int status) throws IOException {
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Workbook workbook = new HSSFWorkbook();
+        Cell cell = null;
+        CellStyle cellStyle = workbook.createCellStyle();
+
+        Sheet sheet = null;
+        sheet = workbook.createSheet("Reporte de minutas");
+        //Setear ancho de columnas
+        sheet.setColumnWidth(0,1400);
+        sheet.setColumnWidth(1,8000);
+        sheet.setColumnWidth(2,4000);
+        sheet.setColumnWidth(3,3000);
+        sheet.setColumnWidth(4,2000);
+        sheet.setColumnWidth(5,8000);
+        sheet.setColumnWidth(6,7000);
+        sheet.setColumnWidth(7,4000);
+
+        Row row = null;
+        row = sheet.createRow(1);
+/*
+       InputStream inputStream = new FileInputStream("drawable/logoshimaco.png");
+        //Get the contents of an InputStream as a byte[].
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        //Adds a picture to the workbook
+        int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+        //close the input stream
+        inputStream.close();
+        CreationHelper helper = workbook.getCreationHelper();
+
+        //Creates the top-level drawing patriarch.
+        Drawing drawing = sheet.createDrawingPatriarch();
+
+        //Create an anchor that is attached to the worksheet
+        ClientAnchor anchor = helper.createClientAnchor();
+        //set top-left corner for the image
+        anchor.setCol1(0);
+        anchor.setRow1(0);
+
+        //Creates a picture
+        Picture pict = drawing.createPicture(anchor, pictureIdx);
+        //Reset the image to the original size
+        pict.resize();
+*/
+        cell = row.createCell(2);
+        Font titulo= workbook.createFont();
+        titulo.setFontHeight((short) 400);
+
+        cell.setCellValue("REPORTE DE MINUTAS");
+        cellStyle.setFont(titulo);
+        cell.setCellStyle(cellStyle);
+
+        Font encabezado= workbook.createFont();
+        encabezado.setFontHeight((short) 250);
+        CellStyle cellStyleTable = workbook.createCellStyle();
+        cellStyleTable.setFont(encabezado);
+        cellStyleTable.setRightBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable.setBorderRight(BorderStyle.THIN);
+        cellStyleTable.setLeftBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable.setBorderLeft(BorderStyle.THIN);
+        cellStyleTable.setTopBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable.setBorderTop(BorderStyle.THIN);
+        cellStyleTable.setBottomBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable.setBorderBottom(BorderStyle.THIN);
+
+        row = sheet.createRow(3);
+        cell = row.createCell(0);
+        cell.setCellValue("Num");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(1);
+        cell.setCellValue("Convoco");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(2);
+        cell.setCellValue("Lugar");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(3);
+        cell.setCellValue("Fecha");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(4);
+        cell.setCellValue("Hora");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(5);
+        cell.setCellValue("Participantes");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(6);
+        cell.setCellValue("Tema");
+        cell.setCellStyle(cellStyleTable);
+        cell = row.createCell(7);
+        cell.setCellValue("Acuerdos");
+        cell.setCellStyle(cellStyleTable);
+
+        //Variable para autoincrementar la fila donde se escribiran los datos
+        int rowN = 4;
+        Font info= workbook.createFont();
+        info.setFontHeight((short) 180);
+        CellStyle cellStyleTable2 = workbook.createCellStyle();
+        cellStyleTable2.setFont(info);
+        cellStyleTable2.setRightBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable2.setBorderRight(BorderStyle.THIN);
+        cellStyleTable2.setLeftBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable2.setBorderLeft(BorderStyle.THIN);
+        cellStyleTable2.setTopBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable2.setBorderTop(BorderStyle.THIN);
+        cellStyleTable2.setBottomBorderColor(HSSFColor.BLACK.index);
+        cellStyleTable2.setBorderBottom(BorderStyle.THIN);
+        //Loop de llenado de datos
+        for(int i = 0; i < arrayReuniones.size(); i++){
+            row = sheet.createRow(rowN);
+            cell = row.createCell(0);
+            cell.setCellValue(arrayReuniones.get(i).getReunionID());
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell(1);
+            cell.setCellValue(arrayReuniones.get(i).getEmpleado());
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell((short)2);
+            cell.setCellValue(arrayReuniones.get(i).getLugar());
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell((short)3);
+            cell.setCellValue(arrayReuniones.get(i).getFecha());
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell((short)4);
+            cell.setCellValue(arrayReuniones.get(i).getHoraInicio());
+            cell.setCellStyle(cellStyleTable2);
+
+            int id = arrayReuniones.get(i).getReunionID();
+            ArrayList<ModeloAsistente> arrayListAsistentes= getAsistentes(id);
+            String arrayListAsistentesNombres = "";
+            ArrayList<ModeloAcuerdo> arrayListAcuerdos = getAcuerdos(id);
+            String arrayListAcuerdosTexto = "";
+            ArrayList<ModeloTema> arrayListTema = getTemas(id);
+            String arrayListTemas = "";
+
+            for (int j = 0; j < arrayListAsistentes.size(); j++){
+                arrayListAsistentesNombres += arrayListAsistentes.get(j).getNombre() + "\n";
+            }
+            for (int j = 0; j < arrayListTema.size(); j++){
+                arrayListTemas += arrayListTema.get(j).getTema() + "\n";
+            }
+
+            for (int j = 0; j < arrayListAcuerdos.size(); j++){
+                arrayListAcuerdosTexto += arrayListAcuerdos.get(j).getAcuerdo() + "\n";
+            }
+
+            cell = row.createCell(5);
+            cell.setCellValue(arrayListAsistentesNombres);
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell(6);
+            cell.setCellValue(arrayListTemas);
+            cell.setCellStyle(cellStyleTable2);
+            cell = row.createCell(7);
+            cell.setCellValue(arrayListAcuerdosTexto);
+            cell.setCellStyle(cellStyleTable2);
+
+            rowN++;
         }
+
+        File file = crearFichero("Reporte de Minutas"+date.replace("-", "_")+".xls");
+        FileOutputStream fileOutputStream = null;
+
+        try{
+            fileOutputStream = new FileOutputStream(file);
+            workbook.write(fileOutputStream);
+            /*File ruta = getRuta();
+            if(ruta != null){
+                Toast.makeText(contexto,"Se guardo el reporte en "+ruta.toString(),Toast.LENGTH_LONG).show();
+            }*/
+        }catch (IOException ioException){
+            //Toast.makeText(contexto, "No fue posible generar el reporte", Toast.LENGTH_SHORT).show();
+            ioException.printStackTrace();
+        }
+
     }
 
-    //Crea el fichero para el pedf
+    //Crea el fichero para el pdf
     public File crearFichero(String nombreFichero) {
         File ruta = getRuta();
 
@@ -646,7 +875,6 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
                     }
                 }
             }
-
         }
         return ruta;
     }
@@ -708,9 +936,11 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         }
     }
     public ArrayList<String> stringSplit(ArrayList<String> a, int xn){
-        int n = 0, w=0, z=xn;
+        int n, w, z;
         ArrayList<String> partes = new ArrayList<>();
         for(int k = 0; k<a.size();k++){
+            w=0;
+            z=xn;
             n = a.get(k).length();
             if(n>=xn){
                 while ( n>0){
@@ -732,7 +962,7 @@ public class MinutaConsultarMinutas extends AppCompatActivity {
         return partes;
     }
     public ArrayList<String> stringSplit(String a, int xn){
-        int n = 0, w=0, z=xn;
+        int n, w=0, z=xn;
         ArrayList<String> partes = new ArrayList<>();
             n = a.length();
             if(n>xn){

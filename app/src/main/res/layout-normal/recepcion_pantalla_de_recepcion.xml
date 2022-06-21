@@ -116,19 +116,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logoshimaco" />
 
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/video"
-        android:layout_width="140sp"
-        android:layout_height="106sp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout24"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
-        app:layout_constraintVertical_bias="1.0" />
-
     <LinearLayout
         android:id="@+id/linearLayout24"
         android:layout_width="wrap_content"
@@ -245,20 +232,40 @@
         app:layout_constraintEnd_toStartOf="@+id/shimacologo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButtonAcercar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/acercarse"
-        app:layout_constraintBottom_toTopOf="@+id/imageButtonAlejar"
-        app:layout_constraintEnd_toStartOf="@+id/video" />
+    <LinearLayout
+        android:id="@+id/layoutVideo"
+        android:layout_width="200dp"
+        android:layout_height="107dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageButton
-        android:id="@+id/imageButtonAlejar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/alejarse"
-        app:layout_constraintBottom_toBottomOf="@+id/video"
-        app:layout_constraintEnd_toStartOf="@+id/video" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/imageButtonAcercar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/acercarse"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <ImageButton
+                android:id="@+id/imageButtonAlejar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/alejarse"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

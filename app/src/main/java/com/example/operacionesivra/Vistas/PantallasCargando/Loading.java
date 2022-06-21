@@ -255,6 +255,12 @@ public class Loading extends AsyncTask<Void, Void, Void> {
                     ((MinutaConsultarMinutas) mContext).fillRecyclerMinutas();
                 }else if(((MinutaConsultarMinutas) mContext).loadingMinutaConsulta == 2){
                     ((MinutaConsultarMinutas) mContext).getMinutasPorFecha();
+                }else if(((MinutaConsultarMinutas) mContext).loadingMinutaConsulta == 3){
+                    ((MinutaConsultarMinutas) mContext).generateReporte(0);
+                }else if(((MinutaConsultarMinutas) mContext).loadingMinutaConsulta == 4){
+                    ((MinutaConsultarMinutas) mContext).generateReporte(1);
+                }else if(((MinutaConsultarMinutas) mContext).loadingMinutaConsulta == 5){
+                    ((MinutaConsultarMinutas) mContext).generateReporteExcel(0);
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());

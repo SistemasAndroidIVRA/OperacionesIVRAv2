@@ -45,6 +45,8 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -140,16 +142,6 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                 minimize();
             }
         });
-        /*btnReproductor.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-                        view);
-                view.startDrag(null, shadowBuilder, view, 0);
-                return true;
-            }
-        });*/
-
     }
     //Método para seleccionar la canción
     public void seleccionarCancion(){
@@ -164,6 +156,7 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerReproductor.setLayoutManager(layoutManager);
         //Adaptador
+
         AdapterVideos adapterVideos = new AdapterVideos();
         recyclerReproductor.setAdapter(adapterVideos);
         //BtnAceptar
@@ -175,6 +168,7 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         imgButtonNext.setImageResource(R.drawable.next);
         imgButtonAtras = view2.findViewById(R.id.imgButtonAtras);
         imgButtonAtras.setImageResource(R.drawable.backbtn);
+
         //Acciones
         imgButtonAtras.setOnClickListener(view -> {
             ModeloVideos video = arrayVideos.get(arrayVideos.size()-1);
@@ -329,6 +323,8 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                         }
                     });
                 }
+                //Metodo para reiniciar el recycler para resolver fallo de las progressbar
+                resetRecycler();
             }
         } catch (Exception e) {
             new MaterialAlertDialogBuilder(this)
@@ -343,9 +339,12 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
                     .show();
         }
     }
-    public void resetRecycler(RecyclerView recyclerView){
-        recyclerView.clearAnimation();
-
+    //Sirve para resetear el recycler debido al fallo en el progress bar
+    public void resetRecycler(){
+        recycerpedidos.setLayoutManager(null);
+        recycerpedidos.setAdapter(null);
+        recycerpedidos.setLayoutManager(new LinearLayoutManager(context));
+        recycerpedidos.setAdapter(adaptador);
     }
 
     //Elimina el elemto al estar completado o bien es eliminado
@@ -408,17 +407,6 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         }
     }
 
-    //Se utilizaba para cambiar la cancion
-    /*
-    public static void reiniciarActivity(Activity actividad) {
-        Intent intent = new Intent();
-        intent.setClass(actividad, actividad.getClass());
-        //llamamos a la actividad
-        actividad.startActivity(intent);
-        //finalizamos la actividad actual
-        actividad.finish();
-    }
-*/
     @Override
     public void onBackPressed() {
         finish();
@@ -432,7 +420,7 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
         youTubePlayer.setPlaybackEventListener(this);
         youTubePlayer.setPlaybackEventListener(this);
         if (!b) {
-            //Se asigna el reproductor de youtube
+            //Se asigna el reproductor de youtube para poder hacer el cambio de cancion
             mPlayer = youTubePlayer;
             for (int i = 0; i < arrayVideos.size(); i++) {
                             if (arrayVideos.get(i).getNombre().equals(videoSeleccionado)) {
@@ -528,25 +516,26 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-    public void minimize() {
 
-       // linearLayoutVideo.setScaleX(scale);
-       // linearLayoutVideo.setScaleY(scale);
+    //Procedimientos para minimizar o maximizar el dialgo de youtube junto con los botones
+    public void minimize() {
+        //Se obtiene el contenedor donde se encuentra el dialogo de youtube y los botones
         ViewGroup.LayoutParams params = linearLayoutVideo.getLayoutParams();
+        //Se mininiza, con un porcentaje mayor en el ancho para evitar deformaciones en la dimension del video
         params.width = (int) (linearLayoutVideo.getWidth()-(10*dimension));
         params.height = linearLayoutVideo.getHeight()-10;
         linearLayoutVideo.setLayoutParams(params);
-
     }
     public void maximize(){
-
+        //Se obtiene el contenedor donde se encuentra el dialogo de youtube y los botones
         ViewGroup.LayoutParams params = linearLayoutVideo.getLayoutParams();
+        //Se maximiza, con un porcentaje mayor en el ancho para evitar deformaciones en la dimension del video
         params.width = (int) (linearLayoutVideo.getWidth()+(10*dimension));
         params.height = linearLayoutVideo.getHeight()+10;
         linearLayoutVideo.setLayoutParams(params);
 
     }
-//Se utiliza para cambiar la cancion que se seleccione
+//Metodo para cambiar la cancion que se seleccione
     public void playVideo(String url){
         if(mPlayer != null){
             for (int i = 0; i < arrayVideos.size(); i++) {
@@ -576,18 +565,24 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
             return arrayVideos.size();
         }
 
-        class AdapterVideosHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class AdapterVideosHolder extends RecyclerView.ViewHolder implements View.OnClickListener, YouTubeThumbnailView.OnInitializedListener {
             TextView lblConsecutivoReproductor, lblNombreReproductor;
-            ImageView imagenLista;
             LinearLayout layoutSeleccionar;
+
+            //Miniatura de youtube para cargar imagenes en la seleccion de canciones
+            YouTubeThumbnailView youTubeThumbnailView;
+            YouTubeThumbnailLoader youTubeThumbnailLoadera;
             public AdapterVideosHolder(@NonNull View itemView){
                 super(itemView);
+
                 lblConsecutivoReproductor = itemView.findViewById(R.id.lblConsecutivoReproductor);
                 lblNombreReproductor = itemView.findViewById(R.id.lblNombreReproductor);
-                imagenLista = itemView.findViewById(R.id.imagenLista);
-                imagenLista.setImageResource(R.drawable.icono_mp3);
                 layoutSeleccionar = itemView.findViewById(R.id.layoutSeleccionar);
+
+                youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtubethumbnailview);
+                youTubeThumbnailView.initialize(APY_KEY, this);
                 //Acciones
+
                 layoutSeleccionar.setOnClickListener(view -> {
                     for (int i=0; i<arrayVideos.size();i++){
                         arrayVideos.get(i).setIsSelected(0);
@@ -601,6 +596,8 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
             public void printAdapter(int position){
                 lblConsecutivoReproductor.setText(""+(position+1));
                 lblNombreReproductor.setText(arrayVideos.get(position).getNombre());
+
+               setYouTubeThumbnailView(position);
                 if(arrayVideos.get(position).getIsSelected() == 0){
                     layoutSeleccionar.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }else{
@@ -612,6 +609,35 @@ public class PantallaDeRecepcion extends YouTubeBaseActivity implements YouTubeP
             public void onClick(View view){
 
             }
+            public void setYouTubeThumbnailView(int position){
+                //Se asigna la url a la miniatura para que la cargue
+                if(youTubeThumbnailLoadera != null){
+                    youTubeThumbnailLoadera.setPlaylist(arrayVideos.get(position).getUrl());
+                }
+            }
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                youTubeThumbnailLoadera = youTubeThumbnailLoader;
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                    @Override
+                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+
+                    }
+
+                    @Override
+                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+
+                    }
+                });
+                youTubeThumbnailLoadera.setPlaylist(arrayVideos.get(0).getUrl());
+
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+
         }
     }
 

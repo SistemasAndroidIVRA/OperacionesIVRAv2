@@ -18,6 +18,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"></LinearLayout>
@@ -32,12 +33,11 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imagenLista"
-                    android:layout_width="200sp"
+                <com.google.android.youtube.player.YouTubeThumbnailView
+                    android:id="@+id/youtubethumbnailview"
+                    android:layout_width="300sp"
                     android:layout_height="200sp"
-                    app:srcCompat="@drawable/icono_mp3"
-                    tools:srcCompat="@drawable/icono_mp3" />
+                    android:padding="5dp" />
 
                 <TextView
                     android:id="@+id/lblNombreReproductor"

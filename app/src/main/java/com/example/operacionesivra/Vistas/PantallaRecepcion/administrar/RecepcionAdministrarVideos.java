@@ -23,6 +23,9 @@ import com.example.operacionesivra.Vistas.PantallaRecepcion.ModeloVideos;
 import com.example.operacionesivra.R;
 import com.example.operacionesivra.Vistas.Services.Conexion;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +41,8 @@ public class RecepcionAdministrarVideos extends AppCompatActivity {
     //Dialog referencias
     EditText txtNListaNombre, txtNListaURL;
     Button btnCerrarLista, btnGuardarLista, btnVAdminEliminar;
+
+    public static final String APY_KEY = "AIzaSyBz6_qZa1BXC7xl8Rn8NnOipqxrpMwunBM";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,10 +193,13 @@ public class RecepcionAdministrarVideos extends AppCompatActivity {
             return videos.size();
         }
 
-        class AdapterVideosAHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class AdapterVideosAHolder extends RecyclerView.ViewHolder implements View.OnClickListener, YouTubeThumbnailView.OnInitializedListener {
             TextView lblAVConsItem, lblAVNombreItem, lblAVURLItem;
             CheckBox cbAVEliminar;
             CardView cardVideo;
+
+            YouTubeThumbnailView youTubeThumbnailView;
+            YouTubeThumbnailLoader youTubeThumbnailLoadera;
             public AdapterVideosAHolder(@NonNull View itemView){
                 super(itemView);
                 lblAVConsItem = itemView.findViewById(R.id.lblAVConsItem);
@@ -199,6 +207,11 @@ public class RecepcionAdministrarVideos extends AppCompatActivity {
                 lblAVURLItem = itemView.findViewById(R.id.lblAVURLItem);
                 cbAVEliminar = itemView.findViewById(R.id.cbAVEliminar);
                 cardVideo = itemView.findViewById(R.id.cardVideo);
+
+                youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtubethumbnailviewAdmin);
+                youTubeThumbnailView.initialize(APY_KEY, this);
+
+
                 //Acciones
                 cbAVEliminar.setOnClickListener(view -> {
                     if(cbAVEliminar.isChecked()){
@@ -273,9 +286,11 @@ public class RecepcionAdministrarVideos extends AppCompatActivity {
             }
 
             public void printAdapter(int position){
+                setYouTubeThumbnailView(position);
                 lblAVConsItem.setText(""+(position+1));
                 lblAVNombreItem.setText(videos.get(position).getNombre());
                 lblAVURLItem.setText(videos.get(position).getUrl());
+
                 if(videos.get(position).getIsSelected() == 0){
                     cbAVEliminar.setChecked(false);
                 }else{
@@ -285,6 +300,34 @@ public class RecepcionAdministrarVideos extends AppCompatActivity {
 
             @Override
             public void onClick(View view){
+
+            }
+
+            public void setYouTubeThumbnailView(int position){
+                if(youTubeThumbnailLoadera != null){
+                    youTubeThumbnailLoadera.setPlaylist(videos.get(position).getUrl());
+                }
+            }
+
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                youTubeThumbnailLoadera = youTubeThumbnailLoader;
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                    @Override
+                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+
+                    }
+
+                    @Override
+                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                        Toast.makeText(contexto, "Error",Toast.LENGTH_SHORT).show();
+                    }
+                });
+               // youTubeThumbnailLoadera.setPlaylist(videos.get(0).getUrl());
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
 
             }
         }
